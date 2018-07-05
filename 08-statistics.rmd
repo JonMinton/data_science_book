@@ -1,0 +1,20 @@
+# Statistics {#stats}
+
+Most books on quantitative methods focus very heavily on statistics. This book will instead situate statistics as an element within a much broader process of activities in the service of getting insight from data, and making better decisions on the basis of this insight. 
+
+## The aims of statistics: data reduction or inference? 
+
+Part (a) will argue for statistics, by which is meant primarily the production of summary statistics, as a key part of the data science toolkit from two parallel perspectives: in addition to recourse to theories of statistical inference, which have as their key concern the appropriate use of data to populate parameters in stochastic models, there are also important cognitive reasons for producing summary statistics, namely that often more data means less information, as people are severely limited both in time and memory as to the number of ‘facts’ they can hold onto and make sense of at a time. Summary statistics are therefore invaluable as tools for intelligent data reduction: data reduction because it turns many thousands or millions of observations into just a handful of key values, and intelligent because these key values are ‘less worse’ at standing in place of many more values than most alternatives. The relationship between statistical modelling and signal processing will also be discussed. 
+Theories of statistical inference, and in particular likelihood theory, provide a means of selecting between many different models – each assuming different stochastic structures and processes, and hence each embodying different theories about social phenomena – and of deciding on the right balance between model accuracy and model parsimony, but only when models have a particular structural relationship to each other (When one model can be thought of as a ‘constrained’ variant of another model).
+
+## Balancing accuracy and parsimony using AIC and BIC
+
+Part (b) will discuss this further, and offer Aikiake Information Criterion (AIC) and the Bayesian Information Criterion (BIC) as a way of guiding the accuracy/parsimony trade-off in selecting between many types of statistical model.
+
+## Statistical Simulation: Showing what models really mean
+
+Having decided on the ‘least worst’ model to represent the data, part (c) will describe a series of methods and functions – including sim within the arm package and the Zelig package – for extracting substantive meaning from statistical models, going beyond the usual convention of stopping and starting with the question of whether particular model parameters are ‘statistically significant’ or not, to instead making predictions and projections about the expected and predicted effects of change within social systems. 
+
+## Advanced statistics: structural modelling to formalise informal knowledge
+  
+Part (d) will discuss further how statistical models can be developed to formalise implicit and ‘fuzzy’ knowledge and expectations about social relationships, discussing both the dangers of going ‘too far’ and developing such complicated and precisely structured models that it becomes easy to confuse ‘the map for the territory’, and the danger of not going far enough and failing to capture important structure and shape in the relationships between variables and social factors. 

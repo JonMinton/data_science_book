@@ -1,0 +1,25 @@
+# Initial Data Tidying and exploration {#tidy_data}
+
+
+This section will guide the reader through both the concepts and practicalities of working with and creating data saved in a range of different file types.  
+  
+
+## Loading and saving data - file types 
+
+Part (a) will introduce the primary distinction used by computer programmers between types of files, between human-readable text files and human-unreadable binary files. Examples of these two different types of files will be introduced, which also highlight another important conceptual distinction: the difference between data and meta-data (data about data). The relative advantages of different file types will be discussed, and the argument will be made that, as a rule-of-thumb, text files should be used in preference to binary files.
+
+## Loading and saving data - R packages and functions
+
+Part (b) will discuss some of the particular R packages and functions within that can be used to work with different file types, presenting even the loading of data as at iterative process of learning more about how variables in data are structured and saved, and how the information in these variables be best represented and operated with inside R. 
+
+## Data tidying - principles and challenges 
+
+Part (c) will introduce a further, higher level, distinction between types of data: from ‘untidy’ and ‘initial’ data to ‘tidy’ and ‘derived’ data. This section will frame much of the practical challenge of data science as involving first identifying what needs to be done to move from the former to the latter, and then knowing how to do this.
+
+## Data tidying - tidyr and dplyr
+
+Part (d) will introduce two closely linked R packages, tidyr and dplyr, as providing the tools necessary to complete the vast majority of data tidying and data derivation tasks.
+
+## Initial Exploratory data analysis
+
+Finally, part (e) will emphasise the importance of rapid exploratory data analysis both at the data tidying stage, and for developing familiarity and engagement with tidied data sources.

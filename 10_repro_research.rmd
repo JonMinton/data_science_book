@@ -1,0 +1,20 @@
+# Open, Reproducible and Collaborative Research {#repro_research}
+
+A vitally important aspect of any science is to be able to produce claims that can be tested and verified by other people. As research activities are tending to become more complex - conceptually, methodologically and technically – there need to work collaboratively has become increasingly important. 
+
+## The theory and challenges of open and reproducible research
+
+Part (a) will consider both the benefits and the barriers to open and reproducible research in the context of the social and health sciences, where both the nature of the data and the background of researchers tend to be very different to disciplines like physics, where open and reproducible research practices tend to be more commonplace. 
+
+
+## Sharing results and findings using github
+
+Part (b) will turn to the practical means and benefits of using GitHub, integrated with Rstudio projects, for making both the code and processes produced available to your future self, but also tidied and derived data, and initial findings and figures, available to other researchers. 
+
+## Writing collaboratively with wikis, markdown and related approaches
+
+Part (c) will discuss linked features and programs that allow draft reports and other written material to be shared and co-developed with other researchers. 
+
+## Managing literature (Optional)
+
+Finally part (d) covers approaches to managing literature and literature review in the context of R projects and the research-project-as-suitcase philosophy advocated throughout the book.  

@@ -1,0 +1,5 @@
+#	Text analysis {#text_explore}
+
+This section will provide a brief introduction to using R to explore text documents, an unusual type of data often
+encountered more associated with qualitative than quantitative research in the social sciences. This chapter will not provide an extensive, formal discussion of how to produce statistical models based on text, but instead should serve as a taster of some of the features of the recent `tidytext` package by XXX. 
+

@@ -1,0 +1,41 @@
+#	Data Visualisation {#data_vis}
+
+## What is data visualisation? The grammar of graphics approach
+
+Part (a) will introduce Leland Wilkinson’s ‘grammar of graphics’ philosophy to thinking about 
+data visualisation, and for producing clear modular instructions for the production of data graphics. 
+
+
+## Exploratory data analysis using ggplot2
+Part (b) will describe how the concept of the ‘grammar of graphics’ has been operationalised within R 
+within the hugely popular ggplot2 package, and more recently ggvis, and present some extended examples 
+of their use in exploring the tidied dataset introduced previously. 
+
+
+## Producing tables in R 
+
+Part (c) will cover the considerations and practicalities of table production, both in the context 
+of exploratory data analysis, and when producing final outputs for papers and reports. 
+The relative merits of figures and tables – both in principle and in practice – will also be discussed at this stage. 
+
+
+## Producing publication-ready graphs
+
+Part (d) will return to more conventional types of data visualisation, and address how to polish and 
+tweak the graphs produced using ggplot2 and related packages into something publication ready. 
+Issues such as how to control cosmetic features such as background styles, fonts and tick label orientation, 
+will be discussed, as well as how to produce both monochrome and colour versions of images, how to add 
+additional labels and captions within figures, and how to save images as files of the correct type and resolution.
+
+
+## An introduction to spatial maps
+
+Part (e) will provide an introduction to using R to produce maps. Spatial data are handled very differently 
+in R to most other types of data featured in this book, and so working with such data produces a series of 
+additional challenges. However, maps can be immensely powerful tools for analysis, often revealing otherwise 
+hidden spatial structures to social data. Although the challenges of working with spatial data mean that 
+many of the packages introduced earlier in the book are not appropriate, this part of the chapter will 
+emphasise continuity with previous material on data visualisation by focusing on two packages which are
+both inspired by the grammar of graphics philosophy, ggmap and tmap. 
+
+

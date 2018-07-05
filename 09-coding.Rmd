@@ -1,0 +1,30 @@
+# Programming and Automation {#Coding}
+
+A guiding principle in this book is the following: more emphasis should be given to training students about technical issues in quantitative methods courses, because technical issues are not interesting. This is because often ‘technical issues’, such as ensuring software are loaded correctly and searching for bugs and syntax errors in code, can take up a large proportion of the time available to social researchers to do research; if the definition of ‘technical issues’ were expanded to include many routine ‘janitorial’ data management issues like reformatting data and managing different versions of code and documents, then ‘technical issues’ usually take the majority of researchers’ time. The rationale for focusing more on teaching methods and approaches for handling technical issues is therefore that if even small efficiency gains can be found in some of these areas then much more time will be freed to perform more interesting and substantively meaningful tasks, such as exploring data and thinking carefully about interpretations, implications and social hypotheses. 
+R is a statistical programming language rather than simply a statistical package. What this means is that R has a steeper learning curve initially than a statistical package, but that both the range and efficiency of data science tasks which can be performed in R can be much greater than for a standard statistical software package. However, in order to make use of the benefits of R, it needs to be approached as a programming language, and in order to do this, something about programming languages needs to be covered within this book. This chapter will provide this necessary background knowledge required to make best use of R in data science, and in particular for using its functionality to greatly cut down the amount of time and effort required to solve routine technical and janitorial data science tasks. 
+
+##	Writing user-defined functions
+
+Functions will have been used throughout the book up until this point. Part (a) formally introduces them in R, providing explicit guidance on what functions are, how they work, and how they can be used to speed up, standardise, and reduce the scope for errors to accumulate within the data-to-value chain. Functions provide building blocks for automation, and automation means that the marginal costs of doing more, in terms of researcher time and effort, fall to almost nothing, and so more data analyses and explorations can be performed. 
+
+
+##	Automating analyses using purrr
+
+Part (b) moves from the individual function, to functional programming philosophies more generally, and shows how this broader understanding of functional programming allow for automation of tasks at each and every stage of the data-to-value process. The purrr package, effectively a series of functions for working with functions, will be introduced at this stage; purrr functions integrate with user-defined functions to allow the same complex processes and procedures to be applied many times to many different pieces or chunks of data. 
+
+##	Automating data tidying
+
+Parts (c), (d) and (e) will provide examples of purrr in use for a range of different activities: automating the loading, tidying and arranging of data from many different files; automating the production of graphs and summary findings from many different sections of a dataset, producing dozens or hundreds of files at a time; and automating either the running of a single statistical model to multiple pieces of data, or alternatively running many different types of model to a single dataset
+
+##	Automating graphs and tables
+
+Parts (c), (d) and (e) will provide examples of purrr in use for a range of different activities: automating the loading, tidying and arranging of data from many different files; automating the production of graphs and summary findings from many different sections of a dataset, producing dozens or hundreds of files at a time; and automating either the running of a single statistical model to multiple pieces of data, or alternatively running many different types of model to a single dataset
+
+
+##	Automating statistical analyses 
+
+Parts (c), (d) and (e) will provide examples of purrr in use for a range of different activities: automating the loading, tidying and arranging of data from many different files; automating the production of graphs and summary findings from many different sections of a dataset, producing dozens or hundreds of files at a time; and automating either the running of a single statistical model to multiple pieces of data, or alternatively running many different types of model to a single dataset
+
+
+
+. 
