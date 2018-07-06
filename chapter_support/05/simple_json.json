@@ -1,0 +1,21 @@
+{
+  "edibles": {
+    "fruit": {
+      "name":"apples", 
+      "name":"oranges", 
+      "name":"tomatoes", 
+      "name":"lemons"
+     },
+    "vegetables": {
+      "name":"potatoes", 
+      "name":"sweet potatoes", 
+      "name":"aubergines"
+    }
+  },
+  "inedibles": {
+    "name":"tables", 
+    "name":"benches", 
+    "name":"chairs", 
+    "name":"pots"
+  }
+}

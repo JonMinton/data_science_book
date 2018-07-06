@@ -1,3 +1,8 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 # Open, Reproducible and Collaborative Research {#repro_research}
 
 A vitally important aspect of any science is to be able to produce claims that can be tested and verified by other people. As research activities are tending to become more complex - conceptually, methodologically and technically – there need to work collaboratively has become increasingly important. 

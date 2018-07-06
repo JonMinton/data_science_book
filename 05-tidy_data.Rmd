@@ -1,10 +1,90 @@
 # Initial Data Tidying and exploration {#tidy_data}
 
+## Introduction 
 
-This section will guide the reader through both the concepts and practicalities of working with and creating data saved in a range of different file types.  
-  
+>'Can you do Addition?' the White Queen asked. 'What's one and one and one and one and one and one and one and one and one and one?'
+>'I don't know,' said Alice. 'I lost count.'
 
-## Loading and saving data - file types 
+[REF TO THROUGH THE LOOKING GLASS]
+
+
+Computer's operate with linear streams of discrete values. People don't. One of the first challenges in data science is therefore understanding how computers process digital data, when they are reading the data, working with the data, and writing out the data. This chapter will provide this understanding, in order to make sure you use approaches for writing and reading data that are appropriate for the tasks. 
+
+
+
+## Eight ways of dividing file and data types 
+
+There are many types of files on computers, usually identified with different file extensions, such as `.zip`, `.csv`, `.exe`, `.doc`, `.pdf`, and so on. Such files can be categorised into two groups:
+
+* Text files
+* Binary files 
+
+A text file is a file that, when opened with a basic text editor, like Notepad on Windows or TextEdit on OSX, will tend to display strings of characters that are human readable. A poem or short note written in Notepad would be an example of this, but so are other types of file that, though not written so as to be read by people (at least not for fun or enlightenment) nevertheless clearly contain text when displayed in a text editor. 
+
+As an example of a text file written in a plain text format, we can look to Project Gutenberg [REF], an online repository of classic literature that's old enough to be copyright free. This is accessible within R through a package called `gutenbergr`[REF]. With a few lines of code we can download and jump right into some plain text data clearly meant for humans rather than machines: 
+
+```{r looking_glass}
+require(tidyverse)
+require(gutenbergr)
+gutenberg_metadata %>% 
+  filter(title == "Through the Looking-Glass")
+
+looking_glass <- gutenberg_download(12)
+
+looking_glass[100:105,"text"]
+
+```
+By contrast, binary files are all other file types. The term 'binary' refers to the fact that computers work with zeros and ones. Binary files are those that don't clearly or obviously display as text when you look at them through a basic text editor. Instead the computer needs something more specialised to the type of data in order to make sense of it. 
+
+The `readLines` function tries to load and display the contents of any file, assuming it is a text file, even when it is not. For example, if we try to read the first five 'lines' of an .mp3 file of a song by the Norwegian electronic music duo Royksopp, we get the following:
+
+
+```{r read_rproj_as_lines}
+readLines("chapter_support/05/03 49 Percent.mp3", n = 5)
+
+```
+
+(Note: the above text still does not make any sense even if you read Norwegian!)
+
+A second way of distinguishing between types of files, more relevant when thinking about data files, is the following:
+
+* Rectangular data files
+* Non-rectangular data files 
+
+To some extent, the difference between these two types of data should be obvious: a rectangular data file contains data that the computer expects to be arranged in some kind of rectangular table. Non-rectangular data is any other type of data. 
+
+An example of rectangular data, available from the data-sharing website `figshare`, is shown below. The data reports the body mass index (BMIs) of participants in a study recorded at different time points. In the example below, the first five lines of the data are first loaded with the `readLines` function we used earlier, then using a special function, `read_csv` designed to work with rectangular data through an understanding of how the stream of data inside the file is split into different columns and rows:
+
+```{r text_rectangle_example}
+readLines("https://ndownloader.figshare.com/files/10905845", n = 5)
+read_csv("https://ndownloader.figshare.com/files/10905845", n_max = 5)
+
+```
+
+We can see in the two examples above that, though the `readLines` function has split the above data into different rows, the contents within each row are stuck together, separated by the `,` symbol. The `read_csv` function, however, has split these values into separate columns, producing the rectangle of data that we largely expect. The `read_csv` output still has some problems, which we will fix later, but it's more suitable for this type of data. 
+
+
+It's likely that you'll be working with rectangular data most of the time. However it's useful to be aware of what non-rectangular data can look like, and to think about the cases where non-rectangular data structures are most appropriate. Much of the internet is built using structured non-rectangular data written as text files. An simple example of this is the following:
+
+```{r json_example}
+require(jsonlite)
+
+readLines("chapter_support/05/simple_json.json")
+
+read_json("chapter_support/05/simple_json.json")
+
+```
+
+Non-rectangular data structures are hierarchical and tree-like. For example, the structure of the above can be shown graphically as follows:
+
+
+```{r vis_json_tree}
+
+json_dta <- read_json("chapter_support/05/simple_json.json")
+#json_dta %>% data.tree::as.Node() %>% plot()
+json_dta %>% data.tree::FromListSimple() %>% plot()
+```
+
 
 Part (a) will introduce the primary distinction used by computer programmers between types of files, between human-readable text files and human-unreadable binary files. Examples of these two different types of files will be introduced, which also highlight another important conceptual distinction: the difference between data and meta-data (data about data). The relative advantages of different file types will be discussed, and the argument will be made that, as a rule-of-thumb, text files should be used in preference to binary files.
 
