@@ -1,0 +1,883 @@
+\documentclass[]{book}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={A DS Book Example},
+            pdfauthor={Jon Minton},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{natbib}
+\bibliographystyle{apalike}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{longtable,booktabs}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{A DS Book Example}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Jon Minton}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{2018-07-07}
+
+\usepackage{booktabs}
+\usepackage{amsthm}
+\makeatletter
+\def\thm@space@setup{%
+  \thm@preskip=8pt plus 2pt minus 4pt
+  \thm@postskip=\thm@preskip
+}
+\makeatother
+
+\usepackage{amsthm}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}{Lemma}[chapter]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{corollary}{Corollary}[chapter]
+\newtheorem{proposition}{Proposition}[chapter]
+\theoremstyle{definition}
+\newtheorem{example}{Example}[chapter]
+\theoremstyle{definition}
+\newtheorem{exercise}{Exercise}[chapter]
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{solution}{Solution}
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+\chapter{Prerequisites}\label{prerequisites}
+
+This is a \emph{sample} book written in \textbf{Markdown}. You can use
+anything that Pandoc's Markdown supports, e.g., a math equation
+\(a^2 + b^2 = c^2\).
+
+The \textbf{bookdown} package can be installed from CRAN or Github:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{install.packages}\NormalTok{(}\StringTok{"bookdown"}\NormalTok{)}
+\CommentTok{# or the development version}
+\CommentTok{#devtools::install_github("rstudio/bookdown")}
+\end{Highlighting}
+\end{Shaded}
+
+Remember each Rmd file contains one and only one chapter, and a chapter
+is defined by the first-level heading \texttt{\#}.
+
+To compile this example to PDF, you need XeLaTeX. You are recommended to
+install TinyTeX (which includes XeLaTeX):
+\url{https://yihui.name/tinytex/}.
+
+\chapter{Introduction}\label{intro}
+
+You can label chapter and section titles using \texttt{\{\#label\}}
+after them, e.g., we can reference Chapter \ref{intro}. If you do not
+manually label them, there will be automatic labels anyway, e.g.,
+Chapter \ref{methods}.
+
+Figures and tables with captions will be placed in \texttt{figure} and
+\texttt{table} environments, respectively.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mar =} \KeywordTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{4}\NormalTok{, .}\DecValTok{1}\NormalTok{, .}\DecValTok{1}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(pressure, }\DataTypeTok{type =} \StringTok{'b'}\NormalTok{, }\DataTypeTok{pch =} \DecValTok{19}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{bookdown-demo_files/figure-latex/nice-fig-1} 
+
+}
+
+\caption{Here is a nice figure!}\label{fig:nice-fig}
+\end{figure}
+
+Reference a figure by its code chunk label with the \texttt{fig:}
+prefix, e.g., see Figure \ref{fig:nice-fig}. Similarly, you can
+reference tables generated from \texttt{knitr::kable()}, e.g., see Table
+\ref{tab:nice-tab}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{knitr}\OperatorTok{::}\KeywordTok{kable}\NormalTok{(}
+  \KeywordTok{head}\NormalTok{(iris, }\DecValTok{20}\NormalTok{), }\DataTypeTok{caption =} \StringTok{'Here is a nice table!'}\NormalTok{,}
+  \DataTypeTok{booktabs =} \OtherTok{TRUE}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:nice-tab}Here is a nice table!}
+\centering
+\begin{tabular}[t]{rrrrl}
+\toprule
+Sepal.Length & Sepal.Width & Petal.Length & Petal.Width & Species\\
+\midrule
+5.1 & 3.5 & 1.4 & 0.2 & setosa\\
+4.9 & 3.0 & 1.4 & 0.2 & setosa\\
+4.7 & 3.2 & 1.3 & 0.2 & setosa\\
+4.6 & 3.1 & 1.5 & 0.2 & setosa\\
+5.0 & 3.6 & 1.4 & 0.2 & setosa\\
+\addlinespace
+5.4 & 3.9 & 1.7 & 0.4 & setosa\\
+4.6 & 3.4 & 1.4 & 0.3 & setosa\\
+5.0 & 3.4 & 1.5 & 0.2 & setosa\\
+4.4 & 2.9 & 1.4 & 0.2 & setosa\\
+4.9 & 3.1 & 1.5 & 0.1 & setosa\\
+\addlinespace
+5.4 & 3.7 & 1.5 & 0.2 & setosa\\
+4.8 & 3.4 & 1.6 & 0.2 & setosa\\
+4.8 & 3.0 & 1.4 & 0.1 & setosa\\
+4.3 & 3.0 & 1.1 & 0.1 & setosa\\
+5.8 & 4.0 & 1.2 & 0.2 & setosa\\
+\addlinespace
+5.7 & 4.4 & 1.5 & 0.4 & setosa\\
+5.4 & 3.9 & 1.3 & 0.4 & setosa\\
+5.1 & 3.5 & 1.4 & 0.3 & setosa\\
+5.7 & 3.8 & 1.7 & 0.3 & setosa\\
+5.1 & 3.8 & 1.5 & 0.3 & setosa\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+You can write citations, too. For example, we are using the
+\textbf{bookdown} package \citep{R-bookdown} in this sample book, which
+was built on top of R Markdown and \textbf{knitr} \citep{xie2015}.
+
+\chapter{Literature}\label{literature}
+
+Here is a review of existing methods.
+
+\chapter{Methods}\label{methods}
+
+We describe our methods in this chapter.
+
+\chapter{Applications}\label{applications}
+
+Some \emph{significant} applications are demonstrated in this chapter.
+
+\section{Example one}\label{example-one}
+
+\section{Example two}\label{example-two}
+
+\chapter{Initial Data Tidying and exploration}\label{tidy_data}
+
+\section{Introduction}\label{introduction}
+
+\begin{quote}
+`Can you do Addition?' the White Queen asked. `What's one and one and
+one and one and one and one and one and one and one and one?' `I don't
+know,' said Alice. `I lost count.'
+\end{quote}
+
+{[}REF TO THROUGH THE LOOKING GLASS{]}
+
+Computer's operate with linear streams of discrete values. People don't.
+One of the first challenges in data science is therefore understanding
+how computers process digital data, when they are reading the data,
+working with the data, and writing out the data. This chapter will
+provide this understanding, in order to make sure you use approaches for
+writing and reading data that are appropriate for the tasks.
+
+\section{Eight ways of dividing file and data
+types}\label{eight-ways-of-dividing-file-and-data-types}
+
+There are many types of files on computers, usually identified with
+different file extensions, such as \texttt{.zip}, \texttt{.csv},
+\texttt{.exe}, \texttt{.doc}, \texttt{.pdf}, and so on. Such files can
+be categorised into two groups:
+
+\begin{itemize}
+\tightlist
+\item
+  Text files
+\item
+  Binary files
+\end{itemize}
+
+A text file is a file that, when opened with a basic text editor, like
+Notepad on Windows or TextEdit on OSX, will tend to display strings of
+characters that are human readable. A poem or short note written in
+Notepad would be an example of this, but so are other types of file
+that, though not written so as to be read by people (at least not for
+fun or enlightenment) nevertheless clearly contain text when displayed
+in a text editor.
+
+As an example of a text file written in a plain text format, we can look
+to Project Gutenberg {[}REF{]}, an online repository of classic
+literature that's old enough to be copyright free. This is accessible
+within R through a package called \texttt{gutenbergr}{[}REF{]}. With a
+few lines of code we can download and jump right into some plain text
+data clearly meant for humans rather than machines:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{require}\NormalTok{(tidyverse)}
+\KeywordTok{require}\NormalTok{(gutenbergr)}
+\NormalTok{gutenberg_metadata }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{filter}\NormalTok{(title }\OperatorTok{==}\StringTok{ "Through the Looking-Glass"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2 x 8
+##   gutenberg_id title   author  gutenberg_autho~ language gutenberg_booksh~
+##          <int> <chr>   <chr>              <int> <chr>    <chr>            
+## 1           12 Throug~ Carrol~                7 en       Children's Liter~
+## 2        23718 Throug~ Carrol~                7 en       Children's Liter~
+## # ... with 2 more variables: rights <chr>, has_text <lgl>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{looking_glass <-}\StringTok{ }\KeywordTok{gutenberg_download}\NormalTok{(}\DecValTok{12}\NormalTok{)}
+
+\NormalTok{looking_glass[}\DecValTok{100}\OperatorTok{:}\DecValTok{105}\NormalTok{,}\StringTok{"text"}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 1
+##   text                                                                    
+##   <chr>                                                                   
+## 1 that nasty Knight, that came wiggling down among my pieces. Kitty, dear,
+## 2 let's pretend--' And here I wish I could tell you half the things Alice 
+## 3 used to say, beginning with her favourite phrase 'Let's pretend.' She   
+## 4 had had quite a long argument with her sister only the day before--all  
+## 5 because Alice had begun with 'Let's pretend we're kings and queens;' and
+## 6 her sister, who liked being very exact, had argued that they couldn't,
+\end{verbatim}
+
+By contrast, binary files are all other file types. The term `binary'
+refers to the fact that computers work with zeros and ones. Binary files
+are those that don't clearly or obviously display as text when you look
+at them through a basic text editor. Instead the computer needs
+something more specialised to the type of data in order to make sense of
+it.
+
+The \texttt{readLines} function tries to load and display the contents
+of any file, assuming it is a text file, even when it is not. For
+example, if we try to read the first five `lines' of an .mp3 file of a
+song by the Norwegian electronic music duo Royksopp, we get the
+following:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{readLines}\NormalTok{(}\StringTok{"chapter_support/05/03 49 Percent.mp3"}\NormalTok{, }\DataTypeTok{n =} \DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in readLines("chapter_support/05/03 49 Percent.mp3", n = 5): line 1
+## appears to contain an embedded nul
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in readLines("chapter_support/05/03 49 Percent.mp3", n = 5):
+## incomplete final line found on 'chapter_support/05/03 49 Percent.mp3'
+\end{verbatim}
+
+\begin{verbatim}
+## [1] "ID3\003"                                                                                                                                                                  
+## [2] "´ÙUYY@¥«½°7Ž;\210\027\031\177\200ÔHÅ4m\025½uÅË H\vè'\023¨\\6y\036+\035\026Ã!|Ós\200œPA4\025\020Óê6Ä2#õdL«Üà+\034!«\t\vŠÍ”\024\030\\0aq[j"                                           
+## [3] "\030\\PÂâ¶Ô\0240¸¡…ÉÞ¡#\v’0º=Q\003—$rèõD\030º\f]\036¨ƒ\027A‹£Õ\020dÐbèõF2h1võF2lEvä£\036lbíÒŒdØŠó¥!sc\027G$\b\"\215\210£n\2201\024lZ6é\003\026\215‹FÜ\020BÛ`\\qÂãOèYðÁ5¿$Nï”/\020\027"
+\end{verbatim}
+
+(Note: the above text still does not make any sense even if you read
+Norwegian!)
+
+A second way of distinguishing between types of files, more relevant
+when thinking about data files, is the following:
+
+\begin{itemize}
+\tightlist
+\item
+  Rectangular data files
+\item
+  Non-rectangular data files
+\end{itemize}
+
+To some extent, the difference between these two types of data should be
+obvious: a rectangular data file contains data that the computer expects
+to be arranged in some kind of rectangular table. Non-rectangular data
+is any other type of data.
+
+An example of rectangular data, available from the data-sharing website
+\texttt{figshare}, is shown below. The data reports the body mass index
+(BMIs) of participants in a study recorded at different time points. In
+the example below, the first five lines of the data are first loaded
+with the \texttt{readLines} function we used earlier, then using a
+special function, \texttt{read\_csv} designed to work with rectangular
+data through an understanding of how the stream of data inside the file
+is split into different columns and rows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{readLines}\NormalTok{(}\StringTok{"https://ndownloader.figshare.com/files/10905845"}\NormalTok{, }\DataTypeTok{n =} \DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "2011,30.684,24.894,39,0"    "2012,24.894,-1,40,0"       
+## [3] "2003,20.751,22.991,26,1"    "2004,22.991,23.345,27.25,1"
+## [5] "2005,23.345,22.828,28,1"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{read_csv}\NormalTok{(}\StringTok{"https://ndownloader.figshare.com/files/10905845"}\NormalTok{, }\DataTypeTok{n_max =} \DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Parsed with column specification:
+## cols(
+##   `2011` = col_integer(),
+##   `30.684` = col_double(),
+##   `24.894` = col_double(),
+##   `39` = col_double(),
+##   `0` = col_integer()
+## )
+\end{verbatim}
+
+\begin{verbatim}
+## # A tibble: 5 x 5
+##   `2011` `30.684` `24.894`  `39`   `0`
+##    <int>    <dbl>    <dbl> <dbl> <int>
+## 1   2012     24.9     -1    40       0
+## 2   2003     20.8     23.0  26       1
+## 3   2004     23.0     23.3  27.2     1
+## 4   2005     23.3     22.8  28       1
+## 5   2006     22.8     22.1  29       1
+\end{verbatim}
+
+We can see in the two examples above that, though the \texttt{readLines}
+function has split the above data into different rows, the contents
+within each row are stuck together, separated by the \texttt{,} symbol.
+The \texttt{read\_csv} function, however, has split these values into
+separate columns, producing the rectangle of data that we largely
+expect. The \texttt{read\_csv} output still has some problems, which we
+will fix later, but it's more suitable for this type of data.
+
+It's likely that you'll be working with rectangular data most of the
+time. However it's useful to be aware of what non-rectangular data can
+look like, and to think about the cases where non-rectangular data
+structures are most appropriate. Much of the internet is built using
+structured non-rectangular data written as text files. An simple example
+of this is the following:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{require}\NormalTok{(jsonlite)}
+
+\KeywordTok{readLines}\NormalTok{(}\StringTok{"chapter_support/05/simple_json.json"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "{"                                  
+##  [2] "  \"edibles\": {"                   
+##  [3] "    \"fruit\": {"                   
+##  [4] "      \"name\":\"apples\", "        
+##  [5] "      \"name\":\"oranges\", "       
+##  [6] "      \"name\":\"tomatoes\", "      
+##  [7] "      \"name\":\"lemons\""          
+##  [8] "     },"                            
+##  [9] "    \"vegetables\": {"              
+## [10] "      \"name\":\"potatoes\", "      
+## [11] "      \"name\":\"sweet potatoes\", "
+## [12] "      \"name\":\"aubergines\""      
+## [13] "    }"                              
+## [14] "  },"                               
+## [15] "  \"inedibles\": {"                 
+## [16] "    \"name\":\"tables\", "          
+## [17] "    \"name\":\"benches\", "         
+## [18] "    \"name\":\"chairs\", "          
+## [19] "    \"name\":\"pots\""              
+## [20] "  }"                                
+## [21] "}"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{read_json}\NormalTok{(}\StringTok{"chapter_support/05/simple_json.json"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $edibles
+## $edibles$fruit
+## $edibles$fruit$name
+## [1] "apples"
+## 
+## $edibles$fruit$name
+## [1] "oranges"
+## 
+## $edibles$fruit$name
+## [1] "tomatoes"
+## 
+## $edibles$fruit$name
+## [1] "lemons"
+## 
+## 
+## $edibles$vegetables
+## $edibles$vegetables$name
+## [1] "potatoes"
+## 
+## $edibles$vegetables$name
+## [1] "sweet potatoes"
+## 
+## $edibles$vegetables$name
+## [1] "aubergines"
+## 
+## 
+## 
+## $inedibles
+## $inedibles$name
+## [1] "tables"
+## 
+## $inedibles$name
+## [1] "benches"
+## 
+## $inedibles$name
+## [1] "chairs"
+## 
+## $inedibles$name
+## [1] "pots"
+\end{verbatim}
+
+Non-rectangular data structures are hierarchical and tree-like. For
+example, the structure of the above can be shown graphically as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{json_dta <-}\StringTok{ }\KeywordTok{read_json}\NormalTok{(}\StringTok{"chapter_support/05/simple_json.json"}\NormalTok{)}
+\NormalTok{json_dta }\OperatorTok{%>%}\StringTok{ }\NormalTok{data.tree}\OperatorTok{::}\KeywordTok{as.Node}\NormalTok{() }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          levelName
+## 1 Root            
+## 2  ¦--edibles     
+## 3  ¦   ¦--apples  
+## 4  ¦   °--potatoes
+## 5  °--tables
+\end{verbatim}
+
+Part (a) will introduce the primary distinction used by computer
+programmers between types of files, between human-readable text files
+and human-unreadable binary files. Examples of these two different types
+of files will be introduced, which also highlight another important
+conceptual distinction: the difference between data and meta-data (data
+about data). The relative advantages of different file types will be
+discussed, and the argument will be made that, as a rule-of-thumb, text
+files should be used in preference to binary files.
+
+\section{Loading and saving data - R packages and
+functions}\label{loading-and-saving-data---r-packages-and-functions}
+
+Part (b) will discuss some of the particular R packages and functions
+within that can be used to work with different file types, presenting
+even the loading of data as at iterative process of learning more about
+how variables in data are structured and saved, and how the information
+in these variables be best represented and operated with inside R.
+
+\section{Data tidying - principles and
+challenges}\label{data-tidying---principles-and-challenges}
+
+Part (c) will introduce a further, higher level, distinction between
+types of data: from `untidy' and `initial' data to `tidy' and `derived'
+data. This section will frame much of the practical challenge of data
+science as involving first identifying what needs to be done to move
+from the former to the latter, and then knowing how to do this.
+
+\section{Data tidying - tidyr and
+dplyr}\label{data-tidying---tidyr-and-dplyr}
+
+Part (d) will introduce two closely linked R packages, tidyr and dplyr,
+as providing the tools necessary to complete the vast majority of data
+tidying and data derivation tasks.
+
+\section{Initial Exploratory data
+analysis}\label{initial-exploratory-data-analysis}
+
+Finally, part (e) will emphasise the importance of rapid exploratory
+data analysis both at the data tidying stage, and for developing
+familiarity and engagement with tidied data sources.
+
+\chapter{Data Visualisation}\label{data_vis}
+
+\section{What is data visualisation? The grammar of graphics
+approach}\label{what-is-data-visualisation-the-grammar-of-graphics-approach}
+
+Part (a) will introduce Leland Wilkinson's `grammar of graphics'
+philosophy to thinking about data visualisation, and for producing clear
+modular instructions for the production of data graphics.
+
+\section{Exploratory data analysis using
+ggplot2}\label{exploratory-data-analysis-using-ggplot2}
+
+Part (b) will describe how the concept of the `grammar of graphics' has
+been operationalised within R within the hugely popular ggplot2 package,
+and more recently ggvis, and present some extended examples of their use
+in exploring the tidied dataset introduced previously.
+
+\section{Producing tables in R}\label{producing-tables-in-r}
+
+Part (c) will cover the considerations and practicalities of table
+production, both in the context of exploratory data analysis, and when
+producing final outputs for papers and reports. The relative merits of
+figures and tables -- both in principle and in practice -- will also be
+discussed at this stage.
+
+\section{Producing publication-ready
+graphs}\label{producing-publication-ready-graphs}
+
+Part (d) will return to more conventional types of data visualisation,
+and address how to polish and tweak the graphs produced using ggplot2
+and related packages into something publication ready. Issues such as
+how to control cosmetic features such as background styles, fonts and
+tick label orientation, will be discussed, as well as how to produce
+both monochrome and colour versions of images, how to add additional
+labels and captions within figures, and how to save images as files of
+the correct type and resolution.
+
+\section{An introduction to spatial
+maps}\label{an-introduction-to-spatial-maps}
+
+Part (e) will provide an introduction to using R to produce maps.
+Spatial data are handled very differently in R to most other types of
+data featured in this book, and so working with such data produces a
+series of additional challenges. However, maps can be immensely powerful
+tools for analysis, often revealing otherwise hidden spatial structures
+to social data. Although the challenges of working with spatial data
+mean that many of the packages introduced earlier in the book are not
+appropriate, this part of the chapter will emphasise continuity with
+previous material on data visualisation by focusing on two packages
+which are both inspired by the grammar of graphics philosophy, ggmap and
+tmap.
+
+\chapter{Text analysis}\label{text_explore}
+
+This section will provide a brief introduction to using R to explore
+text documents, an unusual type of data often encountered more
+associated with qualitative than quantitative research in the social
+sciences. This chapter will not provide an extensive, formal discussion
+of how to produce statistical models based on text, but instead should
+serve as a taster of some of the features of the recent
+\texttt{tidytext} package by XXX.
+
+\chapter{Statistics}\label{stats}
+
+Most books on quantitative methods focus very heavily on statistics.
+This book will instead situate statistics as an element within a much
+broader process of activities in the service of getting insight from
+data, and making better decisions on the basis of this insight.
+
+\section{The aims of statistics: data reduction or
+inference?}\label{the-aims-of-statistics-data-reduction-or-inference}
+
+Part (a) will argue for statistics, by which is meant primarily the
+production of summary statistics, as a key part of the data science
+toolkit from two parallel perspectives: in addition to recourse to
+theories of statistical inference, which have as their key concern the
+appropriate use of data to populate parameters in stochastic models,
+there are also important cognitive reasons for producing summary
+statistics, namely that often more data means less information, as
+people are severely limited both in time and memory as to the number of
+`facts' they can hold onto and make sense of at a time. Summary
+statistics are therefore invaluable as tools for intelligent data
+reduction: data reduction because it turns many thousands or millions of
+observations into just a handful of key values, and intelligent because
+these key values are `less worse' at standing in place of many more
+values than most alternatives. The relationship between statistical
+modelling and signal processing will also be discussed. Theories of
+statistical inference, and in particular likelihood theory, provide a
+means of selecting between many different models -- each assuming
+different stochastic structures and processes, and hence each embodying
+different theories about social phenomena -- and of deciding on the
+right balance between model accuracy and model parsimony, but only when
+models have a particular structural relationship to each other (When one
+model can be thought of as a `constrained' variant of another model).
+
+\section{Balancing accuracy and parsimony using AIC and
+BIC}\label{balancing-accuracy-and-parsimony-using-aic-and-bic}
+
+Part (b) will discuss this further, and offer Aikiake Information
+Criterion (AIC) and the Bayesian Information Criterion (BIC) as a way of
+guiding the accuracy/parsimony trade-off in selecting between many types
+of statistical model.
+
+\section{Statistical Simulation: Showing what models really
+mean}\label{statistical-simulation-showing-what-models-really-mean}
+
+Having decided on the `least worst' model to represent the data, part
+(c) will describe a series of methods and functions -- including sim
+within the arm package and the Zelig package -- for extracting
+substantive meaning from statistical models, going beyond the usual
+convention of stopping and starting with the question of whether
+particular model parameters are `statistically significant' or not, to
+instead making predictions and projections about the expected and
+predicted effects of change within social systems.
+
+\section{Advanced statistics: structural modelling to formalise informal
+knowledge}\label{advanced-statistics-structural-modelling-to-formalise-informal-knowledge}
+
+Part (d) will discuss further how statistical models can be developed to
+formalise implicit and `fuzzy' knowledge and expectations about social
+relationships, discussing both the dangers of going `too far' and
+developing such complicated and precisely structured models that it
+becomes easy to confuse `the map for the territory', and the danger of
+not going far enough and failing to capture important structure and
+shape in the relationships between variables and social factors.
+
+\chapter{Programming and Automation}\label{Coding}
+
+A guiding principle in this book is the following: more emphasis should
+be given to training students about technical issues in quantitative
+methods courses, because technical issues are not interesting. This is
+because often `technical issues', such as ensuring software are loaded
+correctly and searching for bugs and syntax errors in code, can take up
+a large proportion of the time available to social researchers to do
+research; if the definition of `technical issues' were expanded to
+include many routine `janitorial' data management issues like
+reformatting data and managing different versions of code and documents,
+then `technical issues' usually take the majority of researchers' time.
+The rationale for focusing more on teaching methods and approaches for
+handling technical issues is therefore that if even small efficiency
+gains can be found in some of these areas then much more time will be
+freed to perform more interesting and substantively meaningful tasks,
+such as exploring data and thinking carefully about interpretations,
+implications and social hypotheses.
+
+R is a statistical programming language rather than simply a statistical
+package. What this means is that R has a steeper learning curve
+initially than a statistical package, but that both the range and
+efficiency of data science tasks which can be performed in R can be much
+greater than for a standard statistical software package. However, in
+order to make use of the benefits of R, it needs to be approached as a
+programming language, and in order to do this, something about
+programming languages needs to be covered within this book. This chapter
+will provide this necessary background knowledge required to make best
+use of R in data science, and in particular for using its functionality
+to greatly cut down the amount of time and effort required to solve
+routine technical and janitorial data science tasks.
+
+\section{Writing user-defined
+functions}\label{writing-user-defined-functions}
+
+Functions will have been used throughout the book up until this point.
+Part (a) formally introduces them in R, providing explicit guidance on
+what functions are, how they work, and how they can be used to speed up,
+standardise, and reduce the scope for errors to accumulate within the
+data-to-value chain. Functions provide building blocks for automation,
+and automation means that the marginal costs of doing more, in terms of
+researcher time and effort, fall to almost nothing, and so more data
+analyses and explorations can be performed.
+
+\section{Automating analyses using
+purrr}\label{automating-analyses-using-purrr}
+
+Part (b) moves from the individual function, to functional programming
+philosophies more generally, and shows how this broader understanding of
+functional programming allow for automation of tasks at each and every
+stage of the data-to-value process. The purrr package, effectively a
+series of functions for working with functions, will be introduced at
+this stage; purrr functions integrate with user-defined functions to
+allow the same complex processes and procedures to be applied many times
+to many different pieces or chunks of data.
+
+\section{Automating data tidying}\label{automating-data-tidying}
+
+Parts (c), (d) and (e) will provide examples of purrr in use for a range
+of different activities: automating the loading, tidying and arranging
+of data from many different files; automating the production of graphs
+and summary findings from many different sections of a dataset,
+producing dozens or hundreds of files at a time; and automating either
+the running of a single statistical model to multiple pieces of data, or
+alternatively running many different types of model to a single dataset
+
+\section{Automating graphs and
+tables}\label{automating-graphs-and-tables}
+
+Parts (c), (d) and (e) will provide examples of purrr in use for a range
+of different activities: automating the loading, tidying and arranging
+of data from many different files; automating the production of graphs
+and summary findings from many different sections of a dataset,
+producing dozens or hundreds of files at a time; and automating either
+the running of a single statistical model to multiple pieces of data, or
+alternatively running many different types of model to a single dataset
+
+\section{Automating statistical
+analyses}\label{automating-statistical-analyses}
+
+Parts (c), (d) and (e) will provide examples of purrr in use for a range
+of different activities: automating the loading, tidying and arranging
+of data from many different files; automating the production of graphs
+and summary findings from many different sections of a dataset,
+producing dozens or hundreds of files at a time; and automating either
+the running of a single statistical model to multiple pieces of data, or
+alternatively running many different types of model to a single dataset
+
+.
+
+\chapter{Open, Reproducible and Collaborative
+Research}\label{repro_research}
+
+A vitally important aspect of any science is to be able to produce
+claims that can be tested and verified by other people. As research
+activities are tending to become more complex - conceptually,
+methodologically and technically -- there need to work collaboratively
+has become increasingly important.
+
+\section{The theory and challenges of open and reproducible
+research}\label{the-theory-and-challenges-of-open-and-reproducible-research}
+
+Part (a) will consider both the benefits and the barriers to open and
+reproducible research in the context of the social and health sciences,
+where both the nature of the data and the background of researchers tend
+to be very different to disciplines like physics, where open and
+reproducible research practices tend to be more commonplace.
+
+\section{Sharing results and findings using
+github}\label{sharing-results-and-findings-using-github}
+
+Part (b) will turn to the practical means and benefits of using GitHub,
+integrated with Rstudio projects, for making both the code and processes
+produced available to your future self, but also tidied and derived
+data, and initial findings and figures, available to other researchers.
+
+\section{Writing collaboratively with wikis, markdown and related
+approaches}\label{writing-collaboratively-with-wikis-markdown-and-related-approaches}
+
+Part (c) will discuss linked features and programs that allow draft
+reports and other written material to be shared and co-developed with
+other researchers.
+
+\section{Managing literature
+(Optional)}\label{managing-literature-optional}
+
+Finally part (d) covers approaches to managing literature and literature
+review in the context of R projects and the research-project-as-suitcase
+philosophy advocated throughout the book.
+
+\bibliography{book.bib,packages.bib}
+
+
+\end{document}

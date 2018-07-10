@@ -81,8 +81,8 @@ Non-rectangular data structures are hierarchical and tree-like. For example, the
 ```{r vis_json_tree}
 
 json_dta <- read_json("chapter_support/05/simple_json.json")
-#json_dta %>% data.tree::as.Node() %>% plot()
-json_dta %>% data.tree::FromListSimple() %>% plot()
+json_dta %>% data.tree::as.Node() 
+
 ```
 
 
