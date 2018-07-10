@@ -75,16 +75,188 @@ read_json("chapter_support/05/simple_json.json")
 
 ```
 
-Non-rectangular data structures are hierarchical and tree-like. For example, the structure of the above can be shown graphically as follows:
+Non-rectangular data structures are hierarchical and tree-like. This ordered structure can be shown more clearly using the function `Hmisc::list.tree()` function, below:
 
 
 ```{r vis_json_tree}
 
 json_dta <- read_json("chapter_support/05/simple_json.json")
+<<<<<<< HEAD:05-tidy_data_home.Rmd
 json_dta %>% data.tree::as.Node() 
+
+=======
+#json_dta %>% data.tree::as.Node() %>% plot()
+json_dta %>% Hmisc::list.tree()
+>>>>>>> f9f224d6f8d65a2b26a94c97a3a8425d325899a5:05-tidy_data.Rmd
+```
+
+In the above, the data structure has a single 'root', which splits into two branches, `edibles` and `inedibles`. The `edibles` branch itself has two branches, `fruit` and `vegetables`, which have four and three sub-branches respectively. At the end of the sub-branches are the data objects themselves themselves: four fruits, and three vegetables. The `inexibles` branch is less deep, and leads directly to four objects at the same level. 
+
+> Activity: graphically draw the above tree. 
+
+
+### Rectangular representation of the above
+
+The same information can often be represented using either rectangular or non-rectangular data structures. For example, a rectangular representation of the above data is as follows: 
+
+```{r rect_rep}
+rect_rep <- 
+  tribble(
+    ~edi_class, ~fruit_or_veg, ~name,
+    "edibles",   "fruit",       "apples",
+    "edibles",   "fruit",       "oranges",
+    "edibles",   "fruit",       "tomatoes",
+    "edibles",   "fruit",       "lemons",
+    "edibles",   "vegetables",  "potatoes",
+    "edibles",   "vegetables",  "sweet potatoes",
+    "edibles",   "vegetables",  "aubergines",
+    "inedibles", NA,            "tables",
+    "inedibles", NA,            "benches", 
+    "inedibles", NA,            "chairs",
+    "inedibles", NA,            "pots"
+)
+
+print(rect_rep, n=20)
 
 ```
 
+Note in the above the use of quotation marks `\"` for the contents of the cells in the rectangles. This tells R that the expected content of the cell should be a character string, and that this character string will be created within the code itself, rather than fetched from somewhere else. 
+
+Note also the use of `NA`. This means "not applicable", and tells R that the cells being referred to should be left 'empty' rather than filled with a value. In the above example, `NA` is used to indicate that it is not appropriate to try to categorise pots, benches, chairs and other inedibles as either a fruit or a vegetable. Often, `NA` is also used to indicate that data are missing, rather than that the fields (broadly synonymous with columns when working with rectangular data) are inappropriate.   
+
+## Data and metadata 
+
+Another useful distinction when considering the contents of a file is between 'data', i.e. the values on which various forms of quantitative analyses will be performed, and metadata, meaning additional information relating to the data. The distinction is not always hard-and-fast, as information that could be metadata in one file could be provided as data in another, but often important to bear in mind. 
+
+As a simple example of the data/metadata distinction, let's return to the data downloaded from `figshare` earlier. A direct link to the data itself was used earlier, but to make sense of the data, additional information is needed, which is available from [this URL](https://figshare.com/articles/Northwestern_Medicine_BMI_data/6059513). When this website is looked at through a web browser, we can see both a preview of the contents of the data which we downloaded earlier, and below that some further information:
+
+> *Northwestern Medicine BMI data*
+
+>Dataset posted on 21.12.2017, 12:49 by John C. Lang Hans De Sterck Daniel M. Abrams
+
+>Northwestern Medicine (NU) data are stored in NU.csv comma separated values (CSV) format. This file contains five columns: year t, BMI in year t, BMI in year t + 1, age in year t, and gender. Note: When BMI in year t + 1 is unavailable then the entry in the third column is -1.
+
+We can think of the contents of the paragraph at the bottom as containing the 'metadata' we need to use the data appropriately. We know from this three new things:
+
+1. The column names are not really the names of the names of the first row. 
+2. One of the columns indicates a year, two indicate BMI values, one indicates age, and one indicates gender 
+3. The value `-1` has a special meaning. It means the data are missing for that participant in that year. 
+
+With the above metadata, we can reload and re-format the data in a more appropriate way. 
+
+We can start by giving appropriate names to each column. This means that the values of the first row in the dataset are not used (incorrectly) as the column names. 
+
+```{r reload_bmi_data, cache = T}
+bmi_dta <-
+  read_csv(file = "https://ndownloader.figshare.com/files/10905845", 
+         col_names = c("year", "bmi_t0", "bmi_t1", "age_t0", "gender")
+         )
+
+```
+
+Next we can change the `-1` values to `NA`, R's way of representing missing data. 
+
+```{r}
+bmi_dta <- 
+  bmi_dta %>% 
+  mutate_each(funs(ifelse(. == -1, NA, .)))
+
+bmi_dta
+
+```
+
+Notice that the second column, which used to be `-1`, is now listed correctly as `NA`, i.e. missing. 
+
+In the above example we used the term `metadata` to refer to information that we inferred by reading some text meant for people to read. Often `metadata` is used in a more formal way, to refer to data about data written for machines to understand. 
+
+For example, the gender column currently contains `1`s and `0`s. We know that it refers to two distinct categories of participant, male and female, but R does not. R would have to be told explicitly about the categorical quality of the values in this column, as otherwise it may process the data in inappropriate ways. For instance, if we try to summarise the contents of this column, we are likely to be interested in the numbers of males and females in the dataset. However, R might expect us to be interested in the average value of all rows in the column.
+
+
+```{r}
+summary(bmi_dta)
+
+```
+
+In the above, the summary for the gender colunn gives a mean of `0.3692`, indicating that around 37% of the participants are of the gender indicated by the value `1`. However, a more appropriate way of summarising this column might be to give a tally of each category of participants. 
+
+We can get a sense of the kind of meta-data R has attached to each column by looking back at the table output when we printed `bmi_dta` above. Immediately below the column names is a line containing either `<int>` or `<dbl>`. `<int>` means 'integer', and means that only whole numbers (`0`, `1`, `2`, `3`, etc.) are accepted in that column, and `<dbl>` means 'double', which means that non-integer numeric values, like `2.15`, are also acceptable as inputs. 
+
+We can change the metadata associated with the `gender` column to indicate a different data type, suitable for this type of information, in the following way
+
+```{r}
+bmi_dta %>% 
+  mutate(gender = factor(gender))
+```
+
+The column `gender` now has the data type indicator `<fctr>` just beneath it, suggesting it is now a factor. We can now see how the `summary()` function works differently with this data type than the earlier, integer data type.
+
+
+```{r}
+bmi_dta %>% 
+  mutate(gender = factor(gender)) %>% 
+  summary()
+
+```
+
+The `summary()` function now summarises the gender column in a different way, with a tabulation by group rather than mean of the values. 
+
+One point we should note in the above is that we still do not know, from the information provided, which label (0 or 1) refers to which gender. Does a `1` indicate males, or females? Frustratingly, this information is not clearly stated in the associated article or appendices either (ref: http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0189795). 
+Because of this, we may have to look at the associated code in order to guage this basic fact with certainty, though we can probably guess which code refers to which gender using some additional domain knowledge:
+
+* Females live longer than males, so *if the hospital sample data are representative* of the whole US population, we might expect a higher average age for females than males. We might also expect the upper end of the distribution, such as the upper quantile (the age at which 25% of the sample are older and 75% are younger) to be higher too.
+* Females tend to have somewhat higher variance in BMIs than males. 
+
+Let's try to infer gender using this additional information, by summarising some key statistics for various columns by gender.
+
+```{r}
+bmi_dta %>% 
+  group_by(gender) %>% 
+  summarise(
+    mean_bmi = mean(bmi_t0, na.rm = T),
+    var_bmi  = mean(bmi_t0, na.rm = T),
+    mean_age = mean(age_t0, na.rm = T),
+    uq_age   = quantile(age_t0, probs = 0.75, na.rm = T)
+  )
+  
+```
+
+Based on this, we might feel more confident assuming that a `1` in the gender column indicates females, and so a `0` indicates males. Depending on how sure we need to be about this, we might either decide to go with these coding assumptions, or to seek further information to (dis)confirm this suspicion. 
+
+For now, let's recode the gender according to our current best assumptions: 
+
+```{r}
+bmi_dta <- 
+  bmi_dta %>% 
+    mutate(gender = case_when(
+      gender == 0 ~ 'male', 
+      gender == 1 ~ 'female'
+      ) %>% factor()
+    ) 
+
+bmi_dta
+
+summary(bmi_dta)
+
+```
+
+The `gender` column now contains data of class `factor` (`<fctr>` in the above). We can see from the summary that the male number of rows per category is as before. 
+
+Factors in R contain an additional type of metadata. Rather than repeatedly writing the word 'male' and 'female' in each row, R represents each label by a number, and contains a look-up table linking each number to each label. We can start to learn more about how R does this by typing the following:
+
+```{r}
+head(bmi_dta$gender)
+head(as.numeric(bmi_dta$gender))
+levels(bmi_dta$gender)
+
+```
+
+The first of these commands shows the first five items in the column: two males then three females. The second shows the numeric values actually stored, and the last function shows the labels associated with each successive numeric value in the look-up table. 
+...
+
+
+## Tidy and untidy data 
+
+A final way of distinguishing between types of data 
 
 Part (a) will introduce the primary distinction used by computer programmers between types of files, between human-readable text files and human-unreadable binary files. Examples of these two different types of files will be introduced, which also highlight another important conceptual distinction: the difference between data and meta-data (data about data). The relative advantages of different file types will be discussed, and the argument will be made that, as a rule-of-thumb, text files should be used in preference to binary files.
 
