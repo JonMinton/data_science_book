@@ -1,3 +1,8 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 # Initial Data Tidying and exploration {#tidy_data}
 
 ## Introduction 
