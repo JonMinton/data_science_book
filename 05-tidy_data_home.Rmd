@@ -419,9 +419,89 @@ In order to think further about what's meant by an observational unit, let's ret
 |  20  | 10      | 2010     | 22 | 
 |  30  | 10      | 2010     | 9 |
 
-Why would `elevation` not be included in the above table, with its latitude-longitude-year observational unit? Because, barring an earthquake, volcanic eruption, or Dutch engineering, `elevation` is likely to remain constant over each of the observed years. For elevation, the differences (in terms of years) do not make a difference to the measured values. The appropriate observational unit for `elevation` is `latitude-longitude`, not `latitude-longitude-year`. 
+Why would `elevation` not be included in the above table, with its latitude-longitude-year observational unit? Because, barring an earthquake, volcanic eruption, or Dutch engineering, `elevation` is likely to remain constant over each of the observed years, so recording elevation for each latitude-longitude-year combination will lead to much repetition of the data within the dataset. For elevation, the differences (in terms of years) do not make a difference to the measured values. The appropriate observational unit for `elevation` is `latitude-longitude`, not `latitude-longitude-year`. 
+
+Much as you can crop a larger image to produce a smaller image, but not uncrop a smaller image to produce a larger image, a dataset using a `latitude-longitude-year` observational unit can be used to produce a `latitude-longitude` observational unit, but not vice-versa. Later in this chapter we will discuss how to do this using the `group_by` and `summarise` functions. 
+
+
+### Section summary
+
+In this chapter section we have introduced a number of core distinctions between types of data and types of file used to store them. This includes: 
+
+* the text/binary file distinction; 
+* the rectangular/non-rectangular data distinction; 
+* the data/metadata distinction; and 
+* the tidy/untidy data distinction
+
+Although a number of examples have been provided in order to illustrate some of these distinctions, and the code used to produce these examples has been displayed, the contents of this code, including the particular functions and packages used, have not been formally introduced. The next section of this chapter will provide this more formal introduction. After you have been introduced formally, and progressed further with the rest of the book, consider returning to the examples above with a greater focus on the code rather than the principles. 
+
 
 ## Loading and saving data - R packages and functions
+
+As you will have seen from the examples earlier in this and previous chapters, R makes use of a large number of functions, stored in a number of different packages. Because R is open source, the bar to adding new packages and functions is low, and because of this, and R's large user and developer base, there are many thousands of packages available. 
+
+In the previous examples, a number of relatively 'exotic' functions and packages, like the `jsonlite` package, were used to illustrate some of the above distinctions. However, in practice we will largely be working with rectangular data stored as text files. To work with such data, we can largely stick with functions that are within the `tidyr` packages, which is part of `tidyverse`, and loaded along with other related packages whenever we load the `tidyverse` package. 
+
+### Loading a new package
+
+Using a function within a package usually involves the following two steps:
+
+1. Install the package of interest from the internet to your machine
+2. Load the package from your machine to the particular R session you are working on currently. 
+
+The first of these steps only has to be done once per machine you work with. The `install.packages()` function can be used to install the required packages. For example, to install the `tidyverse` package, we would write and run the following:
+
+```{r, eval = F}
+install.packages("tidyverse")
+
+```
+
+After the package has been installed on your machine, it can be loaded using any of the following
+
+```{r, eval = F}
+library(tidyverse)
+require(tidyverse)
+
+pacman::p_load(tidyverse)
+
+```
+
+Both the `library()` and `require()` functions are part of Base R. They will be loaded on your R session whenever you load up R. The third expression calls a function within a new package, `pacman`, which is a package designed to manage other packages. (pacman: *pac*kage *man*ager.) The `library`, `require` and `p_load` functions differ in terms of what they check for before attempting to load a package:
+
+* `library()`: Loads the package
+* `require()`: Checks whether the package has already been loaded. If not, loads the package.
+* `p_load()`: Checks whether the package has been installed and loaded. Installs the package if not already installed, and loads the package if not already loaded. 
+
+The `p_load()` function may be preferable if you want to run a script multiple times, on different machines. This is because the required packages may be installed on one machine but not another. By first checking that the package has been installed, and installing if necessary, this means the scripts should work unmodified on each machine. (So long as the `pacman` package itself has been installed.) Otherwise, you will have to remember to use `install.packages()` the first time you run the script, but also remember to not run it each time, because otherwise you are wasting valuable time reinstalling the same package each time. A good way to ensure you do this is to remember to comment out the `install.packages()` line after running it within the script.
+
+```{r, eval = F}
+# install.packages("tidyverse")
+```
+
+Note: Within RStudio you can turn lines of code into comments, and vice-versa, by selecting the lines of interest and pressing `Ctrl+Shift+C`.
+
+If you wish for a script to first check whether the `pacman` package has been installed on a machine, you can include the following line at the start of the R script 
+
+```{r, eval = F}
+if (!("pacman" %in% rownames(installed.packages()))) install.packages("pacman")
+
+```
+
+The line above is an example of a conditional statement. It states that: if the name `"pacman"` is *not* in a list of package names returned by the function `installed.packages()`, then install the package `pacman`. There are a number of different ways of expressing the same conditional statements, and the above is not the easiest expression to understand, but it will work as required. So long as the `pacman` package is installed, the installation of all other packages can be managed using the `pacman::p_load()` function. 
+
+But first, let's explain what's meant by 'loading' a package. Whenever you type a name ending with `()` at the end of it, R thinks you are asking for a function to be run, with that particular name. For example, if you were to type `select()`, R would look for a function called `select`. But where does it look? 
+
+R looks for functions inside a list of packages. This list can be found by typing `search()` in R. 
+
+
+```{r}
+search()
+
+```
+
+When R is looking for a function with a particular name, it starts at the top of the list and works its way down. As soon as it finds a function with the name you've specified, it stops looking.
+
+
 
 Part (b) will discuss some of the particular R packages and functions within that can be used to work with different file types, presenting even the loading of data as at iterative process of learning more about how variables in data are structured and saved, and how the information in these variables be best represented and operated with inside R. 
 
