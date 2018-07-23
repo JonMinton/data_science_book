@@ -33,7 +33,7 @@ For example, a plain text version of Lewis Carroll's *Through the Looking Glass*
 
 
 ```{r}
-readLines("https://www.gutenberg.org/files/12/12.txt", n = 10)
+readLines("http://www.gutenberg.org/files/12/12-0.txt", n = 10)
 
 ```
 
@@ -256,14 +256,31 @@ bmi_dta %>%
   group_by(gender) %>% 
   summarise(
     mean_bmi = mean(bmi_t0, na.rm = T),
-    var_bmi  = mean(bmi_t0, na.rm = T),
+    var_bmi  = var(bmi_t0, na.rm = T),
     mean_age = mean(age_t0, na.rm = T),
     uq_age   = quantile(age_t0, probs = 0.75, na.rm = T)
   )
   
 ```
 
-Based on this, we might feel more confident assuming that a `1` in the gender column indicates females, and so a `0` indicates males. Depending on how sure we need to be about this, we might either decide to go with these coding assumptions, or to seek further information to (dis)confirm this suspicion. 
+```{r}
+bmi_dta %>% 
+  filter(!is.na(gender)) %>% 
+  ggplot(aes(x = bmi_t0, group = factor(gender), fill = factor(gender))) + 
+  geom_histogram(position = "dodge")
+
+```
+
+```{r}
+bmi_dta %>% 
+  filter(!is.na(gender)) %>% 
+  ggplot(aes(x = bmi_t0, y = age_t0, colour = factor(gender))) + 
+  geom_point(alpha = 0.2)
+
+```
+
+
+Based on this, we might feel more confident assuming that a `0` in the gender column indicates females, and so a `1` indicates males. Depending on how sure we need to be about this, we might either decide to go with these coding assumptions, or to seek further information to (dis)confirm this suspicion. 
 
 For now, let's recode the gender according to our current best assumptions: 
 
@@ -271,8 +288,8 @@ For now, let's recode the gender according to our current best assumptions:
 bmi_dta <- 
   bmi_dta %>% 
     mutate(gender = case_when(
-      gender == 0 ~ 'male', 
-      gender == 1 ~ 'female'
+      gender == 0 ~ 'female', 
+      gender == 1 ~ 'male'
       ) %>% factor()
     ) 
 
@@ -499,9 +516,11 @@ search()
 
 ```
 
-When R is looking for a function with a particular name, it starts at the top of the list and works its way down. As soon as it finds a function with the name you've specified, it stops looking.
+When R is looking for a function with a particular name, it starts at the top of the list of packages and works its way down. As soon as it finds a function with the name you've specified, it stops looking.
 
+This behaviour is R's way of resolving ambiguity when two packages contain a function with the same name. What this can mean, however, is that that the same code could work differently depending on which packages have already been loaded, and the order in which they were loaded. 
 
+For example, both the This behaviour is important to be aware of, because it can lead to the same code working differently depending on the order in which packages are loaded
 
 Part (b) will discuss some of the particular R packages and functions within that can be used to work with different file types, presenting even the loading of data as at iterative process of learning more about how variables in data are structured and saved, and how the information in these variables be best represented and operated with inside R. 
 
