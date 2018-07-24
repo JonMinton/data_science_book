@@ -247,7 +247,7 @@ One point we should note in the above is that we still do not know, from the inf
 Frustratingly, this information is not clearly stated in the [associated article](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0189795) or appendices either. Because of this, we may have to look at the associated code in order to guage this basic fact with certainty, though we can probably guess which code refers to which gender using some additional domain knowledge:
 
 * Females live longer than males, so *if the hospital sample data are representative* of the whole US population, we might expect a higher average age for females than males. We might also expect the upper end of the distribution, such as the upper quantile (the age at which 25% of the sample are older and 75% are younger) to be higher too.
-* Females tend to have somewhat higher variance in BMIs than males. 
+* Females tend to have somewhat higher variance in BMIs than males. (e.g. https://www.ncbi.nlm.nih.gov/pubmed/23675464) 
 
 Let's try to infer gender using this additional information, by summarising some key statistics for various columns by gender.
 
@@ -266,19 +266,11 @@ bmi_dta %>%
 ```{r}
 bmi_dta %>% 
   filter(!is.na(gender)) %>% 
-  ggplot(aes(x = bmi_t0, group = factor(gender), fill = factor(gender))) + 
-  geom_histogram(position = "dodge")
+  ggplot(aes(x = bmi_t0)) + 
+  geom_histogram() + 
+  facet_wrap(~gender)
 
 ```
-
-```{r}
-bmi_dta %>% 
-  filter(!is.na(gender)) %>% 
-  ggplot(aes(x = bmi_t0, y = age_t0, colour = factor(gender))) + 
-  geom_point(alpha = 0.2)
-
-```
-
 
 Based on this, we might feel more confident assuming that a `0` in the gender column indicates females, and so a `1` indicates males. Depending on how sure we need to be about this, we might either decide to go with these coding assumptions, or to seek further information to (dis)confirm this suspicion. 
 
@@ -299,7 +291,7 @@ summary(bmi_dta)
 
 ```
 
-The `gender` column now contains data of class `factor` (`<fctr>` in the above). We can see from the summary that the male number of rows per category is as before. 
+The `gender` column now contains data of class `factor` (`<fctr>`) in the above). We can see from the summary that the male number of rows per category is as before. 
 
 Factors in R contain an additional type of metadata. Rather than repeatedly writing the word 'male' and 'female' in each row, R represents each label by a number, and contains a look-up table linking each number to each label. We can start to learn more about how R does this by typing the following:
 
@@ -520,7 +512,80 @@ When R is looking for a function with a particular name, it starts at the top of
 
 This behaviour is R's way of resolving ambiguity when two packages contain a function with the same name. What this can mean, however, is that that the same code could work differently depending on which packages have already been loaded, and the order in which they were loaded. 
 
-For example, both the This behaviour is important to be aware of, because it can lead to the same code working differently depending on the order in which packages are loaded
+For example, both the `dplyr` and the `stats` package contain functions called `filter`, but these are different functions with different behaviours. Looking through the search list, we see that the `dplyr` package is enountered earlier in the list than the `stats` package, and so `dplyr`s `filter` function will, for our current R session, be used instead of `stats`' `filter` function. But what if: 
+
+1. We want to ensure that the code always refers to the `dplyr` `filter` function, regardless of the order in which packages have been loaded in a session? 
+2. We want to use the `stats` `filter` function, while also having loaded the `dyplr` package? 
+3. We want to use a particular function within a package, without having to load the package itself?
+
+Each of these challenges can be solved by being more explicit about which package we want to use a function from, which we can do using the `::` operator, known as the scope operator. For example, if we wanted to see the first few rows of the `bmi_dta` data_frame we created earlier, with gender now explicitly labelled rather than simply coded with 0 and 1, we could filter to only include females as follows:
+
+```{r}
+bmi_dta %>% 
+  filter(gender == "female")
+
+```
+
+However, this only works because of the particular package search space we have created by loading the packages in the order we did in our session. If someone loads the packages in a different order and runs the same code, they may not get the same outcome. We can make the above line of code more explicit by using the scope operator as follows:
+
+
+```{r}
+bmi_dta %>% 
+  dplyr::filter(gender == "female")
+
+```
+
+In this case, you can see there is no difference in terms of what's been produced. However, making the functions required explicit in this way can help uncover and resolve issues about package dependencies, especially when code are shared by users.
+
+The syntax for the `::`operator is as follows:
+
+`[PACKAGE NAME]::[FUNCTION NAME]`
+
+i.e. just write the package name, then the `::`, then the function name. 
+
+## Functions and packages for working with data of different types 
+
+We have been encountered some examples of functions for working with data of different types earlier, but we have not yet been formally introduced. This book emphasises the use of the Tidyverse suite of packages and functions, because they are designed to work together elegantly. However, most functions for loading and saving data which the Tidyverse uses are modelled very closely on earlier packages included with Base R, with only slight changes in functionality. We will thus look at some examples of both the tidyverse and base R solutions. 
+
+The majority of your work is likely to involve working with rectangular data saved as text files. As the examples above illustrated, these involve using special codes within the stream of text within the file to distinguish:
+
+1. Where one column ends and the next begins
+2. Where one row ends and the next begins
+
+The standard way of distinguishing breaks between rows is with the *new line character*. We don't usually see this character, but we do see its effects on how it breaks up some text when displayed. Within R, we can specify this by writing `"\n"`, i.e. the `n` character preceded by a backtick. We can understand this behaviour a little more by using the `cat` function, which is like the `print` function, but which does not add any new lines on its own:
+
+
+```{r}
+cat("I am a cat")
+cat("I am a dog")
+cat("I am a cat\nand I am a dog")
+
+```
+
+Though there are three commands, written on three lines, in the input above, the output is just on two lines, because it's only when the `\n` character is encountered that the `cat` function explicitly knows to move to a new line. Another hidden character, whose properties we need to understand, can be seen in the following example:
+
+```{r}
+cat("I am a cat\n")
+cat("\tI am a tabby cat\n")
+cat("\tI am a tabby\ttabby cat\n")
+
+```
+The `\t` character tells R to display the next that follows it one tab-space away from the current location. Though it may look like the same outcome can be achieved by manually adding a number of spaces (8 in the above example) before the text on the second line, it's interpreted differently by R, as a different character. 
+
+The comma, the tab character, and the new line character, are the main ways in which text files containing rectangular data are split in a consistent way into cells, containing a number of different rows, and the same numbers of columns within each row. Both the comma symbol (,) and the tab symbol (\\\t) are different standard ways of splitting rows of text into columns to form tables. Alteratively, the presence of one or more spaces or other space-line symbols like tabs (collectively called white space) in the text is sometimes used. 
+
+Sometimes, the semi-colon (;) symbol is used to separate row contents into columns instead. One reason why the semi-colon is used to separate row contents into columns is because the `,` symbol is already used for something else: to separate numbers into the part before and after the decimal. For example, the value of one half might be written as `0.5` but also (much more occasionally) as `0,5`, and if the function you are using expects to chop the data whenever it encounters a `,` symbol, this creates problems. 
+
+Some older text file formats, harking back to the conventions and constraints of physical punch tape, don't make use of delimiters at all, but instead expect an equal number of characters on all lines. They put (say) the first five characters of a row in the first column, the next five in the second column, and so on. If the number of characters in one line is off, the contents of the columns in that row won't be correct, and potentially the whole file won't be read correctly. 
+
+The key point to remember is that computers are *fast* but *dumb*, and when you encounter problems and behaviours you don't expect from R, you have to keep this fact in mind, and 
+
+
+
+```{r}
+help(read.delim)
+
+```
 
 Part (b) will discuss some of the particular R packages and functions within that can be used to work with different file types, presenting even the loading of data as at iterative process of learning more about how variables in data are structured and saved, and how the information in these variables be best represented and operated with inside R. 
 
