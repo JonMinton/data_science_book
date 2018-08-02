@@ -578,7 +578,7 @@ Sometimes, the semi-colon (;) symbol is used to separate row contents into colum
 
 Some older text file formats, harking back to the conventions and constraints of physical punch tape, don't make use of delimiters at all, but instead expect an equal number of characters on all lines. They put (say) the first five characters of a row in the first column, the next five in the second column, and so on. If the number of characters in one line is off, the contents of the columns in that row won't be correct, and potentially the whole file won't be read correctly. 
 
-The key point to remember is that computers are *fast* but *dumb*, and when you encounter problems and behaviours you don't expect from R, you have to keep this fact in mind, and 
+The key point to remember is that computers are *fast* but *dumb*, and when you encounter problems and behaviours you don't expect from R, you have to keep this fact in mind, and be very careful in specifying to R exactly what sort of input it should receive, and in exactly what order. 
 
 
 

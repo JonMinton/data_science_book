@@ -2,6 +2,79 @@
 
 ## What is data visualisation? The grammar of graphics approach
 
+This chapter will discuss the hows and whys of data visualisation. The chapter will start by offering a consistent definition of what data visualisations are, then move onto introducing a package, `ggplot2`, which is built around this definition, and very widely used. Some of the key features and ideas underlying the ggplot2 package will be introduced through examples, in which the same data are used but visualised in some very different ways. 
+
+The chapter will also present some examples of table production, as these remain important within much scientific literature. It will then conclude by discussing how both tables and graphs can be tweaked to be 'publication ready'. 
+
+
+## The Grammar of Graphics 
+
+Data visualisations have been produced for almost as long as data have existed, and in some senses before. The statistician and historian of data visualisations, Michael Friendly, has chronicled key developments of data visualisations throughout recorded history, in thie [Milestones project](http://datavis.ca/milestones/). Many of the earliest examples are of maps of physical landscapes showing, for example, trade routes between cities in relation to the physical environment. Such examples were attempts to represent at a human scale relationships between parts of the physical world in which people were embedded, to turn the macro into the micro, to foster a common and shared understanding of what surrounds us. Such physical maps were not produced from tables of numbers available for other people to read, but from implicit knowledge about the world held in the minds of a few key individuals. They were physical and explicit manifestations of the implicit and symbolic 'maps' of relational understanding that travellers of the time possessed. 
+
+Contrast this with another key early use of data visualisation, those which mapped the cosmos, including the stars, moon and sun. In such cases, the relative positions of a particular constellation, or the position and shape of the moon, when the sun rose and fell, on different days of the year, are likely to have been first recorded numerically, in almanacs. At a time when artificial light was expensive and in limited supply, being able to predict the supply of sunlight and moonlight available weeks or months in advance was a powerful kind of information, from which important decisions (such as when to organise harvests) could be made more effectively. And by presenting this information graphically, deeper insights into the rhythms and patterns of the cosmos could be gained. 
+
+But what does it mean to present numeric information graphically? For spatial information, such as a topographic map, this is relatively straightforward. A page, scroll or parchment is a two dimensional plane. The physical space around someone is also imagined to extend over two dimensions, latitude and longitude, and at different positions and locations across this two dimensional plane, the space possesses one or more features which differ. These features could be categorical, such as a named location, or cardinal or ordinal, such as elevation above sea level; and they could be inherently physical in nature, such as towns or rivers, or they could relate more to the way that people see the world, such as demarcating boundaries between social groups, or showing proportions or rates of social characteristics that differ spatially. Representing large scale spatial variation in terms of the small scale variation of the parchment or page takes a leap of imagination, but not a large one. 
+
+By contrast, representing something that is not inherently spatial through the metaphor of spatial variation and distinction is a slightly more abstract endeavor. This is what visualisations of non-spatial data do. Both spatial and non-spatial data involve 'mapping', even if they do not produce maps. The Grammar of Graphics, a 1999 book by Leland Wilkinson, provided a vocabulary for describing this mapping process clearly and consistently. [REF]
+
+Mapping, as used by mathematicians, refers to a consistent process of translating, turning inputs into outputs. The majority of R functions 'map' in this sense. For example, consider the following function, `doubler()`.
+
+
+```{r}
+doubler <- function(x) {return(2 * x)}
+
+input <- 1:5
+
+output <- doubler(input)
+
+df <- data.frame(input, output)
+df
+
+
+```
+
+The `doubler` function maps each of the input values to a corresponding output value. It will do so consistently and predictably: every time it encounters a `1`, it will return a `2`, every `2` will return a `4`, and so on. And it does this by repeatedly and consistently applying the same *mapping rule* to each input it receives, which in this case is simply to double the value it receives.
+
+Now consider how a mapping rule could be used to produce a data visualisation. Imagine a column of values, people's ages in years, which can be used to represent such data graphically.
+
+| Age | Distance right of origin in cm | 
+| --- | ------------------------------- | 
+| 5   | 2.5                             | 
+| 8   | 4.0                             |
+| 3   | 1.5                             | 
+| 10  | 5.0                             | 
+
+The column on the right can be thought of as instructions for a 'scribe'. For many centuries these scribes would be a person with a steady hand. Now they are machines, but the principles are (almost) the same. Let's look at how we can start to instruct the ggplot2 scribe to produce a graph based on the above data:
+
+
+```{r}
+require(tidyverse)
+
+data <- data_frame(age = c(5, 8 ,3, 10))
+
+ggplot(data, aes(x = age)) 
+```
+
+What happened? ggplot2 has drawn some tickmarks, indicating the horizontal positions that correspond to values 4, 6, 8 and 10, but not actually drawn anything. So, it's made and marked up a canvas for us, but not actually drawn any data onto it. Why hasn't ggplot2 actually drawn any of these points? Because, through the ggplot2 scribe has a very steady hand, it's also quite stupid. We told the scribe to move its 'pen' to a number of positions along the canvas, but we've not told ggplot2 to place the pen on the canvas. Ggplot2 has not made any marks, because we have not told ggplot2 what kinds of marks to make.
+
+In the parlance of ggplot2, these mark types are known as geoms. We can specify the mark type by therefore providing the geom required as an additional argument, which we add with a `+` symbol, much as we added new instructions elsewhere using the `%>%` function. To specify we want to draw a point for each of these data values, we can add `geom_point()` to the instructions above
+
+
+```{r}
+ggplot(data, aes(x = age)) + geom_point() 
+
+```
+
+This looks like a step backwards, not forwards, from where we were before. Now ggplot2 has even refused to draw a canvas. Instead it's produced an error message, saying an 'aesthetic' is missing. So, what's an aethetic, and why is it needed? 
+
+An aesthetic, abbreviated as an `aes`, is what defines the mapping rules linking the data to the graphic. These can be specified in a couple of different places, but always wrapped inside a function called `aes()`. The aes function takes a number of arguments, whose names are the graphical features, and whose values are the data columns we wanto to use. Different geoms need different types of aesthetics to be specified in order to work. We can see which aesthetics are required for which geoms by looking at the help file for the geom in question, `geom_point`, which is [also available online](https://ggplot2.tidyverse.org/reference/geom_point.html). This contains a section called aesthetics, which states:
+
+> geom_point understands the following aesthetics (required aesthetics are in bold):
+> **x**, **y**, alpha, colour, fill, group, shape, size, stroke
+
+Each of these aesthetics is a quality of the points that can be determined by 
+
+
 Part (a) will introduce Leland Wilkinson’s ‘grammar of graphics’ philosophy to thinking about 
 data visualisation, and for producing clear modular instructions for the production of data graphics. 
 
