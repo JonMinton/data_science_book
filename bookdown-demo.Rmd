@@ -1,3 +1,71 @@
+--- 
+title: "A DS Book Example"
+author: "Jon Minton"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: jonminton/data_science_book
+description: "This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook."
+---
+
+# Prerequisites
+
+Placeholder
+
+
+
+<!--chapter:end:index.Rmd-->
+
+# Introduction {#intro}
+
+You can label chapter and section titles using `{#label}` after them, e.g., we can reference Chapter \@ref(intro). If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \@ref(methods).
+
+Figures and tables with captions will be placed in `figure` and `table` environments, respectively.
+
+```{r nice-fig, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'}
+par(mar = c(4, 4, .1, .1))
+plot(pressure, type = 'b', pch = 19)
+```
+
+Reference a figure by its code chunk label with the `fig:` prefix, e.g., see Figure \@ref(fig:nice-fig). Similarly, you can reference tables generated from `knitr::kable()`, e.g., see Table \@ref(tab:nice-tab).
+
+```{r nice-tab, tidy=FALSE}
+knitr::kable(
+  head(iris, 20), caption = 'Here is a nice table!',
+  booktabs = TRUE
+)
+```
+
+You can write citations, too. For example, we are using the **bookdown** package [@R-bookdown] in this sample book, which was built on top of R Markdown and **knitr** [@xie2015].
+
+<!--chapter:end:01-intro.Rmd-->
+
+# Literature
+
+Here is a review of existing methods.
+
+<!--chapter:end:02-literature.Rmd-->
+
+# Methods
+
+We describe our methods in this chapter.
+
+<!--chapter:end:03-method.Rmd-->
+
+# Applications
+
+Some _significant_ applications are demonstrated in this chapter.
+
+## Example one
+
+## Example two
+
+<!--chapter:end:04-application.Rmd-->
+
 # Initial Data Tidying and exploration {#tidy_data}
 
 ## Introduction 
@@ -578,14 +646,33 @@ Sometimes, the semi-colon (;) symbol is used to separate row contents into colum
 
 Some older text file formats, harking back to the conventions and constraints of physical punch tape, don't make use of delimiters at all, but instead expect an equal number of characters on all lines. They put (say) the first five characters of a row in the first column, the next five in the second column, and so on. If the number of characters in one line is off, the contents of the columns in that row won't be correct, and potentially the whole file won't be read correctly. 
 
-The key point to remember is that computers are *fast* but *dumb*, and when you encounter problems and behaviours you don't expect from R, you have to keep this fact in mind, and 
+The key point to remember is that computers are *fast* but *dumb*, and when you encounter problems and behaviours you don't expect from R, you have to keep this fact in mind, and think about how you can specify the structure and expected contents of a data file clearly enough that R will know what to do with it. 
+
+Both Base R and the tidyverse's `readr` package have similar functions for reading rectangular data text files structured in some of the more standard ways. The functions `read.csv()` (Base R) and `read_csv()` both assume the within-row contents will be split (delimited) into columns by using the `,` symbol. The functions `read.csv2()` (Base R) and `read_csv2()` (readr) are used when the semi-colon (`;`) rather than comma is used to delimit. By typing the name of a function, we can see some of the function contents:
 
 
 
 ```{r}
-help(read.delim)
+print("read.csv call")
+read.csv
+print("read.csv2 call")
+read.csv2
 
 ```
+
+Both functions (and all functions) comprise a *head* (an argument list), and a *body*. The contents of the head for both functions is what's between `function (` and `)`, on the first couple of lines of each call. This comprises a series of named arguments, things you can set when you call the function. 
+
+The body of the function is the code shown after the `)` on the second line, and the `<bytecode:` line. You can see that both of these functions have a body that does the same thing: call another function, called `read.table()`, with the arguments set in and passed from the head of the calling functions `read.csv()` and `read.csv2()`. The only thing that's different between these two functions is how two of these arguments are set: 
+
+
+| argument| read_csv | read_csv2 | 
+| ------- | -------- | --------  |
+| sep     | ","      | ";"       | 
+| dec     | "."      | ","       |
+
+Both `read.csv()` and `read.csv2()` are examples of convenience or wrapper functions. The `sep` argument defines what character is used to separate/delimit contents within a row into different column, and the `dec` argument specifies which character is used to separate numbers into the pre and post decimal components. All they do is specify some reasonable default arguments to another function (`read.table()` in this case) which does the majority of the heavy lifting. The behaviours of `readr`'s `read_csv()` and `read_csv2()` are conceptually similar though a bit more complex and sophisticated. For example, `read_csv2()` looks up information on the computer you are using (known as its 'locale'), including its timezone, in order to work out whether a `.` or a `,` is more likely to be used for a decimal place in a number. 
+
+The majority of the time, it is likely you will be loading and saving data using the 
 
 Part (b) will discuss some of the particular R packages and functions within that can be used to work with different file types, presenting even the loading of data as at iterative process of learning more about how variables in data are structured and saved, and how the information in these variables be best represented and operated with inside R. 
 
@@ -600,3 +687,108 @@ Part (d) will introduce two closely linked R packages, tidyr and dplyr, as provi
 ## Initial Exploratory data analysis
 
 Finally, part (e) will emphasise the importance of rapid exploratory data analysis both at the data tidying stage, and for developing familiarity and engagement with tidied data sources.
+
+<!--chapter:end:05-tidy_data_home.Rmd-->
+
+
+# Initial Data Tidying and exploration {#tidy_data}
+
+Placeholder
+
+
+## Introduction 
+## Eight ways of dividing file and data types 
+### Rectangular representation of the above
+## Data and metadata 
+## Tidy and untidy data 
+## Loading and saving data - R packages and functions
+## Data tidying - principles and challenges 
+## Data tidying - tidyr and dplyr
+## Initial Exploratory data analysis
+
+<!--chapter:end:05-tidy_data_orig.Rmd-->
+
+
+
+## What is data visualisation? The grammar of graphics approach
+## Exploratory data analysis using ggplot2
+## Producing tables in R 
+## Producing publication-ready graphs
+## An introduction to spatial maps
+
+<!--chapter:end:06-data_vis.Rmd-->
+
+#	Text analysis {#text_explore}
+
+This section will provide a brief introduction to using R to explore text documents, an unusual type of data often
+encountered more associated with qualitative than quantitative research in the social sciences. This chapter will not provide an extensive, formal discussion of how to produce statistical models based on text, but instead should serve as a taster of some of the features of the recent `tidytext` package by XXX. 
+
+
+<!--chapter:end:07-text_analysis.rmd-->
+
+# Statistics {#stats}
+
+Most books on quantitative methods focus very heavily on statistics. This book will instead situate statistics as an element within a much broader process of activities in the service of getting insight from data, and making better decisions on the basis of this insight. 
+
+## The aims of statistics: data reduction or inference? 
+
+Part (a) will argue for statistics, by which is meant primarily the production of summary statistics, as a key part of the data science toolkit from two parallel perspectives: in addition to recourse to theories of statistical inference, which have as their key concern the appropriate use of data to populate parameters in stochastic models, there are also important cognitive reasons for producing summary statistics, namely that often more data means less information, as people are severely limited both in time and memory as to the number of ‘facts’ they can hold onto and make sense of at a time. Summary statistics are therefore invaluable as tools for intelligent data reduction: data reduction because it turns many thousands or millions of observations into just a handful of key values, and intelligent because these key values are ‘less worse’ at standing in place of many more values than most alternatives. The relationship between statistical modelling and signal processing will also be discussed. 
+Theories of statistical inference, and in particular likelihood theory, provide a means of selecting between many different models – each assuming different stochastic structures and processes, and hence each embodying different theories about social phenomena – and of deciding on the right balance between model accuracy and model parsimony, but only when models have a particular structural relationship to each other (When one model can be thought of as a ‘constrained’ variant of another model).
+
+## Balancing accuracy and parsimony using AIC and BIC
+
+Part (b) will discuss this further, and offer Aikiake Information Criterion (AIC) and the Bayesian Information Criterion (BIC) as a way of guiding the accuracy/parsimony trade-off in selecting between many types of statistical model.
+
+## Statistical Simulation: Showing what models really mean
+
+Having decided on the ‘least worst’ model to represent the data, part (c) will describe a series of methods and functions – including sim within the arm package and the Zelig package – for extracting substantive meaning from statistical models, going beyond the usual convention of stopping and starting with the question of whether particular model parameters are ‘statistically significant’ or not, to instead making predictions and projections about the expected and predicted effects of change within social systems. 
+
+## Advanced statistics: structural modelling to formalise informal knowledge
+  
+Part (d) will discuss further how statistical models can be developed to formalise implicit and ‘fuzzy’ knowledge and expectations about social relationships, discussing both the dangers of going ‘too far’ and developing such complicated and precisely structured models that it becomes easy to confuse ‘the map for the territory’, and the danger of not going far enough and failing to capture important structure and shape in the relationships between variables and social factors. 
+
+<!--chapter:end:08-statistics.rmd-->
+
+
+# Programming and Automation {#Coding}
+
+Placeholder
+
+
+
+<!--chapter:end:09-coding.Rmd-->
+
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+# Open, Reproducible and Collaborative Research {#repro_research}
+
+A vitally important aspect of any science is to be able to produce claims that can be tested and verified by other people. As research activities are tending to become more complex - conceptually, methodologically and technically – there need to work collaboratively has become increasingly important. 
+
+## The theory and challenges of open and reproducible research
+
+Part (a) will consider both the benefits and the barriers to open and reproducible research in the context of the social and health sciences, where both the nature of the data and the background of researchers tend to be very different to disciplines like physics, where open and reproducible research practices tend to be more commonplace. 
+
+
+## Sharing results and findings using github
+
+Part (b) will turn to the practical means and benefits of using GitHub, integrated with Rstudio projects, for making both the code and processes produced available to your future self, but also tidied and derived data, and initial findings and figures, available to other researchers. 
+
+## Writing collaboratively with wikis, markdown and related approaches
+
+Part (c) will discuss linked features and programs that allow draft reports and other written material to be shared and co-developed with other researchers. 
+
+## Managing literature (Optional)
+
+Finally part (d) covers approaches to managing literature and literature review in the context of R projects and the research-project-as-suitcase philosophy advocated throughout the book.  
+
+<!--chapter:end:10_repro_research.rmd-->
+
+`r if (knitr:::is_html_output()) '
+# References {-}
+'`
+
+<!--chapter:end:11-references.Rmd-->
+

@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>A DS Book Example</title>
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook.">
+  <meta name="generator" content="bookdown <!--bookdown:version--> and GitBook 2.6.7">
+
+  <meta property="og:title" content="A DS Book Example" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="github-repo" content="jonminton/data_science_book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="A DS Book Example" />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Jon Minton">
+
+
+<meta name="date" content="2018-07-25">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<!--bookdown:link_prev-->
+<!--bookdown:link_next-->
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+<!--bookdown:title:start-->
+<div id="header">
+<h1 class="title">A DS Book Example</h1>
+<h4 class="author"><em>Jon Minton</em></h4>
+<h4 class="date"><em>2018-07-25</em></h4>
+</div>
+<!--bookdown:title:end-->
+
+<!--bookdown:toc:start-->
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+<!--bookdown:toc2:start-->
+<ul>
+<li><a href="#prerequisites"><span class="toc-section-number">1</span> Prerequisites</a></li>
+<li><a href="#intro"><span class="toc-section-number">2</span> Introduction</a></li>
+<li><a href="#literature"><span class="toc-section-number">3</span> Literature</a></li>
+<li><a href="#methods"><span class="toc-section-number">4</span> Methods</a></li>
+<li><a href="#applications"><span class="toc-section-number">5</span> Applications</a><ul>
+<li><a href="#example-one"><span class="toc-section-number">5.1</span> Example one</a></li>
+<li><a href="#example-two"><span class="toc-section-number">5.2</span> Example two</a></li>
+</ul></li>
+<li><a href="#tidy_data"><span class="toc-section-number">6</span> Initial Data Tidying and exploration</a><ul>
+<li><a href="#introduction"><span class="toc-section-number">6.1</span> Introduction</a></li>
+<li><a href="#eight-ways-of-dividing-file-and-data-types"><span class="toc-section-number">6.2</span> Eight ways of dividing file and data types</a><ul>
+<li><a href="#division-one-text-files-and-binary-files"><span class="toc-section-number">6.2.1</span> Division One: Text files and binary files</a></li>
+<li><a href="#division-two-rectangular-and-non-rectangular-data"><span class="toc-section-number">6.2.2</span> Division two: Rectangular and non-rectangular data</a></li>
+</ul></li>
+<li><a href="#data-and-metadata"><span class="toc-section-number">6.3</span> Data and metadata</a><ul>
+<li><a href="#data-with-informal-metadata-northwestern-medicine-bmi-data"><span class="toc-section-number">6.3.1</span> Data with informal metadata: NorthWestern Medicine BMI data</a></li>
+</ul></li>
+<li><a href="#tidy-and-untidy-data"><span class="toc-section-number">6.4</span> Tidy and untidy data</a><ul>
+<li><a href="#section-summary"><span class="toc-section-number">6.4.1</span> Section summary</a></li>
+</ul></li>
+<li><a href="#loading-and-saving-data---r-packages-and-functions"><span class="toc-section-number">6.5</span> Loading and saving data - R packages and functions</a><ul>
+<li><a href="#loading-a-new-package"><span class="toc-section-number">6.5.1</span> Loading a new package</a></li>
+</ul></li>
+<li><a href="#functions-and-packages-for-working-with-data-of-different-types"><span class="toc-section-number">6.6</span> Functions and packages for working with data of different types</a></li>
+<li><a href="#data-tidying---principles-and-challenges"><span class="toc-section-number">6.7</span> Data tidying - principles and challenges</a></li>
+<li><a href="#data-tidying---tidyr-and-dplyr"><span class="toc-section-number">6.8</span> Data tidying - tidyr and dplyr</a></li>
+<li><a href="#initial-exploratory-data-analysis"><span class="toc-section-number">6.9</span> Initial Exploratory data analysis</a></li>
+</ul></li>
+<li><a href="#tidy_data"><span class="toc-section-number">7</span> Initial Data Tidying and exploration</a><ul>
+<li><a href="#introduction-1"><span class="toc-section-number">7.1</span> Introduction</a></li>
+<li><a href="#eight-ways-of-dividing-file-and-data-types-1"><span class="toc-section-number">7.2</span> Eight ways of dividing file and data types</a><ul>
+<li><a href="#rectangular-representation-of-the-above-1"><span class="toc-section-number">7.2.1</span> Rectangular representation of the above</a></li>
+</ul></li>
+<li><a href="#data-and-metadata-1"><span class="toc-section-number">7.3</span> Data and metadata</a></li>
+<li><a href="#tidy-and-untidy-data-1"><span class="toc-section-number">7.4</span> Tidy and untidy data</a></li>
+<li><a href="#loading-and-saving-data---r-packages-and-functions-1"><span class="toc-section-number">7.5</span> Loading and saving data - R packages and functions</a></li>
+<li><a href="#data-tidying---principles-and-challenges-1"><span class="toc-section-number">7.6</span> Data tidying - principles and challenges</a></li>
+<li><a href="#data-tidying---tidyr-and-dplyr-1"><span class="toc-section-number">7.7</span> Data tidying - tidyr and dplyr</a></li>
+<li><a href="#initial-exploratory-data-analysis-1"><span class="toc-section-number">7.8</span> Initial Exploratory data analysis</a></li>
+<li><a href="#what-is-data-visualisation-the-grammar-of-graphics-approach"><span class="toc-section-number">7.9</span> What is data visualisation? The grammar of graphics approach</a></li>
+<li><a href="#exploratory-data-analysis-using-ggplot2"><span class="toc-section-number">7.10</span> Exploratory data analysis using ggplot2</a></li>
+<li><a href="#producing-tables-in-r"><span class="toc-section-number">7.11</span> Producing tables in R</a></li>
+<li><a href="#producing-publication-ready-graphs"><span class="toc-section-number">7.12</span> Producing publication-ready graphs</a></li>
+<li><a href="#an-introduction-to-spatial-maps"><span class="toc-section-number">7.13</span> An introduction to spatial maps</a></li>
+</ul></li>
+<li><a href="#text_explore"><span class="toc-section-number">8</span> Text analysis</a></li>
+<li><a href="#stats"><span class="toc-section-number">9</span> Statistics</a><ul>
+<li><a href="#the-aims-of-statistics-data-reduction-or-inference"><span class="toc-section-number">9.1</span> The aims of statistics: data reduction or inference?</a></li>
+<li><a href="#balancing-accuracy-and-parsimony-using-aic-and-bic"><span class="toc-section-number">9.2</span> Balancing accuracy and parsimony using AIC and BIC</a></li>
+<li><a href="#statistical-simulation-showing-what-models-really-mean"><span class="toc-section-number">9.3</span> Statistical Simulation: Showing what models really mean</a></li>
+<li><a href="#advanced-statistics-structural-modelling-to-formalise-informal-knowledge"><span class="toc-section-number">9.4</span> Advanced statistics: structural modelling to formalise informal knowledge</a></li>
+</ul></li>
+<li><a href="#Coding"><span class="toc-section-number">10</span> Programming and Automation</a></li>
+<li><a href="#repro_research"><span class="toc-section-number">11</span> Open, Reproducible and Collaborative Research</a><ul>
+<li><a href="#the-theory-and-challenges-of-open-and-reproducible-research"><span class="toc-section-number">11.1</span> The theory and challenges of open and reproducible research</a></li>
+<li><a href="#sharing-results-and-findings-using-github"><span class="toc-section-number">11.2</span> Sharing results and findings using github</a></li>
+<li><a href="#writing-collaboratively-with-wikis-markdown-and-related-approaches"><span class="toc-section-number">11.3</span> Writing collaboratively with wikis, markdown and related approaches</a></li>
+<li><a href="#managing-literature-optional"><span class="toc-section-number">11.4</span> Managing literature (Optional)</a></li>
+</ul></li>
+<li><a href="#references">References</a></li>
+</ul>
+<!--bookdown:toc2:end-->
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A DS Book Example</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<!--bookdown:toc:end-->
+<!--bookdown:body:start-->
+<div id="prerequisites" class="section level1">
+<h1><span class="header-section-number">1</span> Prerequisites</h1>
+<p>Placeholder</p>
+<!--chapter:end:index.Rmd-->
+</div>
+<div id="intro" class="section level1">
+<h1><span class="header-section-number">2</span> Introduction</h1>
+<p>You can label chapter and section titles using <code>{#label}</code> after them, e.g., we can reference Chapter @ref(intro). If you do not manually label them, there will be automatic labels anyway, e.g., Chapter @ref(methods).</p>
+<p>Figures and tables with captions will be placed in <code>figure</code> and <code>table</code> environments, respectively.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="fl">.1</span>, <span class="fl">.1</span>))</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">plot</span>(pressure, <span class="dt">type =</span> <span class="st">&#39;b&#39;</span>, <span class="dt">pch =</span> <span class="dv">19</span>)</a></code></pre></div>
+<div class="figure" style="text-align: center">
+<img src="bookdown-demo_files/figure-html/nice-fig-1.png" alt="Here is a nice figure!" width="80%" />
+<p class="caption">
+(#fig:nice-fig)Here is a nice figure!
+</p>
+</div>
+<p>Reference a figure by its code chunk label with the <code>fig:</code> prefix, e.g., see Figure @ref(fig:nice-fig). Similarly, you can reference tables generated from <code>knitr::kable()</code>, e.g., see Table @ref(tab:nice-tab).</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">knitr<span class="op">::</span><span class="kw">kable</span>(</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="kw">head</span>(iris, <span class="dv">20</span>), <span class="dt">caption =</span> <span class="st">&#39;Here is a nice table!&#39;</span>,</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="dt">booktabs =</span> <span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">)</a></code></pre></div>
+<table>
+<caption>(#tab:nice-tab)Here is a nice table!</caption>
+<thead>
+<tr class="header">
+<th align="right">Sepal.Length</th>
+<th align="right">Sepal.Width</th>
+<th align="right">Petal.Length</th>
+<th align="right">Petal.Width</th>
+<th align="left">Species</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">5.1</td>
+<td align="right">3.5</td>
+<td align="right">1.4</td>
+<td align="right">0.2</td>
+<td align="left">setosa</td>
+</tr>
+<tr class="even">
+<td align="right">4.9</td>
+<td align="right">3.0</td>
+<td align="right">1.4</td>
+<td align="right">0.2</td>
+<td align="left">setosa</td>
+</tr>
+<tr class="odd">
+<td align="right">4.7</td>
+<td align="right">3.2</td>
+<td align="right">1.3</td>
+<td align="right">0.2</td>
+<td align="left">setosa</td>
+</tr>
+<tr class="even">
+<td align="right">4.6</td>
+<td align="right">3.1</td>
+<td align="right">1.5</td>
+<td align="right">0.2</td>
+<td align="left">setosa</td>
+</tr>
+<tr class="odd">
+<td align="right">5.0</td>
+<td align="right">3.6</td>
+<td align="right">1.4</td>
+<td align="right">0.2</td>
+<td align="left">setosa</td>
+</tr>
+<tr class="even">
+<td align="right">5.4</td>
+<td align="right">3.9</td>
+<td align="right">1.7</td>
+<td align="right">0.4</td>
+<td align="left">setosa</td>
+</tr>
+<tr class="odd">
+<td align="right">4.6</td>
+<td align="right">3.4</td>
+<td align="right">1.4</td>
+<td align="right">0.3</td>
+<td align="left">setosa</td>
+</tr>
+<tr class="even">
+<td align="right">5.0</td>
+<td align="right">3.4</td>
+<td align="right">1.5</td>
+<td align="right">0.2</td>
+<td align="left">setosa</td>
+</tr>
+<tr class="odd">
+<td align="right">4.4</td>
+<td align="right">2.9</td>
+<td align="right">1.4</td>
+<td align="right">0.2</td>
+<td align="left">setosa</td>
+</tr>
+<tr class="even">
+<td align="right">4.9</td>
+<td align="right">3.1</td>
+<td align="right">1.5</td>
+<td align="right">0.1</td>
+<td align="left">setosa</td>
+</tr>
+<tr class="odd">
+<td align="right">5.4</td>
+<td align="right">3.7</td>
+<td align="right">1.5</td>
+<td align="right">0.2</td>
+<td align="left">setosa</td>
+</tr>
+<tr class="even">
+<td align="right">4.8</td>
+<td align="right">3.4</td>
+<td align="right">1.6</td>
+<td align="right">0.2</td>
+<td align="left">setosa</td>
+</tr>
+<tr class="odd">
+<td align="right">4.8</td>
+<td align="right">3.0</td>
+<td align="right">1.4</td>
+<td align="right">0.1</td>
+<td align="left">setosa</td>
+</tr>
+<tr class="even">
+<td align="right">4.3</td>
+<td align="right">3.0</td>
+<td align="right">1.1</td>
+<td align="right">0.1</td>
+<td align="left">setosa</td>
+</tr>
+<tr class="odd">
+<td align="right">5.8</td>
+<td align="right">4.0</td>
+<td align="right">1.2</td>
+<td align="right">0.2</td>
+<td align="left">setosa</td>
+</tr>
+<tr class="even">
+<td align="right">5.7</td>
+<td align="right">4.4</td>
+<td align="right">1.5</td>
+<td align="right">0.4</td>
+<td align="left">setosa</td>
+</tr>
+<tr class="odd">
+<td align="right">5.4</td>
+<td align="right">3.9</td>
+<td align="right">1.3</td>
+<td align="right">0.4</td>
+<td align="left">setosa</td>
+</tr>
+<tr class="even">
+<td align="right">5.1</td>
+<td align="right">3.5</td>
+<td align="right">1.4</td>
+<td align="right">0.3</td>
+<td align="left">setosa</td>
+</tr>
+<tr class="odd">
+<td align="right">5.7</td>
+<td align="right">3.8</td>
+<td align="right">1.7</td>
+<td align="right">0.3</td>
+<td align="left">setosa</td>
+</tr>
+<tr class="even">
+<td align="right">5.1</td>
+<td align="right">3.8</td>
+<td align="right">1.5</td>
+<td align="right">0.3</td>
+<td align="left">setosa</td>
+</tr>
+</tbody>
+</table>
+<p>You can write citations, too. For example, we are using the <strong>bookdown</strong> package <span class="citation">(Xie <a href="#ref-R-bookdown">2018</a>)</span> in this sample book, which was built on top of R Markdown and <strong>knitr</strong> <span class="citation">(Xie <a href="#ref-xie2015">2015</a>)</span>.</p>
+<!--chapter:end:01-intro.Rmd-->
+</div>
+<div id="literature" class="section level1">
+<h1><span class="header-section-number">3</span> Literature</h1>
+<p>Here is a review of existing methods.</p>
+<!--chapter:end:02-literature.Rmd-->
+</div>
+<div id="methods" class="section level1">
+<h1><span class="header-section-number">4</span> Methods</h1>
+<p>We describe our methods in this chapter.</p>
+<!--chapter:end:03-method.Rmd-->
+</div>
+<div id="applications" class="section level1">
+<h1><span class="header-section-number">5</span> Applications</h1>
+<p>Some <em>significant</em> applications are demonstrated in this chapter.</p>
+<div id="example-one" class="section level2">
+<h2><span class="header-section-number">5.1</span> Example one</h2>
+</div>
+<div id="example-two" class="section level2">
+<h2><span class="header-section-number">5.2</span> Example two</h2>
+<!--chapter:end:04-application.Rmd-->
+</div>
+</div>
+<div id="tidy_data" class="section level1">
+<h1><span class="header-section-number">6</span> Initial Data Tidying and exploration</h1>
+<div id="introduction" class="section level2">
+<h2><span class="header-section-number">6.1</span> Introduction</h2>
+<blockquote>
+<p>‘Can you do Addition?’ the White Queen asked. ‘What’s one and one and one and one and one and one and one and one and one and one?’
+‘I don’t know,’ said Alice. ‘I lost count.’</p>
+</blockquote>
+<p>[REF TO THROUGH THE LOOKING GLASS]</p>
+<p>Computer’s operate with linear streams of discrete values. People don’t. One of the first challenges in data science is therefore understanding how computers process digital data, when they are reading the data, working with the data, and writing out the data. This chapter will provide this understanding, in order to make sure you use approaches for writing and reading data that are appropriate for the tasks.</p>
+</div>
+<div id="eight-ways-of-dividing-file-and-data-types" class="section level2">
+<h2><span class="header-section-number">6.2</span> Eight ways of dividing file and data types</h2>
+<p>The purpose of this section is to introduce some key distinctions relating to types of files and types of data.</p>
+<p>Within this section a number of code examples are provided as illustrations of the concepts being discussed. These examples make use of packages and techniques that will be formally introduced later in this book. For now, just pay attention to the key ideas, inputs and outputs, and do not be concerned about how the code ‘works’. Once you have read this book and related material, consider revisiting this section with a focus on the code itself.</p>
+<div id="division-one-text-files-and-binary-files" class="section level3">
+<h3><span class="header-section-number">6.2.1</span> Division One: Text files and binary files</h3>
+<p>There are many types of files on computers, usually identified with different file extensions, such as <code>.zip</code>, <code>.csv</code>, <code>.exe</code>, <code>.doc</code>, <code>.pdf</code>, and so on. Such files can be categorised into two groups:</p>
+<ul>
+<li>Text files</li>
+<li>Binary files</li>
+</ul>
+<p>A text file is a file that, when opened with a basic text editor, like Notepad on Windows or TextEdit on OSX, will tend to display strings of characters that are human readable. A poem or short note written in Notepad would be an example of this, but so are other types of file that, though not written so as to be read by people (at least not for fun or enlightenment) nevertheless clearly contain text when displayed in a text editor.</p>
+<p>As an example of a text file written in a plain text format, we can look to Project Gutenberg [REF], an online repository of classic literature that’s old enough to be copyright free. This contains plain text copies of many books, as well as an application programming interface (API) for loading the data directly called <code>gutenbergr</code>[REF].</p>
+<p>For example, a plain text version of Lewis Carroll’s <em>Through the Looking Glass</em> is available <a href="https://www.gutenberg.org/files/12/12.txt">here</a>. We can read the first few lines of this file directly into R using the <code>readLines()</code> function.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">readLines</span>(<span class="st">&quot;http://www.gutenberg.org/files/12/12-0.txt&quot;</span>, <span class="dt">n =</span> <span class="dv">10</span>)</a></code></pre></div>
+<pre><code>##  [1] &quot;ï»¿The Project Gutenberg EBook of Through the Looking-Glass, by&quot;     
+##  [2] &quot;Charles Dodgson                         AKA Lewis Carroll&quot;           
+##  [3] &quot;&quot;                                                                    
+##  [4] &quot;This eBook is for the use of anyone anywhere at no cost and with&quot;    
+##  [5] &quot;almost no restrictions whatsoever.  You may copy it, give it away or&quot;
+##  [6] &quot;re-use it under the terms of the Project Gutenberg License included&quot; 
+##  [7] &quot;with this eBook or online at www.gutenberg.org&quot;                      
+##  [8] &quot;&quot;                                                                    
+##  [9] &quot;&quot;                                                                    
+## [10] &quot;Title: Through the Looking-Glass&quot;</code></pre>
+<p>We can also access the same data through the <code>gutenbergr</code> API, as follows:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">require</span>(tidyverse)</a></code></pre></div>
+<pre><code>## Loading required package: tidyverse</code></pre>
+<pre><code>## -- Attaching packages ------------------- tidyverse 1.2.1 --</code></pre>
+<pre><code>## v ggplot2 3.0.0     v purrr   0.2.5
+## v tibble  1.4.2     v dplyr   0.7.6
+## v tidyr   0.8.1     v stringr 1.3.1
+## v readr   1.1.1     v forcats 0.3.0</code></pre>
+<pre><code>## -- Conflicts ---------------------- tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">require</span>(gutenbergr)</a></code></pre></div>
+<pre><code>## Loading required package: gutenbergr</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">gutenberg_metadata <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(title <span class="op">==</span><span class="st"> &quot;Through the Looking-Glass&quot;</span>)</a></code></pre></div>
+<pre><code>## # A tibble: 2 x 8
+##   gutenberg_id title author gutenberg_autho~ language gutenberg_books~
+##          &lt;int&gt; &lt;chr&gt; &lt;chr&gt;             &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;           
+## 1           12 Thro~ Carro~                7 en       Children&#39;s Lite~
+## 2        23718 Thro~ Carro~                7 en       Children&#39;s Lite~
+## # ... with 2 more variables: rights &lt;chr&gt;, has_text &lt;lgl&gt;</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">looking_glass &lt;-<span class="st"> </span><span class="kw">gutenberg_download</span>(<span class="dv">12</span>)</a></code></pre></div>
+<pre><code>## Determining mirror for Project Gutenberg from http://www.gutenberg.org/robot/harvest</code></pre>
+<pre><code>## Using mirror http://aleph.gutenberg.org</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">looking_glass <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(text) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>)</a></code></pre></div>
+<pre><code>## # A tibble: 20 x 1
+##    text                                                                    
+##    &lt;chr&gt;                                                                   
+##  1 THROUGH THE LOOKING-GLASS                                               
+##  2 &quot;&quot;                                                                      
+##  3 By Lewis Carroll                                                        
+##  4 &quot;&quot;                                                                      
+##  5 &quot;&quot;                                                                      
+##  6 The Millennium Fulcrum Edition 1.7                                      
+##  7 &quot;&quot;                                                                      
+##  8 &quot;&quot;                                                                      
+##  9 &quot;&quot;                                                                      
+## 10 &quot;&quot;                                                                      
+## 11 CHAPTER I. Looking-Glass house                                          
+## 12 &quot;&quot;                                                                      
+## 13 One thing was certain, that the WHITE kitten had had nothing to do with 
+## 14 it:--it was the black kitten&#39;s fault entirely. For the white kitten had 
+## 15 been having its face washed by the old cat for the last quarter of      
+## 16 an hour (and bearing it pretty well, considering); so you see that it   
+## 17 COULDN&#39;T have had any hand in the mischief.                             
+## 18 &quot;&quot;                                                                      
+## 19 The way Dinah washed her children&#39;s faces was this: first she held the  
+## 20 poor thing down by its ear with one paw, and then with the other paw she</code></pre>
+<p>By contrast, binary files are all other file types. The term ‘binary’ refers to the fact that computers work with zeros and ones. Binary files are those that don’t clearly or obviously display as text when you look at them through a basic text editor. Instead the computer needs something more specialised for reading and interpreting that particular file type in order to make sense of it.</p>
+<p>The <code>readLines</code> function tries to load and display the contents of any file, assuming it is a text file, even when it is not. For example, if we try to read the first five ‘lines’ of an .mp3 file of a song by the Norwegian electronic music duo Royksopp, we get the following:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw">readLines</span>(<span class="st">&quot;chapter_support/05/03 49 Percent.mp3&quot;</span>, <span class="dt">n =</span> <span class="dv">5</span>)</a></code></pre></div>
+<pre><code>## Warning in readLines(&quot;chapter_support/05/03 49 Percent.mp3&quot;, n = 5): line 1
+## appears to contain an embedded nul</code></pre>
+<pre><code>## Warning in readLines(&quot;chapter_support/05/03 49 Percent.mp3&quot;, n = 5):
+## incomplete final line found on &#39;chapter_support/05/03 49 Percent.mp3&#39;</code></pre>
+<pre><code>## [1] &quot;ID3\003&quot;                                                                                                                                                                  
+## [2] &quot;´ÙUYY@¥«½°7Ž;\210\027\031\177\200ÔHÅ4m\025½uÅË H\vè&#39;\023¨\\6y\036+\035\026Ã!|Ós\200œPA4\025\020Óê6Ä2#õdL«Üà+\034!«\t\vŠÍ”\024\030\\0aq[j&quot;                                           
+## [3] &quot;\030\\PÂâ¶Ô\0240¸¡…ÉÞ¡#\v’0º=Q\003—$rèõD\030º\f]\036¨ƒ\027A‹£Õ\020dÐbèõF2h1võF2lEvä£\036lbíÒŒdØŠó¥!sc\027G$\b\&quot;\215\210£n\2201\024lZ6é\003\026\215‹FÜ\020BÛ`\\qÂãOèYðÁ5¿$Nï”/\020\027&quot;</code></pre>
+<p>(Note: the above text still does not make any sense even if you read Norwegian!)</p>
+</div>
+<div id="division-two-rectangular-and-non-rectangular-data" class="section level3">
+<h3><span class="header-section-number">6.2.2</span> Division two: Rectangular and non-rectangular data</h3>
+<p>A distinction between types of data is between <em>rectangular</em> and <em>non-rectangular</em> data. To some extent, the difference between these two types of data should be obvious: a rectangular data file contains data that the computer expects to be arranged in some kind of rectangular table. Non-rectangular data is any other type of data.</p>
+<div id="rectangular-data" class="section level4">
+<h4><span class="header-section-number">6.2.2.1</span> Rectangular Data</h4>
+<p>An example of rectangular data, available from the data-sharing website <code>figshare</code>, is shown below. The data reports the body mass index (BMIs) of participants in a study recorded at different time points. In the example below, the first five lines of the data are first loaded with the <code>readLines</code> function we used earlier, then using a special function, <code>read_csv</code> designed to work with rectangular data through an understanding of how the stream of data inside the file is split into different columns and rows:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">readLines</span>(<span class="st">&quot;https://ndownloader.figshare.com/files/10905845&quot;</span>, <span class="dt">n =</span> <span class="dv">5</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;2011,30.684,24.894,39,0&quot;    &quot;2012,24.894,-1,40,0&quot;       
+## [3] &quot;2003,20.751,22.991,26,1&quot;    &quot;2004,22.991,23.345,27.25,1&quot;
+## [5] &quot;2005,23.345,22.828,28,1&quot;</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw">read_csv</span>(<span class="st">&quot;https://ndownloader.figshare.com/files/10905845&quot;</span>, <span class="dt">n_max =</span> <span class="dv">5</span>)</a></code></pre></div>
+<pre><code>## Parsed with column specification:
+## cols(
+##   `2011` = col_integer(),
+##   `30.684` = col_double(),
+##   `24.894` = col_double(),
+##   `39` = col_double(),
+##   `0` = col_integer()
+## )</code></pre>
+<pre><code>## # A tibble: 5 x 5
+##   `2011` `30.684` `24.894`  `39`   `0`
+##    &lt;int&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
+## 1   2012     24.9     -1    40       0
+## 2   2003     20.8     23.0  26       1
+## 3   2004     23.0     23.3  27.2     1
+## 4   2005     23.3     22.8  28       1
+## 5   2006     22.8     22.1  29       1</code></pre>
+<p>We can see in the two examples above that, though the <code>readLines</code> function has split the above data into different rows, the contents within each row are stuck together, separated by the <code>,</code> symbol. The <code>read_csv</code> function, however, has split these values into separate columns, producing the rectangle of data that we largely expect. The <code>read_csv</code> output still has some problems, which we will fix later, but it’s more suitable for this type of data.</p>
+<p>In order to understand how R manages to convert a text file, which is really just a stream of values, into a rectangle, in which values are neatly arranged into rows and columns, it can be helpful to think of the text file as a long length of ticker tape, and functions like <code>read_csv()</code> as a robot with a rulebook and a pair of scissors. The ticker tape contains a long series of symbols, and the rulebook gives instructions about how to cut up the ticker tape, and arrange the pieces.</p>
+<p>To get an even clearer idea about what this ticker tape contains, the function <code>readChar()</code> can be used rather than <code>readLines</code> above. <code>readChar()</code> carries no scissors, and does not even start to cut up the input into separate pieces. The first 200 characters in the data above are as follows:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="kw">readChar</span>(<span class="st">&quot;https://ndownloader.figshare.com/files/10905845&quot;</span>, <span class="dt">nchars =</span> <span class="dv">200</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;2011,30.684,24.894,39,0\n2012,24.894,-1,40,0\n2003,20.751,22.991,26,1\n2004,22.991,23.345,27.25,1\n2005,23.345,22.828,28,1\n2006,22.828,22.071,29,1\n2007,22.071,22.215,30,1\n2008,22.215,23.225,31,1\n2009,23.2&quot;</code></pre>
+<p>Just as with <code>readLines()</code>, the individual values within each row are separated from each other using the <code>,</code> symbol. Unlike the output from <code>readLines()</code>, however, something else is visible at regular intervals within the stream. In the output above this is represented as follows: <code>\n</code>. Although this looks like two characters, it’s actually just a single character, a special character type known as the ‘new line’ or ‘line feed’ character. This character is usually invisible, and meant as an instruction for a computer program (like Word or Notepad) to separate out the contents of a text file onto different lines.</p>
+<p>By comparing the output from <code>readChar()</code> and <code>readLines()</code>, we can see that <code>readLines()</code> cuts the input from the file into separate outputs whenever it encouters the <code>\n</code> character. Each of the pieces is then laid out to the user in the sequence it was encountered and cut. <code>readLines()</code> rulebook is simple: cut the data at the <code>\n</code> symbol.</p>
+<p>The <code>read_csv()</code> rule-book is a bit more complicated, but follows the same principle of cutting at specific symbols. It follows something like the following system of rules:</p>
+<ul>
+<li>First: Cut the stream into discrete chunks separated by the <code>\n</code> symbol.</li>
+<li>Second: <em>Within each of these discrete chunks</em>, cut the chunk again whenever the <code>,</code> symbol is encountered.</li>
+</ul>
+<p>The first of these rules thus creates each of the rows for the dataset, and the second of these rules then creates a series of cells inside each row. In order for these cells to form a rectangular dataset, there must be the same number of cells in each row, because the number of columns in the dataset must be the same for all rows. An additional rule applied by <code>read_csv()</code> and related functions is to produce either a warning or an error if the number of commas within each of the lines is not equal.</p>
+</div>
+<div id="non-rectangular-data" class="section level4">
+<h4><span class="header-section-number">6.2.2.2</span> Non-rectangular data</h4>
+<p>It’s likely that you’ll be working with rectangular data most of the time. However it’s useful to be aware of what non-rectangular data can look like, and to think about the cases where non-rectangular data structures are most appropriate. Much of the internet is built using structured non-rectangular data written as text files. An simple example of this is the following:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw">require</span>(jsonlite)</a></code></pre></div>
+<pre><code>## Loading required package: jsonlite</code></pre>
+<pre><code>## 
+## Attaching package: &#39;jsonlite&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     flatten</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="kw">readLines</span>(<span class="st">&quot;chapter_support/05/simple_json.json&quot;</span>)</a></code></pre></div>
+<pre><code>##  [1] &quot;{&quot;                                  
+##  [2] &quot;  \&quot;edibles\&quot;: {&quot;                   
+##  [3] &quot;    \&quot;fruit\&quot;: {&quot;                   
+##  [4] &quot;      \&quot;name\&quot;:\&quot;apples\&quot;, &quot;        
+##  [5] &quot;      \&quot;name\&quot;:\&quot;oranges\&quot;, &quot;       
+##  [6] &quot;      \&quot;name\&quot;:\&quot;tomatoes\&quot;, &quot;      
+##  [7] &quot;      \&quot;name\&quot;:\&quot;lemons\&quot;&quot;          
+##  [8] &quot;     },&quot;                            
+##  [9] &quot;    \&quot;vegetables\&quot;: {&quot;              
+## [10] &quot;      \&quot;name\&quot;:\&quot;potatoes\&quot;, &quot;      
+## [11] &quot;      \&quot;name\&quot;:\&quot;sweet potatoes\&quot;, &quot;
+## [12] &quot;      \&quot;name\&quot;:\&quot;aubergines\&quot;&quot;      
+## [13] &quot;    }&quot;                              
+## [14] &quot;  },&quot;                               
+## [15] &quot;  \&quot;inedibles\&quot;: {&quot;                 
+## [16] &quot;    \&quot;name\&quot;:\&quot;tables\&quot;, &quot;          
+## [17] &quot;    \&quot;name\&quot;:\&quot;benches\&quot;, &quot;         
+## [18] &quot;    \&quot;name\&quot;:\&quot;chairs\&quot;, &quot;          
+## [19] &quot;    \&quot;name\&quot;:\&quot;pots\&quot;&quot;              
+## [20] &quot;  }&quot;                                
+## [21] &quot;}&quot;</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="kw">read_json</span>(<span class="st">&quot;chapter_support/05/simple_json.json&quot;</span>)</a></code></pre></div>
+<pre><code>## $edibles
+## $edibles$fruit
+## $edibles$fruit$name
+## [1] &quot;apples&quot;
+## 
+## $edibles$fruit$name
+## [1] &quot;oranges&quot;
+## 
+## $edibles$fruit$name
+## [1] &quot;tomatoes&quot;
+## 
+## $edibles$fruit$name
+## [1] &quot;lemons&quot;
+## 
+## 
+## $edibles$vegetables
+## $edibles$vegetables$name
+## [1] &quot;potatoes&quot;
+## 
+## $edibles$vegetables$name
+## [1] &quot;sweet potatoes&quot;
+## 
+## $edibles$vegetables$name
+## [1] &quot;aubergines&quot;
+## 
+## 
+## 
+## $inedibles
+## $inedibles$name
+## [1] &quot;tables&quot;
+## 
+## $inedibles$name
+## [1] &quot;benches&quot;
+## 
+## $inedibles$name
+## [1] &quot;chairs&quot;
+## 
+## $inedibles$name
+## [1] &quot;pots&quot;</code></pre>
+<p>Non-rectangular data structures are hierarchical and tree-like. This ordered structure can be shown more clearly using the <code>Hmisc::list.tree()</code> function, below:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1">json_dta &lt;-<span class="st"> </span><span class="kw">read_json</span>(<span class="st">&quot;chapter_support/05/simple_json.json&quot;</span>)</a>
+<a class="sourceLine" id="cb38-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb38-3" data-line-number="3">json_dta <span class="op">%&gt;%</span><span class="st"> </span>Hmisc<span class="op">::</span><span class="kw">list.tree</span>()</a></code></pre></div>
+<pre><code>##  . = list 2 (1976 bytes)
+## .  edibles = list 2
+## . .  fruit = list 4
+## . . .  name = character 1= apples 
+## . . .  name = character 1= oranges 
+## . . .  name = character 1= tomatoes 
+## . . .  name = character 1= lemons 
+## . .  vegetables = list 3
+## . . .  name = character 1= potatoes 
+## . . .  name = character 1= sweet potatoes 
+## . . .  name = character 1= aubergines 
+## .  inedibles = list 4
+## . .  name = character 1= tables 
+## . .  name = character 1= benches 
+## . .  name = character 1= chairs 
+## . .  name = character 1= pots</code></pre>
+<p>In the above, the data structure has a single ‘root’, which splits into two branches, <code>edibles</code> and <code>inedibles</code>. The <code>edibles</code> branch itself has two branches, <code>fruit</code> and <code>vegetables</code>, which have four and three sub-branches respectively. At the end of the sub-branches are the data objects themselves themselves: four fruits, and three vegetables. The <code>inexibles</code> branch is less deep, as indicated by the number of <code>.</code> marks on the left of each line, and leads directly to four objects at the same level.</p>
+<blockquote>
+<p>Activity: graphically draw the above tree.</p>
+</blockquote>
+</div>
+<div id="rectangular-representation-of-the-above" class="section level4">
+<h4><span class="header-section-number">6.2.2.3</span> Rectangular representation of the above</h4>
+<p>The same information can often be represented using either rectangular or non-rectangular data structures. For example, a rectangular representation of the above data is as follows:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1">rect_rep &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb40-2" data-line-number="2"><span class="st">  </span><span class="kw">tribble</span>(</a>
+<a class="sourceLine" id="cb40-3" data-line-number="3">    <span class="op">~</span>edi_class, <span class="op">~</span>fruit_or_veg, <span class="op">~</span>name,</a>
+<a class="sourceLine" id="cb40-4" data-line-number="4">    <span class="st">&quot;edibles&quot;</span>,   <span class="st">&quot;fruit&quot;</span>,       <span class="st">&quot;apples&quot;</span>,</a>
+<a class="sourceLine" id="cb40-5" data-line-number="5">    <span class="st">&quot;edibles&quot;</span>,   <span class="st">&quot;fruit&quot;</span>,       <span class="st">&quot;oranges&quot;</span>,</a>
+<a class="sourceLine" id="cb40-6" data-line-number="6">    <span class="st">&quot;edibles&quot;</span>,   <span class="st">&quot;fruit&quot;</span>,       <span class="st">&quot;tomatoes&quot;</span>,</a>
+<a class="sourceLine" id="cb40-7" data-line-number="7">    <span class="st">&quot;edibles&quot;</span>,   <span class="st">&quot;fruit&quot;</span>,       <span class="st">&quot;lemons&quot;</span>,</a>
+<a class="sourceLine" id="cb40-8" data-line-number="8">    <span class="st">&quot;edibles&quot;</span>,   <span class="st">&quot;vegetables&quot;</span>,  <span class="st">&quot;potatoes&quot;</span>,</a>
+<a class="sourceLine" id="cb40-9" data-line-number="9">    <span class="st">&quot;edibles&quot;</span>,   <span class="st">&quot;vegetables&quot;</span>,  <span class="st">&quot;sweet potatoes&quot;</span>,</a>
+<a class="sourceLine" id="cb40-10" data-line-number="10">    <span class="st">&quot;edibles&quot;</span>,   <span class="st">&quot;vegetables&quot;</span>,  <span class="st">&quot;aubergines&quot;</span>,</a>
+<a class="sourceLine" id="cb40-11" data-line-number="11">    <span class="st">&quot;inedibles&quot;</span>, <span class="ot">NA</span>,            <span class="st">&quot;tables&quot;</span>,</a>
+<a class="sourceLine" id="cb40-12" data-line-number="12">    <span class="st">&quot;inedibles&quot;</span>, <span class="ot">NA</span>,            <span class="st">&quot;benches&quot;</span>, </a>
+<a class="sourceLine" id="cb40-13" data-line-number="13">    <span class="st">&quot;inedibles&quot;</span>, <span class="ot">NA</span>,            <span class="st">&quot;chairs&quot;</span>,</a>
+<a class="sourceLine" id="cb40-14" data-line-number="14">    <span class="st">&quot;inedibles&quot;</span>, <span class="ot">NA</span>,            <span class="st">&quot;pots&quot;</span></a>
+<a class="sourceLine" id="cb40-15" data-line-number="15">)</a>
+<a class="sourceLine" id="cb40-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb40-17" data-line-number="17"><span class="kw">print</span>(rect_rep, <span class="dt">n=</span><span class="dv">20</span>)</a></code></pre></div>
+<pre><code>## # A tibble: 11 x 3
+##    edi_class fruit_or_veg name          
+##    &lt;chr&gt;     &lt;chr&gt;        &lt;chr&gt;         
+##  1 edibles   fruit        apples        
+##  2 edibles   fruit        oranges       
+##  3 edibles   fruit        tomatoes      
+##  4 edibles   fruit        lemons        
+##  5 edibles   vegetables   potatoes      
+##  6 edibles   vegetables   sweet potatoes
+##  7 edibles   vegetables   aubergines    
+##  8 inedibles &lt;NA&gt;         tables        
+##  9 inedibles &lt;NA&gt;         benches       
+## 10 inedibles &lt;NA&gt;         chairs        
+## 11 inedibles &lt;NA&gt;         pots</code></pre>
+<p>Note in the above the use of quotation marks <code>\&quot;</code> for the contents of the cells in the rectangles. This tells R that the expected content of the cell should be a character string, and that this character string will be created within the code itself, rather than fetched from somewhere else.</p>
+<p>Note also the use of <code>NA</code>. This means “not applicable”, and tells R that the cells being referred to should be left ‘empty’ rather than filled with a value. In the above example, <code>NA</code> is used to indicate that it is not appropriate to try to categorise pots, benches, chairs and other inedibles as either a fruit or a vegetable. Often, <code>NA</code> is also used to indicate that data are missing, rather than that the fields (broadly synonymous with columns when working with rectangular data) are inappropriate.</p>
+</div>
+</div>
+</div>
+<div id="data-and-metadata" class="section level2">
+<h2><span class="header-section-number">6.3</span> Data and metadata</h2>
+<p>Another useful distinction when considering the contents of a file is between ‘data’, i.e. the values on which various forms of quantitative analyses will be performed, and metadata, meaning additional information relating to the data. The distinction is not always hard-and-fast, as information that could be metadata in one file could be provided as data in another, but often important to bear in mind.</p>
+<div id="data-with-informal-metadata-northwestern-medicine-bmi-data" class="section level3">
+<h3><span class="header-section-number">6.3.1</span> Data with informal metadata: NorthWestern Medicine BMI data</h3>
+<p>As a simple example of the data/metadata distinction, let’s return to the data downloaded from <code>figshare</code> earlier. A direct link to the data itself was used earlier, but to make sense of the data, additional information is needed, which is available from <a href="https://figshare.com/articles/Northwestern_Medicine_BMI_data/6059513">this URL</a>. When this website is looked at through a web browser, we can see both a preview of the contents of the data which we downloaded earlier, and below that some further information:</p>
+<blockquote>
+<p><em>Northwestern Medicine BMI data</em></p>
+</blockquote>
+<blockquote>
+<p>Dataset posted on 21.12.2017, 12:49 by John C. Lang Hans De Sterck Daniel M. Abrams</p>
+</blockquote>
+<blockquote>
+<p>Northwestern Medicine (NU) data are stored in NU.csv comma separated values (CSV) format. This file contains five columns: year t, BMI in year t, BMI in year t + 1, age in year t, and gender. Note: When BMI in year t + 1 is unavailable then the entry in the third column is -1.</p>
+</blockquote>
+<p>Many computer scientists and information specialists may baulk calling the above description ‘metadata’, because this additional information is not stored in a way meant for machines to easily understand. However it is ‘metadata’ in the sense of being additional information about the dataset itself, and information that we require in order to allow R to work with it in the most appropriate way. Our tasks are therefore to interpret and infer the above information correctly, and produce formal (machine-interpretable) metadata that R can understand and respond to appropriately.</p>
+<p>We can think of the contents of the paragraph at the bottom as containing the ‘metadata’ we need to use the data appropriately. We know from this three new things:</p>
+<ol style="list-style-type: decimal">
+<li>The column names are not really the names of the names of the first row.</li>
+<li>One of the columns indicates a year, two indicate BMI values, one indicates age, and one indicates gender</li>
+<li>The value <code>-1</code> has a special meaning. It means the data are missing for that participant in that year.</li>
+</ol>
+<p>With the above (informal or inferred) metadata, we can reload and re-format the data in a more appropriate way.
+### From informal ‘metadata’ to formal metadata</p>
+<p>We can start by giving appropriate names to each column. This means that the values of the first row in the dataset are not used (incorrectly) as the column names.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1">bmi_dta &lt;-</a>
+<a class="sourceLine" id="cb42-2" data-line-number="2"><span class="st">  </span><span class="kw">read_csv</span>(<span class="dt">file =</span> <span class="st">&quot;https://ndownloader.figshare.com/files/10905845&quot;</span>, </a>
+<a class="sourceLine" id="cb42-3" data-line-number="3">         <span class="dt">col_names =</span> <span class="kw">c</span>(<span class="st">&quot;year&quot;</span>, <span class="st">&quot;bmi_t0&quot;</span>, <span class="st">&quot;bmi_t1&quot;</span>, <span class="st">&quot;age_t0&quot;</span>, <span class="st">&quot;gender&quot;</span>)</a>
+<a class="sourceLine" id="cb42-4" data-line-number="4">         )</a></code></pre></div>
+<pre><code>## Parsed with column specification:
+## cols(
+##   year = col_integer(),
+##   bmi_t0 = col_double(),
+##   bmi_t1 = col_double(),
+##   age_t0 = col_double(),
+##   gender = col_integer()
+## )</code></pre>
+<p>Next we can change the <code>-1</code> values to <code>NA</code>, R’s way of representing missing data.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1">bmi_dta &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb44-2" data-line-number="2"><span class="st">  </span>bmi_dta <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb44-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate_each</span>(<span class="kw">funs</span>(<span class="kw">ifelse</span>(. <span class="op">==</span><span class="st"> </span><span class="dv">-1</span>, <span class="ot">NA</span>, .)))</a></code></pre></div>
+<pre><code>## `mutate_each()` is deprecated.
+## Use `mutate_all()`, `mutate_at()` or `mutate_if()` instead.
+## To map `funs` over all variables, use `mutate_all()`</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1">bmi_dta</a></code></pre></div>
+<pre><code>## # A tibble: 2,056,400 x 5
+##     year bmi_t0 bmi_t1 age_t0 gender
+##    &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;int&gt;
+##  1  2011   30.7   24.9   39        0
+##  2  2012   24.9   NA     40        0
+##  3  2003   20.8   23.0   26        1
+##  4  2004   23.0   23.3   27.2      1
+##  5  2005   23.3   22.8   28        1
+##  6  2006   22.8   22.1   29        1
+##  7  2007   22.1   22.2   30        1
+##  8  2008   22.2   23.2   31        1
+##  9  2009   23.2   23.8   32        1
+## 10  2010   23.8   21.9   33        1
+## # ... with 2,056,390 more rows</code></pre>
+<p>Notice that the second column, which used to be <code>-1</code>, is now listed correctly as <code>NA</code>, i.e. missing.</p>
+<p>In the above example we used the term <code>metadata</code> to refer to information that we inferred by reading some text meant for people to read. Often <code>metadata</code> is used in a more formal way, to refer to data about data written for machines to understand.</p>
+<p>For example, the gender column currently contains <code>1</code>s and <code>0</code>s. We know that it refers to two distinct categories of participant, male and female, but R does not. R would have to be told explicitly about the categorical quality of the values in this column, as otherwise it may process the data in inappropriate ways. For instance, if we try to summarise the contents of this column, we are likely to be interested in the numbers of males and females in the dataset. However, R might expect us to be interested in the average value of all rows in the column.</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1"><span class="kw">summary</span>(bmi_dta)</a></code></pre></div>
+<pre><code>##       year          bmi_t0           bmi_t1            age_t0     
+##  Min.   :1991   Min.   : 10.01   Min.   :10.0      Min.   :18.00  
+##  1st Qu.:2007   1st Qu.: 23.22   1st Qu.:23.2      1st Qu.:33.00  
+##  Median :2010   Median : 26.43   Median :26.4      Median :44.17  
+##  Mean   :2009   Mean   : 27.62   Mean   :27.6      Mean   :46.84  
+##  3rd Qu.:2012   3rd Qu.: 30.60   3rd Qu.:30.7      3rd Qu.:59.00  
+##  Max.   :2014   Max.   :100.00   Max.   :99.0      Max.   :90.00  
+##                                  NA&#39;s   :1038882                  
+##      gender      
+##  Min.   :0.0000  
+##  1st Qu.:0.0000  
+##  Median :0.0000  
+##  Mean   :0.3692  
+##  3rd Qu.:1.0000  
+##  Max.   :1.0000  
+##  NA&#39;s   :873</code></pre>
+<p>In the above, the summary for the gender colunn gives a mean of <code>0.3692</code>, indicating that around 37% of the participants are of the gender indicated by the value <code>1</code>. However, a more appropriate way of summarising this column might be to give a tally of each category of participants.</p>
+<p>We can get a sense of the kind of meta-data R has attached to each column by looking back at the table output when we printed <code>bmi_dta</code> above. Immediately below the column names is a line containing either <code>&lt;int&gt;</code> or <code>&lt;dbl&gt;</code>. <code>&lt;int&gt;</code> means ‘integer’, and means that only whole numbers (<code>0</code>, <code>1</code>, <code>2</code>, <code>3</code>, etc.) are accepted in that column, and <code>&lt;dbl&gt;</code> means ‘double’, which means that non-integer numeric values, like <code>2.15</code>, are also acceptable as inputs.</p>
+<p>We can change the metadata associated with the <code>gender</code> column to indicate a different data type, suitable for this type of information, in the following way</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1">bmi_dta <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb50-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">gender =</span> <span class="kw">factor</span>(gender))</a></code></pre></div>
+<pre><code>## # A tibble: 2,056,400 x 5
+##     year bmi_t0 bmi_t1 age_t0 gender
+##    &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt; 
+##  1  2011   30.7   24.9   39   0     
+##  2  2012   24.9   NA     40   0     
+##  3  2003   20.8   23.0   26   1     
+##  4  2004   23.0   23.3   27.2 1     
+##  5  2005   23.3   22.8   28   1     
+##  6  2006   22.8   22.1   29   1     
+##  7  2007   22.1   22.2   30   1     
+##  8  2008   22.2   23.2   31   1     
+##  9  2009   23.2   23.8   32   1     
+## 10  2010   23.8   21.9   33   1     
+## # ... with 2,056,390 more rows</code></pre>
+<p>The column <code>gender</code> now has the data type indicator <code>&lt;fctr&gt;</code> just beneath it, suggesting it is now a factor. We can now see how the <code>summary()</code> function works differently with this data type than the earlier, integer data type.</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1">bmi_dta <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb52-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">gender =</span> <span class="kw">factor</span>(gender)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb52-3" data-line-number="3"><span class="st">  </span><span class="kw">summary</span>()</a></code></pre></div>
+<pre><code>##       year          bmi_t0           bmi_t1            age_t0     
+##  Min.   :1991   Min.   : 10.01   Min.   :10.0      Min.   :18.00  
+##  1st Qu.:2007   1st Qu.: 23.22   1st Qu.:23.2      1st Qu.:33.00  
+##  Median :2010   Median : 26.43   Median :26.4      Median :44.17  
+##  Mean   :2009   Mean   : 27.62   Mean   :27.6      Mean   :46.84  
+##  3rd Qu.:2012   3rd Qu.: 30.60   3rd Qu.:30.7      3rd Qu.:59.00  
+##  Max.   :2014   Max.   :100.00   Max.   :99.0      Max.   :90.00  
+##                                  NA&#39;s   :1038882                  
+##   gender       
+##  0   :1296641  
+##  1   : 758886  
+##  NA&#39;s:    873  
+##                
+##                
+##                
+## </code></pre>
+<p>The <code>summary()</code> function now summarises the gender column in a different way, with a tabulation by group rather than mean of the values.</p>
+<div id="the-ghost-in-the-machine-making-an-educated-guess-about-gender-labels" class="section level4">
+<h4><span class="header-section-number">6.3.1.1</span> The ghost in the machine: making an educated guess about gender labels</h4>
+<p>One point we should note in the above is that we still do not know, from the information provided, which label (0 or 1) refers to which gender. Does a <code>1</code> indicate males, or females?</p>
+<p>Frustratingly, this information is not clearly stated in the <a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0189795">associated article</a> or appendices either. Because of this, we may have to look at the associated code in order to guage this basic fact with certainty, though we can probably guess which code refers to which gender using some additional domain knowledge:</p>
+<ul>
+<li>Females live longer than males, so <em>if the hospital sample data are representative</em> of the whole US population, we might expect a higher average age for females than males. We might also expect the upper end of the distribution, such as the upper quantile (the age at which 25% of the sample are older and 75% are younger) to be higher too.</li>
+<li>Females tend to have somewhat higher variance in BMIs than males. (e.g. <a href="https://www.ncbi.nlm.nih.gov/pubmed/23675464" class="uri">https://www.ncbi.nlm.nih.gov/pubmed/23675464</a>)</li>
+</ul>
+<p>Let’s try to infer gender using this additional information, by summarising some key statistics for various columns by gender.</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1">bmi_dta <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb54-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(gender) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb54-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(</a>
+<a class="sourceLine" id="cb54-4" data-line-number="4">    <span class="dt">mean_bmi =</span> <span class="kw">mean</span>(bmi_t0, <span class="dt">na.rm =</span> T),</a>
+<a class="sourceLine" id="cb54-5" data-line-number="5">    <span class="dt">var_bmi  =</span> <span class="kw">var</span>(bmi_t0, <span class="dt">na.rm =</span> T),</a>
+<a class="sourceLine" id="cb54-6" data-line-number="6">    <span class="dt">mean_age =</span> <span class="kw">mean</span>(age_t0, <span class="dt">na.rm =</span> T),</a>
+<a class="sourceLine" id="cb54-7" data-line-number="7">    <span class="dt">uq_age   =</span> <span class="kw">quantile</span>(age_t0, <span class="dt">probs =</span> <span class="fl">0.75</span>, <span class="dt">na.rm =</span> T)</a>
+<a class="sourceLine" id="cb54-8" data-line-number="8">  )</a></code></pre></div>
+<pre><code>## # A tibble: 3 x 5
+##   gender mean_bmi var_bmi mean_age uq_age
+##    &lt;int&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;
+## 1      0     27.4    47.9     45.4   57.3
+## 2      1     28.1    29.4     49.3   62  
+## 3     NA     27.3    57.1     56.6   90</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1">bmi_dta <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb56-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(gender)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb56-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> bmi_t0)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb56-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_histogram</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb56-5" data-line-number="5"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>gender)</a></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>Based on this, we might feel more confident assuming that a <code>0</code> in the gender column indicates females, and so a <code>1</code> indicates males. Depending on how sure we need to be about this, we might either decide to go with these coding assumptions, or to seek further information to (dis)confirm this suspicion.</p>
+<p>For now, let’s recode the gender according to our current best assumptions:</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" data-line-number="1">bmi_dta &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb58-2" data-line-number="2"><span class="st">  </span>bmi_dta <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb58-3" data-line-number="3"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">gender =</span> <span class="kw">case_when</span>(</a>
+<a class="sourceLine" id="cb58-4" data-line-number="4">      gender <span class="op">==</span><span class="st"> </span><span class="dv">0</span> <span class="op">~</span><span class="st"> &#39;female&#39;</span>, </a>
+<a class="sourceLine" id="cb58-5" data-line-number="5">      gender <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">~</span><span class="st"> &#39;male&#39;</span></a>
+<a class="sourceLine" id="cb58-6" data-line-number="6">      ) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">factor</span>()</a>
+<a class="sourceLine" id="cb58-7" data-line-number="7">    ) </a>
+<a class="sourceLine" id="cb58-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb58-9" data-line-number="9">bmi_dta</a></code></pre></div>
+<pre><code>## # A tibble: 2,056,400 x 5
+##     year bmi_t0 bmi_t1 age_t0 gender
+##    &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt; 
+##  1  2011   30.7   24.9   39   female
+##  2  2012   24.9   NA     40   female
+##  3  2003   20.8   23.0   26   male  
+##  4  2004   23.0   23.3   27.2 male  
+##  5  2005   23.3   22.8   28   male  
+##  6  2006   22.8   22.1   29   male  
+##  7  2007   22.1   22.2   30   male  
+##  8  2008   22.2   23.2   31   male  
+##  9  2009   23.2   23.8   32   male  
+## 10  2010   23.8   21.9   33   male  
+## # ... with 2,056,390 more rows</code></pre>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" data-line-number="1"><span class="kw">summary</span>(bmi_dta)</a></code></pre></div>
+<pre><code>##       year          bmi_t0           bmi_t1            age_t0     
+##  Min.   :1991   Min.   : 10.01   Min.   :10.0      Min.   :18.00  
+##  1st Qu.:2007   1st Qu.: 23.22   1st Qu.:23.2      1st Qu.:33.00  
+##  Median :2010   Median : 26.43   Median :26.4      Median :44.17  
+##  Mean   :2009   Mean   : 27.62   Mean   :27.6      Mean   :46.84  
+##  3rd Qu.:2012   3rd Qu.: 30.60   3rd Qu.:30.7      3rd Qu.:59.00  
+##  Max.   :2014   Max.   :100.00   Max.   :99.0      Max.   :90.00  
+##                                  NA&#39;s   :1038882                  
+##     gender       
+##  female:1296641  
+##  male  : 758886  
+##  NA&#39;s  :    873  
+##                  
+##                  
+##                  
+## </code></pre>
+<p>The <code>gender</code> column now contains data of class <code>factor</code> (<code>&lt;fctr&gt;</code>) in the above). We can see from the summary that the male number of rows per category is as before.</p>
+<p>Factors in R contain an additional type of metadata. Rather than repeatedly writing the word ‘male’ and ‘female’ in each row, R represents each label by a number, and contains a look-up table linking each number to each label. We can start to learn more about how R does this by typing the following:</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" data-line-number="1"><span class="kw">head</span>(bmi_dta<span class="op">$</span>gender)</a></code></pre></div>
+<pre><code>## [1] female female male   male   male   male  
+## Levels: female male</code></pre>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" data-line-number="1"><span class="kw">head</span>(<span class="kw">as.numeric</span>(bmi_dta<span class="op">$</span>gender))</a></code></pre></div>
+<pre><code>## [1] 1 1 2 2 2 2</code></pre>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" data-line-number="1"><span class="kw">levels</span>(bmi_dta<span class="op">$</span>gender)</a></code></pre></div>
+<pre><code>## [1] &quot;female&quot; &quot;male&quot;</code></pre>
+<p>The first of these commands shows the first five items in the column: two males then three females. The second shows the numeric values actually stored, and the last function shows the labels associated each of these successive values (1, 2). Turning the gender column into a factor has created two additional types of metadata: a new identifier for the class of the data in the column (a <code>factor</code> rather than <code>integer</code>); and a value-label look-up table like the following:</p>
+<table>
+<thead>
+<tr class="header">
+<th>value</th>
+<th>label</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>female</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>male</td>
+</tr>
+</tbody>
+</table>
+<p>If the dataset we have been working on in R were saved as a standard text file, much of this metadata would be lost, and have to be supplied elsewhere. But instead if it were saved in R’s own binary file format, <code>.rds</code>, much of it would be retained.</p>
+<p>There are thus some important trade-offs to bear in mind when deciding what type of file to use to store data.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Data Type</th>
+<th>Advantages</th>
+<th>Disadvantages</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Text</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+More interoperable: Works with many programs
+<li>
+Likely to remain readable across time
+</ul>
+<div class="line-block"></div>
+<ul>
+<li>
+Metadata lost
+<li>
+Sometimes produces larger file sizes
+</ul>
+<div class="line-block">Binary |</div>
+<ul>
+<li>
+Data and metadata in same file
+<li>
+Sometimes file sizes are smaller, faster to read etc
+</ul>
+<div class="line-block"></div>
+<ul>
+<li>
+Less interoperable
+</ul>
+<div class="line-block"></div>
+<ul>
+<li>Note to self: fix the above</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="tidy-and-untidy-data" class="section level2">
+<h2><span class="header-section-number">6.4</span> Tidy and untidy data</h2>
+<p>A final way of distinguishing between rectangular data is between <em>tidy data</em> and <em>untidy data</em>. This distinction, like many recent developments in the use of R for data science, was popularised by Hadley Wickham, via a <a href="https://www.jstatsoft.org/article/view/v059i10/v59i10.pdf">2014 article</a> and associated software.</p>
+<p>Wickham defines data as tidy if the following is true:</p>
+<ol style="list-style-type: decimal">
+<li>Each variable forms a column</li>
+<li>Each observation forms a row</li>
+<li>Each type of observational unit forms a table</li>
+</ol>
+<p>As is often the case, tidy data is often easiest to understand through examples, rather than purely through definition. One of the first examples given in the <a href="https://www.jstatsoft.org/article/view/v059i10/v59i10.pdf">2014 article</a> concerns the following table:</p>
+<table>
+<thead>
+<tr class="header">
+<th>row</th>
+<th>a</th>
+<th>b</th>
+<th>c</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>1</td>
+<td>4</td>
+<td>7</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>2</td>
+<td>5</td>
+<td>8</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>3</td>
+<td>6</td>
+<td>9</td>
+</tr>
+</tbody>
+</table>
+<p>A tidy data version of the above looks as follows:</p>
+<table>
+<thead>
+<tr class="header">
+<th>row</th>
+<th>column</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>a</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>a</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>a</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>b</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>b</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>C</td>
+<td>b</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td>A</td>
+<td>c</td>
+<td>7</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>c</td>
+<td>8</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>c</td>
+<td>9</td>
+</tr>
+</tbody>
+</table>
+<p>My own way of thinking about tidy data is to think about the columns in a dataset as being of two fundamentally different types:</p>
+<ul>
+<li>Where/locator variables</li>
+<li>What/measurement variables</li>
+</ul>
+<p>For the third of the criteria above to be true, “Each type of observational unit forms a table”, each row must have a unique combination of locator variables. In the table above, the columns marked <code>row</code> and <code>column</code> are the locator variables, and the column marked <code>value</code> is the measurement variables.</p>
+<p>For example, imagine that, instead of the 3-by-3 table above, we had a table giving height above sea level (in km) for various combinations of latitude and longitude:</p>
+<table>
+<thead>
+<tr class="header">
+<th>latitude</th>
+<th>10</th>
+<th>20</th>
+<th>30</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>10</td>
+<td>1</td>
+<td>4</td>
+<td>7</td>
+</tr>
+<tr class="even">
+<td>20</td>
+<td>2</td>
+<td>5</td>
+<td>8</td>
+</tr>
+<tr class="odd">
+<td>30</td>
+<td>3</td>
+<td>6</td>
+<td>9</td>
+</tr>
+</tbody>
+</table>
+<p>The tidy data version of this table now looks as follows:</p>
+<table>
+<thead>
+<tr class="header">
+<th>latitude</th>
+<th>longitude</th>
+<th>elevation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>10</td>
+<td>10</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>20</td>
+<td>10</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>30</td>
+<td>10</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>20</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td>20</td>
+<td>20</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>30</td>
+<td>20</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td>10</td>
+<td>30</td>
+<td>7</td>
+</tr>
+<tr class="even">
+<td>20</td>
+<td>30</td>
+<td>8</td>
+</tr>
+<tr class="odd">
+<td>30</td>
+<td>30</td>
+<td>9</td>
+</tr>
+</tbody>
+</table>
+<p>It’s clear in this example that elevation is <em>what is measured</em>, and latitude and longitude are needed to define <em>where it is measured</em>. Both latitude and longitude need to be specified in order for the measurements to be ‘labelled’ correctly. Similarly, we could imagine additional measurements, like average annual rainfall, having been taken at the same locations, which would be recorded in the table as an additional <em>what</em> column:</p>
+<table>
+<thead>
+<tr class="header">
+<th>latitude</th>
+<th>longitude</th>
+<th>elevation</th>
+<th>rainfall</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>10</td>
+<td>10</td>
+<td>1</td>
+<td>15</td>
+</tr>
+<tr class="even">
+<td>20</td>
+<td>10</td>
+<td>2</td>
+<td>20</td>
+</tr>
+<tr class="odd">
+<td>30</td>
+<td>10</td>
+<td>3</td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>20</td>
+<td>4</td>
+<td>40</td>
+</tr>
+<tr class="odd">
+<td>20</td>
+<td>20</td>
+<td>5</td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td>30</td>
+<td>20</td>
+<td>6</td>
+<td>5</td>
+</tr>
+<tr class="odd">
+<td>10</td>
+<td>30</td>
+<td>7</td>
+<td>45</td>
+</tr>
+<tr class="even">
+<td>20</td>
+<td>30</td>
+<td>8</td>
+<td>35</td>
+</tr>
+<tr class="odd">
+<td>30</td>
+<td>30</td>
+<td>9</td>
+<td>20</td>
+</tr>
+</tbody>
+</table>
+<p>Once additional columns are added, the advantages of the tidy data arrangement starts to become clearer. If the original table structure were used, with each row a different latitude and each column a different longitude, then two separate tables would have to have been produced. With the tidy data arrangement, the <em>where</em> columns define the table’s observational unit, and so long as measurements pertain to the table’s observational unit, then they can be added as additional <em>what</em> columns in the dataset, as above.</p>
+<p>In order to think further about what’s meant by an observational unit, let’s return to the example of rainfall. In the above example, the <code>rainfall</code> column is the annual average rainfall. But of course not all years are alike. We could instead imagine a new table, which includes <code>latitude</code>, <code>longitude</code> and <code>year</code> as <em>where</em> variables, and <code>rainfall</code> as the only <em>what</em> variable:</p>
+<table>
+<thead>
+<tr class="header">
+<th>latitude</th>
+<th>longitude</th>
+<th>year</th>
+<th>rainfall</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>10</td>
+<td>10</td>
+<td>2000</td>
+<td>15</td>
+</tr>
+<tr class="even">
+<td>20</td>
+<td>10</td>
+<td>2000</td>
+<td>20</td>
+</tr>
+<tr class="odd">
+<td>30</td>
+<td>10</td>
+<td>2000</td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>10</td>
+<td>2010</td>
+<td>18</td>
+</tr>
+<tr class="odd">
+<td>20</td>
+<td>10</td>
+<td>2010</td>
+<td>22</td>
+</tr>
+<tr class="even">
+<td>30</td>
+<td>10</td>
+<td>2010</td>
+<td>9</td>
+</tr>
+</tbody>
+</table>
+<p>Why would <code>elevation</code> not be included in the above table, with its latitude-longitude-year observational unit? Because, barring an earthquake, volcanic eruption, or Dutch engineering, <code>elevation</code> is likely to remain constant over each of the observed years, so recording elevation for each latitude-longitude-year combination will lead to much repetition of the data within the dataset. For elevation, the differences (in terms of years) do not make a difference to the measured values. The appropriate observational unit for <code>elevation</code> is <code>latitude-longitude</code>, not <code>latitude-longitude-year</code>.</p>
+<p>Much as you can crop a larger image to produce a smaller image, but not uncrop a smaller image to produce a larger image, a dataset using a <code>latitude-longitude-year</code> observational unit can be used to produce a <code>latitude-longitude</code> observational unit, but not vice-versa. Later in this chapter we will discuss how to do this using the <code>group_by</code> and <code>summarise</code> functions.</p>
+<div id="section-summary" class="section level3">
+<h3><span class="header-section-number">6.4.1</span> Section summary</h3>
+<p>In this chapter section we have introduced a number of core distinctions between types of data and types of file used to store them. This includes:</p>
+<ul>
+<li>the text/binary file distinction;</li>
+<li>the rectangular/non-rectangular data distinction;</li>
+<li>the data/metadata distinction; and</li>
+<li>the tidy/untidy data distinction</li>
+</ul>
+<p>Although a number of examples have been provided in order to illustrate some of these distinctions, and the code used to produce these examples has been displayed, the contents of this code, including the particular functions and packages used, have not been formally introduced. The next section of this chapter will provide this more formal introduction. After you have been introduced formally, and progressed further with the rest of the book, consider returning to the examples above with a greater focus on the code rather than the principles.</p>
+</div>
+</div>
+<div id="loading-and-saving-data---r-packages-and-functions" class="section level2">
+<h2><span class="header-section-number">6.5</span> Loading and saving data - R packages and functions</h2>
+<p>As you will have seen from the examples earlier in this and previous chapters, R makes use of a large number of functions, stored in a number of different packages. Because R is open source, the bar to adding new packages and functions is low, and because of this, and R’s large user and developer base, there are many thousands of packages available.</p>
+<p>In the previous examples, a number of relatively ‘exotic’ functions and packages, like the <code>jsonlite</code> package, were used to illustrate some of the above distinctions. However, in practice we will largely be working with rectangular data stored as text files. To work with such data, we can largely stick with functions that are within the <code>tidyr</code> packages, which is part of <code>tidyverse</code>, and loaded along with other related packages whenever we load the <code>tidyverse</code> package.</p>
+<div id="loading-a-new-package" class="section level3">
+<h3><span class="header-section-number">6.5.1</span> Loading a new package</h3>
+<p>Using a function within a package usually involves the following two steps:</p>
+<ol style="list-style-type: decimal">
+<li>Install the package of interest from the internet to your machine</li>
+<li>Load the package from your machine to the particular R session you are working on currently.</li>
+</ol>
+<p>The first of these steps only has to be done once per machine you work with. The <code>install.packages()</code> function can be used to install the required packages. For example, to install the <code>tidyverse</code> package, we would write and run the following:</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</a></code></pre></div>
+<p>After the package has been installed on your machine, it can be loaded using any of the following</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb69-2" data-line-number="2"><span class="kw">require</span>(tidyverse)</a>
+<a class="sourceLine" id="cb69-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb69-4" data-line-number="4">pacman<span class="op">::</span><span class="kw">p_load</span>(tidyverse)</a></code></pre></div>
+<p>Both the <code>library()</code> and <code>require()</code> functions are part of Base R. They will be loaded on your R session whenever you load up R. The third expression calls a function within a new package, <code>pacman</code>, which is a package designed to manage other packages. (pacman: <em>pac</em>kage <em>man</em>ager.) The <code>library</code>, <code>require</code> and <code>p_load</code> functions differ in terms of what they check for before attempting to load a package:</p>
+<ul>
+<li><code>library()</code>: Loads the package</li>
+<li><code>require()</code>: Checks whether the package has already been loaded. If not, loads the package.</li>
+<li><code>p_load()</code>: Checks whether the package has been installed and loaded. Installs the package if not already installed, and loads the package if not already loaded.</li>
+</ul>
+<p>The <code>p_load()</code> function may be preferable if you want to run a script multiple times, on different machines. This is because the required packages may be installed on one machine but not another. By first checking that the package has been installed, and installing if necessary, this means the scripts should work unmodified on each machine. (So long as the <code>pacman</code> package itself has been installed.) Otherwise, you will have to remember to use <code>install.packages()</code> the first time you run the script, but also remember to not run it each time, because otherwise you are wasting valuable time reinstalling the same package each time. A good way to ensure you do this is to remember to comment out the <code>install.packages()</code> line after running it within the script.</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" data-line-number="1"><span class="co"># install.packages(&quot;tidyverse&quot;)</span></a></code></pre></div>
+<p>Note: Within RStudio you can turn lines of code into comments, and vice-versa, by selecting the lines of interest and pressing <code>Ctrl+Shift+C</code>.</p>
+<p>If you wish for a script to first check whether the <code>pacman</code> package has been installed on a machine, you can include the following line at the start of the R script</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1"><span class="cf">if</span> (<span class="op">!</span>(<span class="st">&quot;pacman&quot;</span> <span class="op">%in%</span><span class="st"> </span><span class="kw">rownames</span>(<span class="kw">installed.packages</span>()))) <span class="kw">install.packages</span>(<span class="st">&quot;pacman&quot;</span>)</a></code></pre></div>
+<p>The line above is an example of a conditional statement. It states that: if the name <code>&quot;pacman&quot;</code> is <em>not</em> in a list of package names returned by the function <code>installed.packages()</code>, then install the package <code>pacman</code>. There are a number of different ways of expressing the same conditional statements, and the above is not the easiest expression to understand, but it will work as required. So long as the <code>pacman</code> package is installed, the installation of all other packages can be managed using the <code>pacman::p_load()</code> function.</p>
+<p>But first, let’s explain what’s meant by ‘loading’ a package. Whenever you type a name ending with <code>()</code> at the end of it, R thinks you are asking for a function to be run, with that particular name. For example, if you were to type <code>select()</code>, R would look for a function called <code>select</code>. But where does it look?</p>
+<p>R looks for functions inside a list of packages. This list can be found by typing <code>search()</code> in R.</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" data-line-number="1"><span class="kw">search</span>()</a></code></pre></div>
+<pre><code>##  [1] &quot;.GlobalEnv&quot;         &quot;package:jsonlite&quot;   &quot;package:bindrcpp&quot;  
+##  [4] &quot;package:gutenbergr&quot; &quot;package:forcats&quot;    &quot;package:stringr&quot;   
+##  [7] &quot;package:dplyr&quot;      &quot;package:purrr&quot;      &quot;package:readr&quot;     
+## [10] &quot;package:tidyr&quot;      &quot;package:tibble&quot;     &quot;package:ggplot2&quot;   
+## [13] &quot;package:tidyverse&quot;  &quot;package:stats&quot;      &quot;package:graphics&quot;  
+## [16] &quot;package:grDevices&quot;  &quot;package:utils&quot;      &quot;package:datasets&quot;  
+## [19] &quot;package:methods&quot;    &quot;Autoloads&quot;          &quot;package:base&quot;</code></pre>
+<p>When R is looking for a function with a particular name, it starts at the top of the list of packages and works its way down. As soon as it finds a function with the name you’ve specified, it stops looking.</p>
+<p>This behaviour is R’s way of resolving ambiguity when two packages contain a function with the same name. What this can mean, however, is that that the same code could work differently depending on which packages have already been loaded, and the order in which they were loaded.</p>
+<p>For example, both the <code>dplyr</code> and the <code>stats</code> package contain functions called <code>filter</code>, but these are different functions with different behaviours. Looking through the search list, we see that the <code>dplyr</code> package is enountered earlier in the list than the <code>stats</code> package, and so <code>dplyr</code>s <code>filter</code> function will, for our current R session, be used instead of <code>stats</code>’ <code>filter</code> function. But what if:</p>
+<ol style="list-style-type: decimal">
+<li>We want to ensure that the code always refers to the <code>dplyr</code> <code>filter</code> function, regardless of the order in which packages have been loaded in a session?</li>
+<li>We want to use the <code>stats</code> <code>filter</code> function, while also having loaded the <code>dyplr</code> package?</li>
+<li>We want to use a particular function within a package, without having to load the package itself?</li>
+</ol>
+<p>Each of these challenges can be solved by being more explicit about which package we want to use a function from, which we can do using the <code>::</code> operator, known as the scope operator. For example, if we wanted to see the first few rows of the <code>bmi_dta</code> data_frame we created earlier, with gender now explicitly labelled rather than simply coded with 0 and 1, we could filter to only include females as follows:</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" data-line-number="1">bmi_dta <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb74-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(gender <span class="op">==</span><span class="st"> &quot;female&quot;</span>)</a></code></pre></div>
+<pre><code>## # A tibble: 1,296,641 x 5
+##     year bmi_t0 bmi_t1 age_t0 gender
+##    &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt; 
+##  1  2011   30.7   24.9     39 female
+##  2  2012   24.9   NA       40 female
+##  3  2010   23.0   40.5     55 female
+##  4  2011   40.5   44.7     57 female
+##  5  2012   44.7   NA       58 female
+##  6  2014   46.5   NA       59 female
+##  7  2005   29.3   32.7     19 female
+##  8  2006   32.7   NA       20 female
+##  9  2008   31.6   33.9     22 female
+## 10  2009   33.9   NA       23 female
+## # ... with 1,296,631 more rows</code></pre>
+<p>However, this only works because of the particular package search space we have created by loading the packages in the order we did in our session. If someone loads the packages in a different order and runs the same code, they may not get the same outcome. We can make the above line of code more explicit by using the scope operator as follows:</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" data-line-number="1">bmi_dta <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb76-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(gender <span class="op">==</span><span class="st"> &quot;female&quot;</span>)</a></code></pre></div>
+<pre><code>## # A tibble: 1,296,641 x 5
+##     year bmi_t0 bmi_t1 age_t0 gender
+##    &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt; 
+##  1  2011   30.7   24.9     39 female
+##  2  2012   24.9   NA       40 female
+##  3  2010   23.0   40.5     55 female
+##  4  2011   40.5   44.7     57 female
+##  5  2012   44.7   NA       58 female
+##  6  2014   46.5   NA       59 female
+##  7  2005   29.3   32.7     19 female
+##  8  2006   32.7   NA       20 female
+##  9  2008   31.6   33.9     22 female
+## 10  2009   33.9   NA       23 female
+## # ... with 1,296,631 more rows</code></pre>
+<p>In this case, you can see there is no difference in terms of what’s been produced. However, making the functions required explicit in this way can help uncover and resolve issues about package dependencies, especially when code are shared by users.</p>
+<p>The syntax for the <code>::</code>operator is as follows:</p>
+<p><code>[PACKAGE NAME]::[FUNCTION NAME]</code></p>
+<p>i.e. just write the package name, then the <code>::</code>, then the function name.</p>
+</div>
+</div>
+<div id="functions-and-packages-for-working-with-data-of-different-types" class="section level2">
+<h2><span class="header-section-number">6.6</span> Functions and packages for working with data of different types</h2>
+<p>We have been encountered some examples of functions for working with data of different types earlier, but we have not yet been formally introduced. This book emphasises the use of the Tidyverse suite of packages and functions, because they are designed to work together elegantly. However, most functions for loading and saving data which the Tidyverse uses are modelled very closely on earlier packages included with Base R, with only slight changes in functionality. We will thus look at some examples of both the tidyverse and base R solutions.</p>
+<p>The majority of your work is likely to involve working with rectangular data saved as text files. As the examples above illustrated, these involve using special codes within the stream of text within the file to distinguish:</p>
+<ol style="list-style-type: decimal">
+<li>Where one column ends and the next begins</li>
+<li>Where one row ends and the next begins</li>
+</ol>
+<p>The standard way of distinguishing breaks between rows is with the <em>new line character</em>. We don’t usually see this character, but we do see its effects on how it breaks up some text when displayed. Within R, we can specify this by writing <code>&quot;\n&quot;</code>, i.e. the <code>n</code> character preceded by a backtick. We can understand this behaviour a little more by using the <code>cat</code> function, which is like the <code>print</code> function, but which does not add any new lines on its own:</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" data-line-number="1"><span class="kw">cat</span>(<span class="st">&quot;I am a cat&quot;</span>)</a></code></pre></div>
+<pre><code>## I am a cat</code></pre>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" data-line-number="1"><span class="kw">cat</span>(<span class="st">&quot;I am a dog&quot;</span>)</a></code></pre></div>
+<pre><code>## I am a dog</code></pre>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" data-line-number="1"><span class="kw">cat</span>(<span class="st">&quot;I am a cat</span><span class="ch">\n</span><span class="st">and I am a dog&quot;</span>)</a></code></pre></div>
+<pre><code>## I am a cat
+## and I am a dog</code></pre>
+<p>Though there are three commands, written on three lines, in the input above, the output is just on two lines, because it’s only when the <code>\n</code> character is encountered that the <code>cat</code> function explicitly knows to move to a new line. Another hidden character, whose properties we need to understand, can be seen in the following example:</p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" data-line-number="1"><span class="kw">cat</span>(<span class="st">&quot;I am a cat</span><span class="ch">\n</span><span class="st">&quot;</span>)</a></code></pre></div>
+<pre><code>## I am a cat</code></pre>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" data-line-number="1"><span class="kw">cat</span>(<span class="st">&quot;</span><span class="ch">\t</span><span class="st">I am a tabby cat</span><span class="ch">\n</span><span class="st">&quot;</span>)</a></code></pre></div>
+<pre><code>##  I am a tabby cat</code></pre>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" data-line-number="1"><span class="kw">cat</span>(<span class="st">&quot;</span><span class="ch">\t</span><span class="st">I am a tabby</span><span class="ch">\t</span><span class="st">tabby cat</span><span class="ch">\n</span><span class="st">&quot;</span>)</a></code></pre></div>
+<pre><code>##  I am a tabby    tabby cat</code></pre>
+<p>The <code>\t</code> character tells R to display the next that follows it one tab-space away from the current location. Though it may look like the same outcome can be achieved by manually adding a number of spaces (8 in the above example) before the text on the second line, it’s interpreted differently by R, as a different character.</p>
+<p>The comma, the tab character, and the new line character, are the main ways in which text files containing rectangular data are split in a consistent way into cells, containing a number of different rows, and the same numbers of columns within each row. Both the comma symbol (,) and the tab symbol (\) are different standard ways of splitting rows of text into columns to form tables. Alteratively, the presence of one or more spaces or other space-line symbols like tabs (collectively called white space) in the text is sometimes used.</p>
+<p>Sometimes, the semi-colon (;) symbol is used to separate row contents into columns instead. One reason why the semi-colon is used to separate row contents into columns is because the <code>,</code> symbol is already used for something else: to separate numbers into the part before and after the decimal. For example, the value of one half might be written as <code>0.5</code> but also (much more occasionally) as <code>0,5</code>, and if the function you are using expects to chop the data whenever it encounters a <code>,</code> symbol, this creates problems.</p>
+<p>Some older text file formats, harking back to the conventions and constraints of physical punch tape, don’t make use of delimiters at all, but instead expect an equal number of characters on all lines. They put (say) the first five characters of a row in the first column, the next five in the second column, and so on. If the number of characters in one line is off, the contents of the columns in that row won’t be correct, and potentially the whole file won’t be read correctly.</p>
+<p>The key point to remember is that computers are <em>fast</em> but <em>dumb</em>, and when you encounter problems and behaviours you don’t expect from R, you have to keep this fact in mind, and think about how you can specify the structure and expected contents of a data file clearly enough that R will know what to do with it.</p>
+<p>Both Base R and the tidyverse’s <code>readr</code> package have similar functions for reading rectangular data text files structured in some of the more standard ways. The functions <code>read.csv()</code> (Base R) and <code>read_csv()</code> both assume the within-row contents will be split (delimited) into columns by using the <code>,</code> symbol. The functions <code>read.csv2()</code> (Base R) and <code>read_csv2()</code> (readr) are used when the semi-colon (<code>;</code>) rather than comma is used to delimit. By typing the name of a function, we can see some of the function contents:</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" data-line-number="1"><span class="kw">print</span>(<span class="st">&quot;read.csv call&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;read.csv call&quot;</code></pre>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" data-line-number="1">read.csv</a></code></pre></div>
+<pre><code>## function (file, header = TRUE, sep = &quot;,&quot;, quote = &quot;\&quot;&quot;, dec = &quot;.&quot;, 
+##     fill = TRUE, comment.char = &quot;&quot;, ...) 
+## read.table(file = file, header = header, sep = sep, quote = quote, 
+##     dec = dec, fill = fill, comment.char = comment.char, ...)
+## &lt;bytecode: 0x19708c58&gt;
+## &lt;environment: namespace:utils&gt;</code></pre>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" data-line-number="1"><span class="kw">print</span>(<span class="st">&quot;read.csv2 call&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;read.csv2 call&quot;</code></pre>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" data-line-number="1">read.csv2</a></code></pre></div>
+<pre><code>## function (file, header = TRUE, sep = &quot;;&quot;, quote = &quot;\&quot;&quot;, dec = &quot;,&quot;, 
+##     fill = TRUE, comment.char = &quot;&quot;, ...) 
+## read.table(file = file, header = header, sep = sep, quote = quote, 
+##     dec = dec, fill = fill, comment.char = comment.char, ...)
+## &lt;bytecode: 0x15d24730&gt;
+## &lt;environment: namespace:utils&gt;</code></pre>
+<p>Both functions (and all functions) comprise a <em>head</em> (an argument list), and a <em>body</em>. The contents of the head for both functions is what’s between <code>function (</code> and <code>)</code>, on the first couple of lines of each call. This comprises a series of named arguments, things you can set when you call the function.</p>
+<p>The body of the function is the code shown after the <code>)</code> on the second line, and the <code>&lt;bytecode:</code> line. You can see that both of these functions have a body that does the same thing: call another function, called <code>read.table()</code>, with the arguments set in and passed from the head of the calling functions <code>read.csv()</code> and <code>read.csv2()</code>. The only thing that’s different between these two functions is how two of these arguments are set:</p>
+<table>
+<thead>
+<tr class="header">
+<th>argument</th>
+<th>read_csv</th>
+<th>read_csv2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>sep</td>
+<td>“,”</td>
+<td>“;”</td>
+</tr>
+<tr class="even">
+<td>dec</td>
+<td>“.”</td>
+<td>“,”</td>
+</tr>
+</tbody>
+</table>
+<p>Both <code>read.csv()</code> and <code>read.csv2()</code> are examples of convenience or wrapper functions. The <code>sep</code> argument defines what character is used to separate/delimit contents within a row into different column, and the <code>dec</code> argument specifies which character is used to separate numbers into the pre and post decimal components. All they do is specify some reasonable default arguments to another function (<code>read.table()</code> in this case) which does the majority of the heavy lifting. The behaviours of <code>readr</code>‘s <code>read_csv()</code> and <code>read_csv2()</code> are conceptually similar though a bit more complex and sophisticated. For example, <code>read_csv2()</code> looks up information on the computer you are using (known as its ’locale’), including its timezone, in order to work out whether a <code>.</code> or a <code>,</code> is more likely to be used for a decimal place in a number.</p>
+<p>The majority of the time, it is likely you will be loading and saving data using the</p>
+<p>Part (b) will discuss some of the particular R packages and functions within that can be used to work with different file types, presenting even the loading of data as at iterative process of learning more about how variables in data are structured and saved, and how the information in these variables be best represented and operated with inside R.</p>
+</div>
+<div id="data-tidying---principles-and-challenges" class="section level2">
+<h2><span class="header-section-number">6.7</span> Data tidying - principles and challenges</h2>
+<p>Part (c) will introduce a further, higher level, distinction between types of data: from ‘untidy’ and ‘initial’ data to ‘tidy’ and ‘derived’ data. This section will frame much of the practical challenge of data science as involving first identifying what needs to be done to move from the former to the latter, and then knowing how to do this.</p>
+</div>
+<div id="data-tidying---tidyr-and-dplyr" class="section level2">
+<h2><span class="header-section-number">6.8</span> Data tidying - tidyr and dplyr</h2>
+<p>Part (d) will introduce two closely linked R packages, tidyr and dplyr, as providing the tools necessary to complete the vast majority of data tidying and data derivation tasks.</p>
+</div>
+<div id="initial-exploratory-data-analysis" class="section level2">
+<h2><span class="header-section-number">6.9</span> Initial Exploratory data analysis</h2>
+<p>Finally, part (e) will emphasise the importance of rapid exploratory data analysis both at the data tidying stage, and for developing familiarity and engagement with tidied data sources.</p>
+<!--chapter:end:05-tidy_data_home.Rmd-->
+</div>
+</div>
+<div id="tidy_data" class="section level1">
+<h1><span class="header-section-number">7</span> Initial Data Tidying and exploration</h1>
+<p>Placeholder</p>
+<div id="introduction-1" class="section level2">
+<h2><span class="header-section-number">7.1</span> Introduction</h2>
+</div>
+<div id="eight-ways-of-dividing-file-and-data-types-1" class="section level2">
+<h2><span class="header-section-number">7.2</span> Eight ways of dividing file and data types</h2>
+<div id="rectangular-representation-of-the-above-1" class="section level3">
+<h3><span class="header-section-number">7.2.1</span> Rectangular representation of the above</h3>
+</div>
+</div>
+<div id="data-and-metadata-1" class="section level2">
+<h2><span class="header-section-number">7.3</span> Data and metadata</h2>
+</div>
+<div id="tidy-and-untidy-data-1" class="section level2">
+<h2><span class="header-section-number">7.4</span> Tidy and untidy data</h2>
+</div>
+<div id="loading-and-saving-data---r-packages-and-functions-1" class="section level2">
+<h2><span class="header-section-number">7.5</span> Loading and saving data - R packages and functions</h2>
+</div>
+<div id="data-tidying---principles-and-challenges-1" class="section level2">
+<h2><span class="header-section-number">7.6</span> Data tidying - principles and challenges</h2>
+</div>
+<div id="data-tidying---tidyr-and-dplyr-1" class="section level2">
+<h2><span class="header-section-number">7.7</span> Data tidying - tidyr and dplyr</h2>
+</div>
+<div id="initial-exploratory-data-analysis-1" class="section level2">
+<h2><span class="header-section-number">7.8</span> Initial Exploratory data analysis</h2>
+<!--chapter:end:05-tidy_data_orig.Rmd-->
+</div>
+<div id="what-is-data-visualisation-the-grammar-of-graphics-approach" class="section level2">
+<h2><span class="header-section-number">7.9</span> What is data visualisation? The grammar of graphics approach</h2>
+</div>
+<div id="exploratory-data-analysis-using-ggplot2" class="section level2">
+<h2><span class="header-section-number">7.10</span> Exploratory data analysis using ggplot2</h2>
+</div>
+<div id="producing-tables-in-r" class="section level2">
+<h2><span class="header-section-number">7.11</span> Producing tables in R</h2>
+</div>
+<div id="producing-publication-ready-graphs" class="section level2">
+<h2><span class="header-section-number">7.12</span> Producing publication-ready graphs</h2>
+</div>
+<div id="an-introduction-to-spatial-maps" class="section level2">
+<h2><span class="header-section-number">7.13</span> An introduction to spatial maps</h2>
+<!--chapter:end:06-data_vis.Rmd-->
+</div>
+</div>
+<div id="text_explore" class="section level1">
+<h1><span class="header-section-number">8</span> Text analysis</h1>
+<p>This section will provide a brief introduction to using R to explore text documents, an unusual type of data often
+encountered more associated with qualitative than quantitative research in the social sciences. This chapter will not provide an extensive, formal discussion of how to produce statistical models based on text, but instead should serve as a taster of some of the features of the recent <code>tidytext</code> package by XXX.</p>
+<!--chapter:end:07-text_analysis.rmd-->
+</div>
+<div id="stats" class="section level1">
+<h1><span class="header-section-number">9</span> Statistics</h1>
+<p>Most books on quantitative methods focus very heavily on statistics. This book will instead situate statistics as an element within a much broader process of activities in the service of getting insight from data, and making better decisions on the basis of this insight.</p>
+<div id="the-aims-of-statistics-data-reduction-or-inference" class="section level2">
+<h2><span class="header-section-number">9.1</span> The aims of statistics: data reduction or inference?</h2>
+<p>Part (a) will argue for statistics, by which is meant primarily the production of summary statistics, as a key part of the data science toolkit from two parallel perspectives: in addition to recourse to theories of statistical inference, which have as their key concern the appropriate use of data to populate parameters in stochastic models, there are also important cognitive reasons for producing summary statistics, namely that often more data means less information, as people are severely limited both in time and memory as to the number of ‘facts’ they can hold onto and make sense of at a time. Summary statistics are therefore invaluable as tools for intelligent data reduction: data reduction because it turns many thousands or millions of observations into just a handful of key values, and intelligent because these key values are ‘less worse’ at standing in place of many more values than most alternatives. The relationship between statistical modelling and signal processing will also be discussed.
+Theories of statistical inference, and in particular likelihood theory, provide a means of selecting between many different models – each assuming different stochastic structures and processes, and hence each embodying different theories about social phenomena – and of deciding on the right balance between model accuracy and model parsimony, but only when models have a particular structural relationship to each other (When one model can be thought of as a ‘constrained’ variant of another model).</p>
+</div>
+<div id="balancing-accuracy-and-parsimony-using-aic-and-bic" class="section level2">
+<h2><span class="header-section-number">9.2</span> Balancing accuracy and parsimony using AIC and BIC</h2>
+<p>Part (b) will discuss this further, and offer Aikiake Information Criterion (AIC) and the Bayesian Information Criterion (BIC) as a way of guiding the accuracy/parsimony trade-off in selecting between many types of statistical model.</p>
+</div>
+<div id="statistical-simulation-showing-what-models-really-mean" class="section level2">
+<h2><span class="header-section-number">9.3</span> Statistical Simulation: Showing what models really mean</h2>
+<p>Having decided on the ‘least worst’ model to represent the data, part (c) will describe a series of methods and functions – including sim within the arm package and the Zelig package – for extracting substantive meaning from statistical models, going beyond the usual convention of stopping and starting with the question of whether particular model parameters are ‘statistically significant’ or not, to instead making predictions and projections about the expected and predicted effects of change within social systems.</p>
+</div>
+<div id="advanced-statistics-structural-modelling-to-formalise-informal-knowledge" class="section level2">
+<h2><span class="header-section-number">9.4</span> Advanced statistics: structural modelling to formalise informal knowledge</h2>
+<p>Part (d) will discuss further how statistical models can be developed to formalise implicit and ‘fuzzy’ knowledge and expectations about social relationships, discussing both the dangers of going ‘too far’ and developing such complicated and precisely structured models that it becomes easy to confuse ‘the map for the territory’, and the danger of not going far enough and failing to capture important structure and shape in the relationships between variables and social factors.</p>
+<!--chapter:end:08-statistics.rmd-->
+</div>
+</div>
+<div id="Coding" class="section level1">
+<h1><span class="header-section-number">10</span> Programming and Automation</h1>
+<p>Placeholder</p>
+<!--chapter:end:09-coding.Rmd-->
+</div>
+<div id="repro_research" class="section level1">
+<h1><span class="header-section-number">11</span> Open, Reproducible and Collaborative Research</h1>
+<p>A vitally important aspect of any science is to be able to produce claims that can be tested and verified by other people. As research activities are tending to become more complex - conceptually, methodologically and technically – there need to work collaboratively has become increasingly important.</p>
+<div id="the-theory-and-challenges-of-open-and-reproducible-research" class="section level2">
+<h2><span class="header-section-number">11.1</span> The theory and challenges of open and reproducible research</h2>
+<p>Part (a) will consider both the benefits and the barriers to open and reproducible research in the context of the social and health sciences, where both the nature of the data and the background of researchers tend to be very different to disciplines like physics, where open and reproducible research practices tend to be more commonplace.</p>
+</div>
+<div id="sharing-results-and-findings-using-github" class="section level2">
+<h2><span class="header-section-number">11.2</span> Sharing results and findings using github</h2>
+<p>Part (b) will turn to the practical means and benefits of using GitHub, integrated with Rstudio projects, for making both the code and processes produced available to your future self, but also tidied and derived data, and initial findings and figures, available to other researchers.</p>
+</div>
+<div id="writing-collaboratively-with-wikis-markdown-and-related-approaches" class="section level2">
+<h2><span class="header-section-number">11.3</span> Writing collaboratively with wikis, markdown and related approaches</h2>
+<p>Part (c) will discuss linked features and programs that allow draft reports and other written material to be shared and co-developed with other researchers.</p>
+</div>
+<div id="managing-literature-optional" class="section level2">
+<h2><span class="header-section-number">11.4</span> Managing literature (Optional)</h2>
+<p>Finally part (d) covers approaches to managing literature and literature review in the context of R projects and the research-project-as-suitcase philosophy advocated throughout the book.</p>
+<!--chapter:end:10_repro_research.rmd-->
+</div>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1>References</h1>
+<!--chapter:end:11-references.Rmd-->
+<div id="refs" class="references">
+<div id="ref-xie2015">
+<p>Xie, Yihui. 2015. <em>Dynamic Documents with R and Knitr</em>. 2nd ed. Boca Raton, Florida: Chapman; Hall/CRC. <a href="http://yihui.name/knitr/" class="uri">http://yihui.name/knitr/</a>.</p>
+</div>
+<div id="ref-R-bookdown">
+<p>———. 2018. <em>Bookdown: Authoring Books and Technical Documents with R Markdown</em>. <a href="https://CRAN.R-project.org/package=bookdown" class="uri">https://CRAN.R-project.org/package=bookdown</a>.</p>
+</div>
+</div>
+</div>
+<!--bookdown:body:end-->
+            </section>
+
+          </div>
+        </div>
+      </div>
+<!--bookdown:link_prev-->
+<!--bookdown:link_next-->
+    </div>
+  </div>
+<!--bookdown:config-->
+
+</body>
+
+</html>
