@@ -646,9 +646,13 @@ Sometimes, the semi-colon (;) symbol is used to separate row contents into colum
 
 Some older text file formats, harking back to the conventions and constraints of physical punch tape, don't make use of delimiters at all, but instead expect an equal number of characters on all lines. They put (say) the first five characters of a row in the first column, the next five in the second column, and so on. If the number of characters in one line is off, the contents of the columns in that row won't be correct, and potentially the whole file won't be read correctly. 
 
+<<<<<<< HEAD:bookdown-demo.Rmd
 The key point to remember is that computers are *fast* but *dumb*, and when you encounter problems and behaviours you don't expect from R, you have to keep this fact in mind, and think about how you can specify the structure and expected contents of a data file clearly enough that R will know what to do with it. 
 
 Both Base R and the tidyverse's `readr` package have similar functions for reading rectangular data text files structured in some of the more standard ways. The functions `read.csv()` (Base R) and `read_csv()` both assume the within-row contents will be split (delimited) into columns by using the `,` symbol. The functions `read.csv2()` (Base R) and `read_csv2()` (readr) are used when the semi-colon (`;`) rather than comma is used to delimit. By typing the name of a function, we can see some of the function contents:
+=======
+The key point to remember is that computers are *fast* but *dumb*, and when you encounter problems and behaviours you don't expect from R, you have to keep this fact in mind, and be very careful in specifying to R exactly what sort of input it should receive, and in exactly what order. 
+>>>>>>> a31810dd45b9d218f5913342a4c9add97c3b66af:05-tidy_data_home.Rmd
 
 
 
