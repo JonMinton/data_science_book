@@ -865,7 +865,42 @@ Unfortunately, most of the data you are likely to work with in practice will ten
 
 Regardless of the data we have available to us, and the number of steps involved in converting the data, what's most important to us is to be clear of the destination, i.e. to have a clear idea of ways in which the data we are handling is currently 'untidy', and what a tidy data version of that dataset would look like. Sometimes, this may be slightly ambiguous: there might be more than one preferred tidy output format that we could work with. But so long as we have a clear target form in mind, with a clear sense of how many columns the target dataset should have, and what's contained in each dataset, we will have a clear destination in mind.
 
-After deciding on the target data structure, the second most important principle in data tidying is to know how to build and test a solution incrementally. Using the piping operator, we can build our solution step by step, and see what the output looks like after each step has been applied. 
+After deciding on the target data structure, the second most important principle in data tidying is to know how to build and test a solution incrementally. Using the piping operator, we can build our solution step by step, and see what the output looks like after each step has been applied. Incremental testing is particularly important as the effects of a new process might not be exactly what we expect, especially when we are first learning to use R and developing and refining intuitions about how R works. Here's a simple example:
+
+```{r}
+df <- data_frame(
+  x = c(5,2, 1,4,5,8) 
+)
+
+df
+
+df %>% 
+  mutate(y = factor(x)) 
+
+df %>% 
+  mutate(y = factor(x)) %>% 
+  mutate(z = as.numeric(y))
+
+df %>% 
+  mutate(y = factor(x)) %>% 
+  mutate(z = as.numeric(as.character(y)))
+
+
+```
+
+In this example, `x` is really a vector of numbers, and `y` is the same vector converted to a factor. To turn y back into numbers, we might assume that we can simply wrap y in `as.numeric` and the output will be as before to undo the process. However, factors work by producing a key-value lookup table, which is generated and attached to the factor automatically. This key-value table, when working with numbers, will assign the first level in the lookup table to the lowest value, then the second level to the second lowest value, and so on. In the above case this will be as follows:
+
+| key | value | 
+| --- | ---   | 
+| '1'   | 1     | 
+| '2'   | 2     | 
+| '4'   | 3     | 
+| '5'   | 4     | 
+| '8'   | 5     | 
+
+The keys are stored as characters (because in many cases they will be character labels like 'red', 'blue', 'green' and so on), and the values are stored as integers. When we apply `as.numeric()` to the factor, `y`, R pulls the values. By contrast, when as.character is applied, R pulls the keys. However, in this example, though we want the keys, we do not want them as characters; instead we want them as numbers. To convert them to numbers we therefore need to coerce the character vector we've just created to a numeric vector. 
+
+If we did not check our pipe each step of the way, and just assumed that the naive conversion of a factor to numbers would work, then we might either not identify the error at all, and make an error in judgement; or we might struggle to identify where in the operation pipeline the error emerged. 
 
 
 
