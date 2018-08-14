@@ -900,13 +900,84 @@ In this example, `x` is really a vector of numbers, and `y` is the same vector c
 
 The keys are stored as characters (because in many cases they will be character labels like 'red', 'blue', 'green' and so on), and the values are stored as integers. When we apply `as.numeric()` to the factor, `y`, R pulls the values. By contrast, when as.character is applied, R pulls the keys. However, in this example, though we want the keys, we do not want them as characters; instead we want them as numbers. To convert them to numbers we therefore need to coerce the character vector we've just created to a numeric vector. 
 
-If we did not check our pipe each step of the way, and just assumed that the naive conversion of a factor to numbers would work, then we might either not identify the error at all, and make an error in judgement; or we might struggle to identify where in the operation pipeline the error emerged. 
-
+If we did not check our pipe each step of the way, and just assumed that the naive conversion of a factor to numbers would work, then we might either not identify the error at all, and make an error in judgement; or we might struggle to identify where in the operation pipeline the error emerged. To return to the plumbing analogy of earlier chapters, the error is a 'blockage', and by connecting together the pipeline part by part, we can more easily work out where the blockage ocurred, and replace the part with a a better fit. 
 
 
 ## Data tidying - tidyr and dplyr
 
-Part (d) will introduce two closely linked R packages, tidyr and dplyr, as providing the tools necessary to complete the vast majority of data tidying and data derivation tasks.
+The high level principles - keep in mind the destination; and work like a plumber - have now been established, but the our plumber's toolkit has not been opened up and explored in detail. Our complete tool set, the `tidyverse` is huge, and rapidly expanding. Fortunately it occupies no physical space, otherwise we'd need another room. In this section, let's look at the two main packages  within the `tidyverse` which we'll use for the majority of common-or-garden data tidying tasks: `tidyr` and `dplyr`. 
+
+In the prehistory of the `tidyverse`, both `tidyr` and `dplyr` have their origins in earlier packages. The `tidyr` package was based on a package called `reshape2`, and the `dplyr` package was based on a package called `plyr`. Although the `tidyverse` has expanded to include ever more tools, the trajectory has been for each of these tools to do less, and be more specialised. Out goes the deluxe swiss army knife, with its awkwardly positioned spanner placed somewhere near its skin-nicking corkscrew and the bottle opener, and in goes a separate spanner, hammer, corkscrew and so on. Let's look in more detail at the main functions in each of these two package, and what they are specialised to do: 
+
+|Package  |Function  | Description| 
+|--|--| -- | 
+|tidyr  |gather  | Gather columns into key-value pairs   |
+|tidyr  | spread | Spread a key-value pair across multiple columns
+| dplyr | mutate |   Add new variables
+| dplyr | select | Select/rename variables by name 
+
+
+Both packages have a number of other functions, but much of what we need to do in terms of data tidying can be done with the four functions above. 
+
+Perhaps the most important functions to pay attention to in the above are the `gather` and `spread` functions. Understanding these functions, and how they relate to each other, involves reminding ourselves of two concepts: 
+
+1. Tidy data structures
+2. Key-value pairs
+
+We've discussed tidy data structures quite a lot so far, so let's focus on key-value pairs instead. Quite often in quantitative methods the idea of the key-value pair is approached obliquely, when we refer to rectangular datasets as either being in 'wide' or 'long' form. But in this chapter we've also been introduced to applications of key-value pairs from a more programmatic standpoint. Let's reintroduce ourselves to key-value pairs one final way, by reference to a certain gameshow that ran most weekday afternoons in the UK for over a decade, *Deal or No Deal* (DND).
+In DND, 22 contestants each had one identical looking sealed red box in front of them. Each box contained a number inside, ranging from 1 penny to £250,000. One of the contestants is selected to play, and over a tortuously long half hour asks other contestants to open their boxes until only one remains. To get other contestants to open their box, the playing contestant  calls out either the number of the box, or the name of the contestant, or both. 
+In this example, both the contestant name or the box number can be considered *keys* (one being an alias for the other), and the number within the box its associated *value*. The important property of the keys is they have to be *unique*: a request to open box 7 can only lead to one box being opened, not more nor fewer. Calling the *key* unlocks the *value*. 
+
+Now let's look at a very simple example of two ways in which the keys and values can be stored: 
+
+```{r}
+df <- tibble(
+  A = 2, B = 10, C = 1, D = 5, E = 5
+)
+
+# 'Wide' format
+df
+
+# key-value ('long') format
+
+df %>% 
+  gather(key = "key", value = "value")
+
+```
+
+In the initial, 'wide' example, each key was stored in a separate column. Whereas in the long example, created using the `gather`function, each value is placed in a separate row. This might not seem to achieve much - there's now twice as many cells in the `data_frame` but no additional information - but when producing tidy data it's often an essential process. 
+
+Now let's see how the `gather` function works with a slightly more complex table:
+
+
+```{r}
+df <- tibble(
+	day = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"),
+	Morning = c(1, 1, 2, 1, 3),
+	Lunchtime = c(4, 3, 4, 3, 4),
+	Afternoon = c(3, 2, 4, 1, 3),
+	Evening = c(5, 3, 2, 4, 3) 
+)
+
+df
+
+# First attempt at gather: wrong
+df %>% 
+  gather(key = "time_of_day", value = "hunger_score")
+
+# Second attempt at gather: right:
+df %>% 
+  gather(key = "time_of_day", value = "hunger_score", -day)
+
+# Another way of expressing the above: also right!
+df %>% 
+  gather(key = "time_of_day", value = "hunger_score", Morning:Evening)
+
+
+```
+
+In the above example, there is not just one key, but two. In order to uniquely specify an observed hunger score (say, a value between 1 and 5), not just the day has to be specified, but also the time of day. Whereas the day is stored in long format, in a single column, the time of day is stored in wide format, as a series of columns. 
+The first, naive approach to using `gather` 'over-gathered'. It moved the two keys further apart by putting the day and time of day in separate rows. The second attempt worked. In this attempt, with `-day` as an argument, the instruction was given *not* to scoop up the day column along with the other columns. This instruction was an example of defining what to collect together by *exclusion*, using the `-` symbol as shorthand for 'what *not* to collect'. The final example, which gave the same correct answer, involved specifying what to gather inclusively, with the `:` used as shorthand for `collect the columns from *this* column (on the left) to *that* column (on the right). 
 
 ## Initial Exploratory data analysis
 
