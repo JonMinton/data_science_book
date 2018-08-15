@@ -977,8 +977,67 @@ df %>%
 ```
 
 In the above example, there is not just one key, but two. In order to uniquely specify an observed hunger score (say, a value between 1 and 5), not just the day has to be specified, but also the time of day. Whereas the day is stored in long format, in a single column, the time of day is stored in wide format, as a series of columns. 
-The first, naive approach to using `gather` 'over-gathered'. It moved the two keys further apart by putting the day and time of day in separate rows. The second attempt worked. In this attempt, with `-day` as an argument, the instruction was given *not* to scoop up the day column along with the other columns. This instruction was an example of defining what to collect together by *exclusion*, using the `-` symbol as shorthand for 'what *not* to collect'. The final example, which gave the same correct answer, involved specifying what to gather inclusively, with the `:` used as shorthand for `collect the columns from *this* column (on the left) to *that* column (on the right). 
+The first, naive approach to using `gather` 'over-gathered'. It moved the two keys further apart by putting the day and time of day in separate rows. The second attempt worked. In this attempt, with `-day` as an argument, the instruction was given *not* to scoop up the day column along with the other columns. This instruction was an example of defining what to collect together by *exclusion*, using the `-` symbol as shorthand for 'what *not* to collect'. The final example, which gave the same correct answer, involved specifying what to gather inclusively, with the `:` used as shorthand for 'collect the columns from *this* column (on the left) to *that* column (on the right).'
 
+
+```{r}
+df_tidy <- df %>% gather(key = "time_of_day", value = "hunger_score", Morning:Evening)
+
+
+df_tidy %>% filter(day == "Tuesday")
+
+df_tidy %>% filter(time_of_day == "Lunchtime")
+
+```
+
+```{r}
+df_tidy %>% filter(day == "Tuesday", time_of_day == "Lunchtime")
+
+```
+
+With the idea of key-value pairs fresh in mind, we have another way of thinking about what tidy data structures are and do. We noted earlier that one of the definitions of a tidy data structure is that "every row is an observation". Put another way, each row is a set of measurements about something that's unique and distinct. Like the 22 individually numbered red boxes, keys within key-value pairs are also unique and distinct: they're a way of referring unambiguously to one thing rather than anything else. 
+We've also said that, in the case of this table, there were two keys in use, rather than two. No single key distinctly identified an observation, as we can see if we filter on only `time_of_day` or `day`:
+
+```{r}
+df_tidy <- df %>% gather(key = "time_of_day", value = "hunger_score", Morning:Evening)
+
+
+df_tidy %>% filter(day == "Tuesday")
+
+df_tidy %>% filter(time_of_day == "Lunchtime")
+
+```
+However, if we filter on a specific `day`, *and* a specific `time_of_day`, just a single observation is returned.
+
+```{r}
+df_tidy %>% filter(day == "Tuesday", time_of_day == "Lunchtime")
+
+```
+Another of the definitions of tidy data is that the whole table is consistent in its *observational unit*. This is the case when a particular combination of keys leads to a particular and specific observation, and that observation is only found in one place within the table. A simple (and common) example of when this condition is not hold is shown in the following:
+```{r}
+df <- tibble(
+	gender = c("female", "male", "total"), 
+	count = c(5, 4, 9)
+)
+df
+``` 
+
+This simple example is *not* tidy data because it combines two observational unit types: gender-disaggregated, with the keys `male` and `female`, and gender-aggregated, with the key `total`. If we were to calculate the sum of counts, we would get `r sum(df$count)` rather than `9`, because each observation is being included twice: within its specific gender key (`male` and `female`), and also within the `total` gender key). This would be like picking a box, say box number 4, and inside finding two boxes that could each have been picked independently, like box 2 and 15. Something's amiss; the table's not tidy. 
+ 
+ ### Joins
+ When two tables are both in tidy format and use the same observational unit, they can be joined. There are a number of different join functions within `dplyr`, and they each work in different ways. Further information, and helpful illustrations, of the different join types available are provided elsewhere, including in RStudio's [Data Wrangling 'cheat sheet',](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) from which the following descriptions of the join types are found:
+
+| Join name | Description  |
+| ---- | ----| 
+|left_join(a, b)|Join matching rows from b to a|
+|right join(a, b)  |Join matching rows from a to b  |
+|inner_join(a, b) | Join data, retaining only rows in both sets | 
+|full_join(a, b) | Join data. Retain all values and rows | 
+
+In the above, the join functions each take two tables called `a` and `b`. Without further instruction, they look for all columns which share the same name, and use these columns to perform the join. (Because of the way the piping function `%>%` works, passing the object before the pipe into the first argument slot, each could also be expressed as `a %>% left_join(b)`, `a %>% right_join(b)`, and so on.) 
+
+
+If equivalent columns in the tables are given different names 
 ## Initial Exploratory data analysis
 
 Finally, part (e) will emphasise the importance of rapid exploratory data analysis both at the data tidying stage, and for developing familiarity and engagement with tidied data sources.
