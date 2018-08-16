@@ -1037,7 +1037,148 @@ This simple example is *not* tidy data because it combines two observational uni
 In the above, the join functions each take two tables called `a` and `b`. Without further instruction, they look for all columns which share the same name, and use these columns to perform the join. (Because of the way the piping function `%>%` works, passing the object before the pipe into the first argument slot, each could also be expressed as `a %>% left_join(b)`, `a %>% right_join(b)`, and so on.) 
 
 
-If equivalent columns in the tables are given different names 
+If equivalent columns in two tables are given different names they can be joined correctly in one of two ways: 
+
+* By using the `by` argument within the `*_join` function to state which column(s) in the first table correponds to which column(s) in the second table. 
+* By locally renaming the requisite columns in the second table. 
+
+Let's look at both approaches in action using a simple example:
+
+```{r}
+a <- tibble(
+  day = c("Monday", "Monday", "Tuesday", "Tuesday"),
+  time = c("AM", "PM", "AM", "PM"),
+  grumpiness = c(5, 4, 2, 2)
+)
+
+b <- tibble(
+  day = c("Monday", "Monday", "Tuesday", "Tuesday"),
+  morning_or_afternoon = c("AM", "PM", "AM", "PM"),
+  tiredness = c(1, 2, 3, 3)
+)
+
+a
+b
+
+# join with the by argument
+a %>% 
+	left_join(b, by = c("day" = "day", "time" = "morning_or_afternoon"))
+
+# join through renaming 
+a %>% 
+	left_join(
+		b %>% 
+			rename(time = morning_or_afternoon)
+	)
+
+```
+The `by` argument takes a vector of characters with name-value pairings.: `"day" = "day"`, followed by, `"time" = "morning_or_afternoon"`. For each of these pairings, the name (on the left), refers to the name of the column in the left table, `a`, and the value,  (on the right) refers to the name of the corresponding column in the right table, `b`. Though both solutions work, the second solution involves doing something a bit weird: it contains a pipe within a pipe. The 'outer pipe' looks like this: `a %>% left_join([right_table])`, and the 'inner pipe', `b %>% rename(time = morning_or_afternoon)`, creates the contents of the right table joined with `left_join`. This kind of outer/inner pipe pattern can also be helpful when the measured values (the 'what' rather than the 'where' columns) in two tables to be joined share the same name, as in the following example:
+
+```{r}
+grumpiness_table <- tibble(
+  day = c("Monday", "Monday", "Tuesday", "Tuesday"),
+  time = c("AM", "PM", "AM", "PM"),
+  value = c(5, 4, 2, 2)
+)
+
+tiredness_table <- tibble(
+  day = c("Monday", "Monday", "Tuesday", "Tuesday"),
+  time = c("AM", "PM", "AM", "PM"),
+  value = c(1, 2, 3, 3)
+)
+
+grumpiness_table
+tiredness_table
+
+# First attempt: wrong
+grumpiness_table %>% 
+  left_join(tiredness_table)
+
+# Second attempt: works but inelegant
+grumpiness_table %>% 
+  left_join(tiredness_table,
+            by = c("day", "time")
+            )
+
+# Third attempt: cleaning up second attempt
+grumpiness_table %>% 
+  left_join(tiredness_table,
+            by = c("day", "time")
+            ) %>% 
+  rename(grumpiness = value.x, tiredness = value.y)
+
+
+# Forth attempt: renaming prior to joining
+grumpiness_table %>% 
+  rename(grumpiness = value) %>%
+  left_join(
+    tiredness_table %>% rename(tiredness = value)
+  ) 
+
+```
+Of these four attempts, only the first technically did not work. Because both the `grumpiness_table` and `tiredness_table` had columns `day`, `time`, and `value`, and because we did not explicitly specify otherwise in the `by` argument, the `join` function attempts to join the two tables on all three columns with common names, including `value`. No row on the right table had exactly the same combination of `day`, `time` *and* `value`, and so no rows from the right table were joined to the left table. Even if one of the row combinations matched. however, it would still have been incorrect, because the `value` column refers to a measured value (a *what*), rather than a description of what was measured (a *where*), and so should not be used for the join.
+
+The second attempt uses the `by` argument to explicitly state which columns should be used to join the tables on. Note in this case that, as the equivalent joining columns from both tables had the same names, the character vector passed to the `by` argument was a vector of values only, `c("day", "time")`, rather than key-value pairs as before. (For consistency with the earlier example of joining columns with different names, use of key-values would have worked, and we could have written the following: `c("day"="day", "time"="time")`. However, in cases where all key columns in the left and right tables have identical names, it's unnecessary.) 
+
+Although the second attempt works in terms of producing an appropriate join, it does something a bit inelegant: because both the left and right table have a non-key column with the same name, but `tibble`s do not allow columns to have the same name, it affixes `.x` to the `value`from the left table (`value.x`) and `.y` to the `value` from the right table (`value.y`).  These names stop the two column names clashing, and allow them to be referred to uniquely name name (e.g. `df %>% select(value.x)` and `df %>% select(value.y)`, if we had saved the output from the second attempt as `df`), but they are not particularly informative or memorable names to use. 
+
+In the third attempt, the issue of the uninformative names has been corrected, by using key-value pair arguments to the `dplyr::rename` function. The key, to the left of the `=` sign, is the name we want to *change to*, and the value, to the right of the `=` sign, is the name we want to *change from*.  
+
+
+The forth attempt uses both an 'outer' pipe and an 'inner' pipe. The outer pipe renames the `value` column in the `grumpiness_table` to `grumpiness`, before passing the modified table to the `left_join` function. The inner pipe, contained within the second argument slot of `left_join`, renames the `value` column in the `tiredness_table` to `tiredness`. By doing this, the need to use the `by` argument, as is the need to rename the uninformative `value.x` and `value.y` column names created in the previous two attempts. 
+
+As these examples show, there are often a number of different ways of solving the same problems. The `tidyverse` was developed to be deliberately 'opinionated' in terms of how data science processes should be conducted. For instance, you've seen that most of the functions are verbs, because in human languages it's verbs that express what we'd like to do to and with nouns, so giving functions the names of verbs can make the functions easier to understand and use. However, even within the `tidyverse` opinions vary about how to express the operations we need to perform to and with datasets in order to use them for analysis and insight. If you prefer the solution offered in the third attempt above to the forth, use that instead. 
+
+### More on join types
+
+So far, only the `left_join` function has been used, and there are four join types to choose from: `left_join`, `right_join`, `inner_join` and `outer_join`. These are illustrated graphically in a number of good `tidyverse` resources, including [R4DS](http://r4ds.had.co.nz/relational-data.html) and the data wrangling cheatsheet discussed earlier. But it can be helpful too to show how they work in for a couple of simple examples. 
+
+
+```{r}
+
+# The tribble function is another way of constructing a table, entering the data row by row rather than column by column. The column names are in the first line, preceded by the ~ symbol.
+
+grumptab <- tribble(
+  ~"day", ~"grumps",
+  "Mon", 5,
+  "Tue", 4,
+  "Thurs", 3,
+  "Fri", 2
+)
+
+mirthtab <- tribble(
+  ~"day", ~"lols",
+  "Mon", 2, 
+  "Wed", 3,
+  "Thurs", 3
+)
+
+grumptab %>% 
+  left_join(mirthtab)
+
+grumptab %>% 
+  right_join(mirthtab)
+
+grumptab %>% 
+  inner_join(mirthtab)
+
+grumptab %>%
+  full_join(mirthtab)
+
+
+
+```
+
+As we can see:
+
+* `left_join` keeps all rows from the left table, and adds entries with a common key from the right table. (Missing cells are filled with `NA`.)
+* `right_join` keeps all rows from the right table, and add entries with a common key from the left table. (Missing cells are filled with `NA`.)
+* `inner join` keeps only rows with a common key in both tables. 
+* `outer_join` keeps all rows with a key specified in either table. 
+ 
+As with most tools, the most appropriate join type depends on the tasks you want to perform. It's important to be aware of how these join types when a key in one table is matched by more than one value in the key of the second table. 
+
+
 ## Initial Exploratory data analysis
 
 Finally, part (e) will emphasise the importance of rapid exploratory data analysis both at the data tidying stage, and for developing familiarity and engagement with tidied data sources.
