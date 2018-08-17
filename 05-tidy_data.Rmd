@@ -1124,7 +1124,6 @@ Although the second attempt works in terms of producing an appropriate join, it 
 
 In the third attempt, the issue of the uninformative names has been corrected, by using key-value pair arguments to the `dplyr::rename` function. The key, to the left of the `=` sign, is the name we want to *change to*, and the value, to the right of the `=` sign, is the name we want to *change from*.  
 
-
 The forth attempt uses both an 'outer' pipe and an 'inner' pipe. The outer pipe renames the `value` column in the `grumpiness_table` to `grumpiness`, before passing the modified table to the `left_join` function. The inner pipe, contained within the second argument slot of `left_join`, renames the `value` column in the `tiredness_table` to `tiredness`. By doing this, the need to use the `by` argument, as is the need to rename the uninformative `value.x` and `value.y` column names created in the previous two attempts. 
 
 As these examples show, there are often a number of different ways of solving the same problems. The `tidyverse` was developed to be deliberately 'opinionated' in terms of how data science processes should be conducted. For instance, you've seen that most of the functions are verbs, because in human languages it's verbs that express what we'd like to do to and with nouns, so giving functions the names of verbs can make the functions easier to understand and use. However, even within the `tidyverse` opinions vary about how to express the operations we need to perform to and with datasets in order to use them for analysis and insight. If you prefer the solution offered in the third attempt above to the forth, use that instead. 
@@ -1132,6 +1131,7 @@ As these examples show, there are often a number of different ways of solving th
 ### More on join types
 
 So far, only the `left_join` function has been used, and there are four join types to choose from: `left_join`, `right_join`, `inner_join` and `outer_join`. These are illustrated graphically in a number of good `tidyverse` resources, including [R4DS](http://r4ds.had.co.nz/relational-data.html) and the data wrangling cheatsheet discussed earlier. But it can be helpful too to show how they work in for a couple of simple examples. 
+
 
 
 ```{r}
@@ -1176,8 +1176,166 @@ As we can see:
 * `inner join` keeps only rows with a common key in both tables. 
 * `outer_join` keeps all rows with a key specified in either table. 
  
-As with most tools, the most appropriate join type depends on the tasks you want to perform. It's important to be aware of how these join types when a key in one table is matched by more than one value in the key of the second table. 
+As with most tools, the most appropriate join type depends on the tasks you want to perform. The chapter on relational data in [R For Data Science](http://r4ds.had.co.nz/relational-data.html) provides a comprehensive discussion on differences between join types, theories, terminology and behaviours, and is worth reading and reviewing at least twice. Rather than cover this material again directly in this chapter, the following example provides an illustration of how the concept of the *key* and the *observational unit* are linked to each other. 
 
+
+```{r}
+energy_table <- tribble(
+	~"day", ~"time", ~"value",
+	"Mon", "AM", 4,
+	"Mon", "PM", 4,
+	"Tues", "AM", 3,
+	"Tues", "PM", 2,
+	"Wed", "AM", 2,
+	"Wed", "PM", 3
+)
+
+grumps_table <- tribble(
+	~"day", ~"value",
+	"Mon", 5,
+	"Tues", 3,
+	"Wed", 4,
+	"Thurs", 3
+)
+
+dayleft_table <- tribble(
+ ~"time", ~"value",
+ "AM", 0.75,
+ "PM", 0.25
+)
+
+energy_table %>% 
+  rename(energy = value) %>% 
+  left_join(
+    grumps_table %>% rename(grumps = value)
+    )
+
+energy_table %>% 
+  rename(energy = value) %>% 
+  left_join(
+    dayleft_table %>% rename(dayleft = value)
+    )
+
+```
+In the first table join example, from `energy_table` to `grumps_table`, the tables were joined on the column `day`. The values from `grumps_table` were therefore copied over to each row that matched the `day` column value. Even though the `grumps_table` only had four rows, and only three that matched entries in the `day` column of `energy_table`, six new values in the new `grumps` column from the joined table were created: the values from `grumps_table` for `"Mon"`,  `"Tues"` and `"Wed"` were each copied over twice, as they each matched the keys in two rows of the left table. 
+
+In the second table join example, from `energy_table` to `dayleft_table`, the tables were joined on the column `time`. Both `"AM"` and `"PM"` from the right table were each matched three times to rows in the left table (because there were three days, and each day had a morning and an afternoon), and so the two rows from the right table left to the creation of six new filled rows in the joined table. 
+
+The three tables each used a different *observational unit*, as summarised in the table below. In the terminology of relational databases, which the dplyr join functions are based on, the observational unit of a table is defined by its **primary key**, meaning those columns whose values, in combination, *uniquely identify* an observation (i.e. a row). 
+
+| table | observational unit (Primary Key) |
+|--|--|
+|`energy_table`  |{`time`, `day`}  |
+| `grumps_table` | `day` | 
+| `dayleft_table` | `time` | 
+
+As the examples above show, a table with a given **primary key** can also often be joined to a table with a different **primary key**.  In the above examples, `energy_table` can be joined to `grumps_table` by `day`, and to `dayleft_table` by `time`. In the context of the `left_join` from `energy_table` to `grumps_table`, `day` is known as a **foreign key** from `energy_table`s perspective: it *uniquely identifies* each row in the `grumps_table`, but *doesn't uniquely* identify each row in the `energy_table`. Similarly, when `energy_table` is left-joined to `dayleft_table`, `time` is `energy_table`'s **foreign key**, because it is `dayleft_table`'s **primary key**. 
+
+### Group_by and summarise operations 
+In the above examples, tables sharing different observational units, and hence primary keys, were joined through foreign keys. The `energy_table`, using two columns for its primary key,  was more disaggregated in its observational units than either the `grumps_table` or the `dayleft_table`, which each used one. From this observation we can move to thinking about another approach to joining the tables, which involves first 'coarsening' the information in the more disaggregated table to match its 'resolution' in the less disaggregated table. This process of 'coarsening'  information can be performed using `dplyr`'s `group_by` and `summarise` functions, as shown in the examples below. 
+
+```{r}
+day_coarsened <- energy_table %>% 
+  group_by(day) %>% 
+  summarise(value = mean(value)) %>% 
+  ungroup() 
+
+day_coarsened
+
+time_coarsened <- energy_table %>% 
+  group_by(time) %>% 
+  summarise(value = mean(value)) %>% 
+  ungroup()
+
+time_coarsened
+
+day_coarsened %>% 
+  rename(energy = value) %>% 
+  left_join(
+    grumps_table %>% 
+      rename(grumps = value)
+  )
+
+time_coarsened %>% 
+  rename(energy = value) %>% 
+  left_join(
+    dayleft_table %>% 
+      rename(dayleft = value)
+  )
+
+``` 
+The table `day_coarsened` shares the same **primary key** as the `grumps_table`, and the table `time_coarsened` shares the same **primary key** as the `dayleft_table`. The main pattern to be aware of in the above is the `group_by(), summarise(), ungroup()` pattern, which is repeated to produce both the `day_coarsened` table and the `time_coarsened` table. Let's see what each of the steps in this sequence does to produce the output, by stepping through `day_coarsened` at each stage in the pipe. 
+
+```{r}
+
+# initial table
+energy_table 
+
+# addition of group_by()
+energy_table %>% 
+  group_by(day) 
+    
+# addition of summarise()
+energy_table %>% 
+  group_by(day) %>% 
+  summarise(value = mean(value)) 
+  
+# addition of ungroup()
+energy_table %>% 
+  group_by(day) %>% 
+  summarise(value = mean(value)) %>% 
+  ungroup() 
+```
+
+Perhaps the biggest surprise in the above is what the addition of the `group_by` function does to the contents of `energy_table`: nothing! What `group_by(day)` does is add *metadata* to the tibble. More specifically, a grouping variable. This grouping variable then affects the way the following function, `summarise`, operates. The presence of the `group_by` function, and its order in the pipeline, both matters, as the following examples illustrate. 
+
+```{r}
+# group_by missing
+energy_table %>%
+	summarise(value = mean(value))
+	
+# group_by in wrong sequence
+energy_table %>% 
+	summarise(value = mean(value)) %>% 
+	group_by(day)
+```
+
+Without first attaching the grouping variable metadata to the `energy_table` using the `group_by` function, the `summarise` function produces a summary of the value column for the whole table. This has the effect of collapsing the number of rows in the table from six to one. Note that, after the summary variable has been applied, the keys have been lost; they've been aggregated over. This shows why the second example produces an error: the `day` column is no longer present after the `summarise` function has been applied, and so cannot be used as a grouping variable. 
+
+What the summarise function does is apply a summary function, `mean` in this case, to collapse the number of rows in the table. When no grouping variable metadata has been added, it collapses the number of rows from six to one; but when a grouping variable has been applied to the table using the group_by function, it produces a summary output *for each distinct value in the grouping variable*. When `day` is used in `group_by`, there are three distinct values of day, the grouping variable, and so the summarise operation then produces a summary for each of these values. As `day` is necessary to distinguish each of these summarised values, it is included in the table produced after applying `summarise`. 
+
+What role, then, does the `ungroup` function play? In the above example, nothing, because the metadata - that `day` is the grouping variable - is removed automatically from the table by the summarise function. However, it can still be good practice to explicitly include `ungroup` after `summarise`, because only the 'outermost' grouping variable metadata is removed by summarise, rather than all grouping variables. We can see this, as well as perform a quick demonstration that `day` and `time` in combination are the **primary key** of the `energy_table` function, by passing both day and time as arguments in group_by, before summarising, as below:
+
+```{r}
+energy_table %>% 
+	group_by(day, time) %>%
+	summarise(value = mean(value))
+
+energy_table %>%
+	group_by(time, day) %>% 
+	summarise(value = mean(value))
+
+energy_table %>% 
+	group_by(day, time) %>%
+	summarise(value = mean(value)) %>% 
+	summarise(value = mean(value))
+
+
+energy_table %>% 
+	group_by(day, time) %>% 
+	summarise(value = mean(value)) %>% 
+	ungroup() 
+```  
+
+In the first of the examples above, the table is grouped by day, and then by time. When the summary function is applied, the number of rows does not decrease, and remains at six. This confirms that day and time in combination are the **primary key** of `energy_table`, and uniquely identify the observed values. However, when we look at the print out from this operation, we see that one of the grouping variables, `day`, remains attached to the table. The second line of the print out is `Groups:   day [?]`, showing that though the outer-most grouping variable, `time`, was removed by the summarise function, the inner-most grouping variable, `day`, was retained. Similarly, the equivalent print out for the second example, using `group_by(time, day)`, included the line `Groups:   time [?]`. Again, the `summarise` function implicitly 'unwound' the grouping metadata from the last to the first grouping variable. 
+
+Notice the presence of `[?]`in the outputs above. This means that dplyr found the instructions a little ambiguous, and made an educated guess as to which (if any) grouping variables to keep attached to the table, and which to remove. The effect of not removing the grouping variables explicitly is shown in the third example above, in which the summarise function is called twice. The first call assumes that `day,time` is the grouping variable, then removes `time` from the grouping variable list; and the second call assumes that `day`, alone, is the grouping variable, and returns mean values by `day`, which may not be the behaviour we expect. 
+
+In the last of the examples, the `ungroup` function is added to the end of the pipeline. This takes no argument, and simply removes any remaining grouping variables, meaning subsequent behaviour of the table may be easier to predict. 
+
+The `group_by` function also changes the behaviour of some other dplyr functions, as illustrated in the examples below. 
+
+  
 
 ## Initial Exploratory data analysis
 
